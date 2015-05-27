@@ -1,0 +1,23 @@
+mobile()
+  @media(max-width:580px)
+    {block}
+
+mobile-sm()
+  @media(max-width:$mobile-break)
+    {block}
+
+tablet()
+  @media(max-width:980px)
+    {block}
+
+custom-screen(size)
+  @media(max-width:size)
+    {block}
+
+custom-screen-(size)
+  @media(min-width:size)
+    {block}
+
+retina()
+  @media(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+    {block}

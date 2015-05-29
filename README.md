@@ -41,7 +41,7 @@ gulp -lr -img
 
 Git Standards
 --------------
-- Please use proper commit message being consistent with either the present or past tense. 
+- Please use proper commit message being consistent with either the present or past tense.  
 -- A proper commit message must have a noun and a verb. A commit like "update" is not good. Instead "Update _carousel.styl header"  
 -- Fixed issues should have issue # in commit message  
 - Do NOT merge anything to `master`  

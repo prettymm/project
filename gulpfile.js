@@ -173,7 +173,7 @@ gulp.task('server', function(cb) {
     res.render(getPage(req), locals);
   });
   if (!featureEnabled.restarted)
-    server = app.listen(port);
+    app.listen(port);
 });
 
 var gracefulExit =  function() {
@@ -188,10 +188,10 @@ process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
 var restart = function() {
   if (featureEnabled.restarted) {
     process.exit();
-  }
-  if (!featureEnabled.restarted)
+  } else {
     inputArguments.push('-con');
-  var child = spawn('gulp', inputArguments, { stdio: 'inherit'});
+  }
+  spawn('gulp', inputArguments, { stdio: 'inherit'});
 };
 
 gulp.task('coffee', function() {

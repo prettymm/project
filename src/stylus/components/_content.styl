@@ -9,7 +9,6 @@
     h1 
       font-size 20px
   .screen
-    width 100%
     background-color $profero-yellow
     padding $site-padding
     padding-top $site-padding * 2
@@ -30,8 +29,10 @@
   .item
     display inline-block
     vertical-align top
-    width 25%
     margin $site-padding
+    +tablet()
+      width 100%
+      margin $site-padding 0
     h1 
       font-size 30px
       margin-bottom $site-padding - 10

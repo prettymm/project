@@ -230,7 +230,6 @@ gulp.task('watch-all', function() {
 
 gulp.task('refresh', function() {
   livereload.changed(paths.buildJs + config.jsFile);
-    gulp.watch(paths.locale, ['restart']);
 });
 
 gulp.task('locale', function() {

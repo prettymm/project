@@ -16,14 +16,15 @@ watch = require('node-watch'),
 exec = require('child_process').exec,
 changedFile = null,
 featureEnabled = {},
-inputArguments = '',
+inputArguments = [],
+cluster = require('cluster'),
 through = require('through2'),
 imagemin = null,
 sourcemaps = require('gulp-sourcemaps'),
-defaultTasks = ['server'],
+defaultTasks = ['server', 'jade', 'locale'],
+spawn = require('child_process').spawn,
 nib = require('nib');
-
-featureEnabled.maps = false;
+featureEnabled.restarted = featureEnabled.maps = false;
 featureEnabled.simpleWatch = true;
 
 var merge = function(object1, object2) {
@@ -61,11 +62,12 @@ var paths = {
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
   locale: config.src + 'locale/'+ config.language +'.json',
-  jade: config.src + 'jade/'
+  jade: config.src + 'jade/',
 };
 
 var generalCallback = function(error, stdout, stderr) {
-  gutil.log(gutil.colors.blue(changedFile));
+  if (changedFile)
+    gutil.log(gutil.colors.blue(changedFile));
   if (error) {
     gutil.log(gutil.colors.red('exec error: ' + error));
   }
@@ -80,6 +82,10 @@ var getPage = function(req){
   }
   var page = req.params[0];
   return page.replace('.html', '');
+};
+
+var contains = function(haystack, needle) {
+  return haystack.indexOf(needle) > -1;
 };
 
 process.argv.forEach(function (val, index, array) {
@@ -104,14 +110,19 @@ process.argv.forEach(function (val, index, array) {
       defaultTasks.push('watch-all')
       featureEnabled.simpleWatch = false;
     break;
+    case '-con':
+      arg = val;
+      featureEnabled.restarted = true;
+    break;
     default:
-     if (val.indexOf('port=') > -1)
-      port = parseInt(val.split('=')[1]);
+      if (contains(val, 'port='))
+        port = parseInt(val.split('=')[1]);
     break;
   }
   if (index == process.argv.length - 1 && featureEnabled.simpleWatch)
     defaultTasks.push('watch-simple')
-  inputArguments += ' ' + arg; 
+  if (index >= 2)
+    inputArguments.push(arg);
 });
 
 gulp.task('images', function() {
@@ -138,6 +149,7 @@ gulp.task('jade', function() {
       locals: locals,
       pretty: true
     }))
+    .on('error', gutil.log)
     .pipe(gulp.dest(paths.build))
     .pipe(livereload());
 });
@@ -158,13 +170,30 @@ gulp.task('server', function(cb) {
   });
   app.set('views', path.join(__dirname, paths.jade));
   app.set('view engine', 'jade');
-  
   app.get('/*', function (req, res) {
     res.render(getPage(req), locals);
   });
-
-  app.listen(port);
+  if (!featureEnabled.restarted)
+    server = app.listen(port);
 });
+
+var gracefulExit =  function() {
+  setTimeout(function() {
+    gutil.log(gutil.colors.red('Successfully closed ' + process.pid));
+    process.exit(1);
+  }, 500);
+};
+
+process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
+
+var restart = function() {
+  if (featureEnabled.restarted) {
+    process.exit();
+  }
+  if (!featureEnabled.restarted)
+    inputArguments.push('-con');
+  var child = spawn('gulp', inputArguments, { stdio: 'inherit'});
+};
 
 gulp.task('coffee', function() {
   return gulp.src(paths.srcCoffee)
@@ -185,22 +214,32 @@ gulp.task('watch-simple', function() {
 });
 
 gulp.task('watch-all', function() {
+  var args = (inputArguments.toString()).replace(/,/g, ' ');
   watch(paths.jade, function(file) {
     changedFile = file;
-    exec('gulp jade' + inputArguments, generalCallback);
+    exec('gulp jade' + args, generalCallback);
   });
   watch(paths.styles, function(file) {
     changedFile = file;
-    exec('gulp stylus' + inputArguments, generalCallback);
+    exec('gulp stylus' + args, generalCallback);
   });
   watch(paths.coffee, function(file) {
     changedFile = file;
-    exec('gulp coffee' + inputArguments, generalCallback);
+    exec('gulp coffee' + args, generalCallback);
   });
 });
 
 gulp.task('refresh', function() {
   livereload.changed(paths.buildJs + config.jsFile);
+    gulp.watch(paths.locale, ['restart']);
+});
+
+gulp.task('locale', function() {
+  gulp.watch(paths.locale, ['restart']);
+});
+
+gulp.task('restart', function() {
+  restart();
 });
 
 gulp.task('default', defaultTasks);

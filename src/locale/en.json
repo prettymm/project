@@ -1,3 +1,13 @@
 {
-  "appName": "Project Name"
+  "appName": "Profero <span class=\"text-yellow\">Tech</string>",
+  "titleStarterKit": "FE Web Starter Kit",
+  "slogan": "Boilerplate and Tooling for FE development.",
+  "forDetails": "See the README.md file of this repository for usage details.",
+  "features": [
+    {"title":"Live Browser Reloading", "detail": "Reload the browser in real-time anytime an edit is made."},
+    {"title":"Performance optimization", "detail": "Minify and concatenate JavaScript, CSS, HTML and Images to help keep pages lean."},
+    {"title":"Jade Support", "detail": "Never worry about unclosed HTML tags again. Jade also supports dynamic code and reusability."},
+    {"title":"Stylus + Nib Support", "detail": "Expressive, dynamic, robust CSS. Includes automated prefixing and more."},
+    {"title":"CoffeeScript Support", "detail": "Code quick, code concise; output 'clean' JavaScript/JQuery"}
+  ]
 }

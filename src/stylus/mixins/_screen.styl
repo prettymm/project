@@ -1,13 +1,13 @@
 mobile()
-  @media(max-width:580px)
-    {block}
-
-mobile-sm()
   @media(max-width:$mobile-break)
     {block}
 
+mobile-sm()
+  @media(max-width:$mobile-sm-break)
+    {block}
+
 tablet()
-  @media(max-width:980px)
+  @media(max-width:$tablet-break)
     {block}
 
 custom-screen(size)

@@ -1,5 +1,16 @@
 extends partials/_template
 block content
   div.c-content
-    h1.
-      Hello world #{appName}
+    div.bar
+      img(src="assets/img/logo-160.png", alt=appName, width="100")
+      br
+      h1.name!=appName
+    div.screen
+      h1=titleStarterKit
+      h2=slogan
+      h3=forDetails
+    div.details
+      each feature in features
+        div.item
+          h1=feature.title
+          p=feature.detail

@@ -1,0 +1,3 @@
+mixin stripTags(string)
+  - string = string.replace(/(<([^>]+)>)/ig, '') 
+  |!{string}

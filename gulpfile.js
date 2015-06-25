@@ -2,6 +2,7 @@ var express = require('express'),
 app = express(),
 server = null,
 port = 3000,
+logger = require('morgan'),
 path = require('path'),
 gulp = require('gulp'),
 coffee = require('gulp-coffee'),
@@ -153,6 +154,7 @@ gulp.task('jade', function() {
 });
 
 gulp.task('server', function(cb) {
+  app.use(logger('dev'));
   app.use(express.static(__dirname + '/build/'));
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -172,7 +174,7 @@ gulp.task('server', function(cb) {
     res.render(getPage(req), locals);
   });
   if (!featureEnabled.restarted)
-    app.listen(port);
+    app.listen(process.env.PORT || port);
 });
 
 var gracefulExit =  function() {

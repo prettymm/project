@@ -18,6 +18,7 @@
     "nib": "^1.1.0",
     "node-watch": "^0.3.4",
     "through2": "^0.6.5",
-    "try-thread-sleep": "^1.0.0"
+    "try-thread-sleep": "^1.0.0",
+    "morgan": "^1.6.0"
   }
 }

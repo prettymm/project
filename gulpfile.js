@@ -217,15 +217,15 @@ gulp.task('watch-all', function() {
   var args = (inputArguments.toString()).replace(/,/g, ' ');
   watch(paths.jade, function(file) {
     changedFile = file;
-    exec('gulp jade' + args, generalCallback);
+    exec('gulp jade', generalCallback);
   });
   watch(paths.styles, function(file) {
     changedFile = file;
-    exec('gulp stylus' + args, generalCallback);
+    exec('gulp stylus', generalCallback);
   });
   watch(paths.coffee, function(file) {
     changedFile = file;
-    exec('gulp coffee' + args, generalCallback);
+    exec('gulp coffee', generalCallback);
   });
 });
 

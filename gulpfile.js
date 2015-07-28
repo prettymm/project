@@ -23,7 +23,7 @@ sourcemaps = require('gulp-sourcemaps'),
 defaultTasks = ['server', 'jade', 'locale'],
 spawn = require('child_process').spawn,
 nib = require('nib');
-featureEnabled.restarted = featureEnabled.maps = false;
+featureEnabled.noserver = featureEnabled.maps = false;
 featureEnabled.simpleWatch = true;
 
 var merge = function(object1, object2) {
@@ -111,7 +111,7 @@ process.argv.forEach(function (val, index, array) {
     break;
     case '-con':
       arg = val;
-      featureEnabled.restarted = true;
+      featureEnabled.noserver = true;
     break;
     default:
       if (contains(val, 'port='))
@@ -153,9 +153,16 @@ gulp.task('jade', function() {
     .pipe(livereload());
 });
 
-gulp.task('server', function(cb) {
+var initServer = function() {
   app.use(logger('dev'));
   app.use(express.static(__dirname + '/build/'));
+  app.set('views', path.join(__dirname, paths.jade));
+  app.set('view engine', 'jade');
+  app.get('/*', function (req, res) {
+    res.render(getPage(req), locals);
+  });
+
+  /* Handle errors */
   app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
@@ -168,32 +175,37 @@ gulp.task('server', function(cb) {
         error: err
     }));
   });
-  app.set('views', path.join(__dirname, paths.jade));
-  app.set('view engine', 'jade');
-  app.get('/*', function (req, res) {
-    res.render(getPage(req), locals);
-  });
-  if (!featureEnabled.restarted)
-    app.listen(process.env.PORT || port);
-});
-
-var gracefulExit =  function() {
-  setTimeout(function() {
-    gutil.log(gutil.colors.red('Successfully closed ' + process.pid));
-    process.exit(1);
-  }, 500);
 };
 
-process.on('SIGINT', gracefulExit).on('SIGTERM', gracefulExit);
+gulp.task('server', function(cb) {
+  initServer();
+  if (!featureEnabled.noserver) {
 
-var restart = function() {
-  if (featureEnabled.restarted) {
-    process.exit();
-  } else {
-    inputArguments.push('-con');
+    gutil.log(gutil.colors.yellow('Starting server...'));
+    port = process.env.PORT || port;
+
+    var portOps = 'PORT=' + port, ls = null,
+    spawnOps = [portOps, 'nodemon', './bin/www', '-e', 'json', '--ignore', 'build/', '--ignore', 'node_modules'];
+
+    if (port == 80) {
+      ls = spawn('sudo', spawnOps);
+    } else {
+      ls = spawn(portOps, spawnOps.slice(1));
+    }
+    
+    ls.stdout.on('data', function (data) {
+      gutil.log(''+data);
+    });
+
+    ls.stderr.on('data', function (data) {
+      gutil.log(gutil.colors.red(''+data));
+    });
+
+    ls.on('close', function (code) {
+      gutil.log('Process ended with code: ' + code);
+    });
   }
-  spawn('gulp', inputArguments, { stdio: 'inherit'});
-};
+});
 
 gulp.task('coffee', function() {
   return gulp.src(paths.srcCoffee)
@@ -234,12 +246,10 @@ gulp.task('refresh', function() {
 });
 
 gulp.task('locale', function() {
-  gulp.watch(paths.locale, ['restart']);
-});
-
-gulp.task('restart', function() {
-  restart();
+  gulp.watch(paths.locale, ['jade']);
 });
 
 gulp.task('default', defaultTasks);
 
+app.init = initServer;
+module.exports = app;

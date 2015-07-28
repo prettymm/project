@@ -2,6 +2,9 @@
   "name": "FELab",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "sudo PORT=80 gulp -wall"
+  },
   "devDependencies": {
     "express": "^4.12.4",
     "gulp": "^3.8.11",

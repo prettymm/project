@@ -190,7 +190,8 @@ gulp.task('server', function(cb) {
     if (port == 80) {
       ls = spawn('sudo', spawnOps);
     } else {
-      ls = spawn(portOps, spawnOps.slice(1));
+      process.env.PORT = port;
+      ls = spawn('nodemon', spawnOps.slice(2));
     }
     
     ls.stdout.on('data', function (data) {
@@ -237,7 +238,8 @@ gulp.task('watch-all', function() {
   });
   watch(paths.coffee, function(file) {
     changedFile = file;
-    exec('gulp coffee', generalCallback);
+    var arg = inputArguments.indexOf('-maps') ? '-maps' : '';
+    exec('gulp coffee ' + arg, generalCallback);
   });
 });
 

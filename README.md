@@ -21,7 +21,8 @@ Run
 
 ```
 cd $project-directory
-gulp
+
+gulp # defaults with port 3000
 ```
 
 Options
@@ -39,6 +40,13 @@ gulp -maps
 gulp -lr -img
 ```
 
+HTTPS
+-------------
+SSL is available. Start the project on PORT 80 with:
+```
+npm start # enter your password and browse https://localhost
+```
+
 Git Standards
 --------------
 - Please use proper commit message being consistent with either the present or past tense.  
@@ -51,3 +59,34 @@ Coding Standards
 - 2 spaces as a tab for JS, CSS, CoffeeScript, Stylus, Jade  
 - camelCase JS variable/function names  
 - CSS class/id names with dashed format: eg. .c-carousel, .icon-logo, #unique-element
+- If the project must be ADA compliant, make sure that you set up landmarks from the very start.
+- !!IMPORTANT!! Markup should be built in modules and CSS classes should reflect the start of a module. Consider the following markup, notice that every area where a new module is, it is very distinct. Modules are clearly prefixed with `.c-`. 
+ 
+```
+<body>
+  <div class="c-header">
+    <div class="c-hero">...</div>
+    <div class="c-nav" role="navigation" aria-label="Main navigation">
+      <ul class="c-horizontal-list"></ul>
+    </div>
+  <div>
+  <div class="c-main" role="main">
+  <section class="c-article">
+    <section class="c-breadcrumbs">
+      <span class="l-inline-block ic-bread">
+      <span class="l-inline-block meta">Home > Rules</span>
+    </section>
+    <section class="c-article-main">...</section>
+    <section class="c-article-footer">...</section>
+  </section>
+  </div>
+  <div class="c-footer">
+    <section class="c-footer-nav" role="navigation" aria-label="Footer Navigation"></section>
+    <section class="c-copyright" role="contentinfo">....</section>
+  </div>
+</body>
+```
+
+Docs
+------------
+For details visit [FE Lab](https://loweproferotech.atlassian.net/wiki/display/IL/FE+Lab).

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "sudo PORT=80 gulp -wall",
-    "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguides.html"
+    "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html"
   },
   "devDependencies": {
     "express": "^4.12.4",

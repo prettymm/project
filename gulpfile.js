@@ -19,6 +19,7 @@ featureEnabled = {},
 inputArguments = [],
 through = require('through2'),
 imagemin = null,
+styleguide = 'styleguide.html',
 sourcemaps = require('gulp-sourcemaps'),
 defaultTasks = ['server', 'jade', 'locale'],
 spawn = require('child_process').spawn,
@@ -29,6 +30,11 @@ featureEnabled.simpleWatch = true;
 var merge = function(object1, object2) {
   for (var attrname in object2) object1[attrname] = object2[attrname];
   return object1;
+};
+
+var generateStyleguide = function() {
+  changedFile = styleguide;
+  exec('npm run style', generalCallback);
 };
 
 var config = {
@@ -65,10 +71,14 @@ var paths = {
 };
 
 var generalCallback = function(error, stdout, stderr) {
-  if (changedFile)
+  if (changedFile) {
     gutil.log(gutil.colors.blue(changedFile));
+  }
   if (error) {
     gutil.log(gutil.colors.red('exec error: ' + error));
+  }
+  if (changedFile != styleguide) {
+    generateStyleguide(); 
   }
   livereload.changed(paths.buildJs + config.jsFile);
 };
@@ -244,6 +254,7 @@ gulp.task('watch-all', function() {
 });
 
 gulp.task('refresh', function() {
+  generateStyleguide();
   livereload.changed(paths.buildJs + config.jsFile);
 });
 

@@ -5,13 +5,14 @@ Global Dev Requirements
 -------------
   * npm (http://nodejs.org/)
   * gulp
+  * styledown
 
 Install
 -------------
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp
+npm install -g gulp styledown
 cd $project-directory
 npm install
 ```
@@ -47,6 +48,13 @@ SSL is available. Start the project on PORT 80 with:
 npm start # enter your password and browse https://localhost
 ```
 
+Styleguide
+-------------
+Stylus files need to be documented so that the style guide can be automatically generated. We use a very simple generator which does all the heavy lifting called [Styledown](https://github.com/styledown/styledown). 
+```
+npm run style # generates updated style guide
+```
+
 Git Standards
 --------------
 - Please use proper commit message being consistent with either the present or past tense.  
@@ -58,10 +66,11 @@ Coding Standards
 --------------
 - 2 spaces as a tab for JS, CSS, CoffeeScript, Stylus, Jade  
 - camelCase JS variable/function names  
+- Utilize the DRY principle in your code; do not repeat the same code in multiple areas; use stylus & jade mixins, JS functions etc to key code dry
 - CSS class/id names with dashed format: eg. .c-carousel, .icon-logo, #unique-element
-- If the project must be ADA compliant, make sure that you set up landmarks from the very start.
+- If the project must be ADA compliant, make sure that you set up landmarks from the very start
 - !!IMPORTANT!! Markup should be built in modules and CSS classes should reflect the start of a module. Consider the following markup, notice that every area where a new module is, it is very distinct. Modules are clearly prefixed with `.c-`. 
- 
+- Stylus files need to be documented so that the style guide can be automatically generated.
 ```
 <body>
   <div class="c-header">

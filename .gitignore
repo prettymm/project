@@ -13,4 +13,5 @@ node_modules
 tmp
 .idea
 *.swp
+deploy
 deploy/*

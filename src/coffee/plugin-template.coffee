@@ -1,25 +1,37 @@
-(($) ->
-  "use strict"
-  PluginName = (element, options) ->
-    defaults =
-      property: 'value'
+# Create plugins using the following template.
+#
+# Usage:
+# $('[data-js-plugin-name]').PluginName({ property: 'not-foo' });
+# $('[data-js-plugin-name]').PluginName('print', 'Hello, world');
 
-    @options = $.extend(defaults, options)
-    @element = $(element)
-    @init()
-    return
+(($, window) ->
 
-  PluginName::init = ->
-    that = @
-    @element.click ->
-      return false
-    return
+  class PluginName
+    defaults:
+      property: 'foo'
+
+    constructor: (element, options) ->
+      @ops = $.extend({}, @defaults, options)
+      @el = $(element)
+      @init()
+
+    init: ->
+      @el.click ->
+        return false
+
+    print: (echo) ->
+      console.log(@ops.property + ': ' + echo)
 
   ## Add plugin to jQuery namespace.
-  $.fn.PluginName = (options) ->
-    $(@).each (i, element) ->
-      $(@).data 'plugin-name', new PluginName(@, options) unless $(@).data('plugin-name')
-      return
+  $.fn.extend PluginName: (option, args...) ->
+    @each ->
+      $this = $(this)
+      key = 'plugin-name'
+      data = $this.data(key)
 
-  return
-) jQuery
+      if !data
+        $this.data key, (data = new PluginName(this, option))
+      if typeof option == 'string'
+        data[option].apply(data, args)
+
+) window.jQuery, window

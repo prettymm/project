@@ -5,5 +5,10 @@ head
   meta(charset='utf-8')
   meta(name='description', content=appDescription)
   meta(name='keywords', content=appKeywords)
+  <!--[if (gt IE 8)]><!-->
   link(rel='stylesheet', href='assets/css/app.css')
+  <!--<![endif]-->
+  <!--[if (lte IE 8)]>
+  link(rel='stylesheet', href='assets/css/app-ie.css')
+  <![endif]--> 
   link(rel='shortcut icon' href='assets/img/favicon.ico' type='image/ico')

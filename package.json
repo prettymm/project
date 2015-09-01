@@ -1,10 +1,11 @@
 {
   "name": "FELab",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
     "start": "sudo PORT=80 gulp -wall",
-    "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html"
+    "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html",
+    "build": "gulp jade & gulp coffee & gulp stylus"
   },
   "devDependencies": {
     "express": "^4.12.4",

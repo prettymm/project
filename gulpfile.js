@@ -1,3 +1,17 @@
+/**
+  @name FE Starter Kit
+  @company Lowe Profero Beijing
+  @author Lisa-Ann Bruney <lisa-ann.bruney@loweprofero.com>
+
+  If this file is edited to add additional tools, 
+  please make sure that the new tools do not 
+  slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
+  time execution.
+
+  Additional tools should be added as an option, as seen below beginning at ln 114
+  "process.argv...". Please ask for help when unsure. See README.md for additional
+  details.
+**/
 var express = require('express'),
 app = express(),
 server = null,
@@ -168,8 +182,14 @@ var initServer = function() {
   app.use(express.static(__dirname + '/build/'));
   app.set('views', path.join(__dirname, paths.jade));
   app.set('view engine', 'jade');
-  app.get('/*', function (req, res) {
+  var render = function(req, res) {
     res.render(getPage(req), locals);
+  };
+  app.get('/*', function (req, res) {
+    render(req, res);
+  });
+  app.post('/*', function (req, res) {
+    render(req, res);
   });
 
   /* Handle errors */

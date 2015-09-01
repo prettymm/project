@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <meta name="description">
-    <meta name="keywords">
-    <link rel="stylesheet" href="assets/css/app.css">
+    <meta name="keywords"><!--[if (gt IE 8)]><!-->
+    <link rel="stylesheet" href="assets/css/app.css"><!--<![endif]-->
+    <!--[if (lte IE 8)]>
+    <link rel="stylesheet" href="assets/css/app-ie.css"><![endif]--> 
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/ico">
   </head>
   <body>
@@ -43,7 +45,11 @@
         </div>
       </div>
     </div>
-  </body>
-  <script src="assets/js/vendor/jquery.js"></script>
+  </body><!--[if (gt IE 8)]><!-->
+  <script src="assets/js/vendor/jquery.js"></script><!--<![endif]-->
+  <!--[if (lte IE 8)]>
+  <script src="./../public/javascripts/vendor/old-ie/jquery-1.9.0.js"></script>
+  <script src="./../public/javascripts/vendor/old-ie/html5shiv.js"></script>
+  <script src="./../public/javascripts/vendor/old-ie/selectivizr-min.js"></script><![endif]-->
   <script src="assets/js/app.min.js"></script>
 </html>

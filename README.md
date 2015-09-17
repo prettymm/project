@@ -1,5 +1,6 @@
 FE Lab
 =================
+This repositiory is to be used as starter kit for FE projects, so coding standards, workflow, and codebase is as normalized as possible.
 
 Global Dev Requirements
 -------------
@@ -9,13 +10,26 @@ Global Dev Requirements
   * uglifyjs
   * stylint
 
+Cloning
+-------------
+- If you are about to start a new project, then clone this one as starter. Afterwards, change the origin url in git to point to the url of the new project repository.
+
+```
+git clone https://$username@bitbucket.org/loweproferotech/fe-lab.git
+mv fe-lab $new-project-name # rename the directory
+cd $new-project-name
+git remote set-url origin https://$username@bitbucket.org/loweproferotech/$name.git
+```
+
+- Create a new dev branch and start your work from there. Be sure to follow the README.md guides found in the various source directories.
+
 Install
 -------------
 First install all global requirements if not already on system
 
 ```
 npm install -g gulp styledown uglifyjs stylint
-cd $project-directory
+cd $new-project-name
 npm install
 ```
 
@@ -23,7 +37,7 @@ Run
 -------------
 
 ```
-cd $project-directory
+cd $new-project-name
 
 gulp # defaults with port 3000
 ```

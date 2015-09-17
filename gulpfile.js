@@ -33,7 +33,6 @@ featureEnabled = {},
 inputArguments = [],
 through = require('through2'),
 imagemin = null,
-styleguide = 'styleguide.html',
 sourcemaps = require('gulp-sourcemaps'),
 defaultTasks = ['server', 'jade', 'locale', 'watch-vendor'],
 spawn = require('child_process').spawn,
@@ -47,16 +46,17 @@ var merge = function(object1, object2) {
   return object1;
 };
 
-var generateStyleguide = function() {
-  changedFile = styleguide;
-  exec('npm run style', generalCallback);
-};
-
 var config = {
+  styleguide: 'styleguide.html',
   language: 'en',
   build: './build/',
   jsFile: 'app.min.js',
   src: './src/'
+};
+
+var generateStyleguide = function() {
+  changedFile = config.styleguide;
+  exec('npm run style', generalCallback);
 };
 
 var toggle = function(feature, featureEnabled, args) {
@@ -98,7 +98,7 @@ var generalCallback = function(error, stdout, stderr) {
   if (error) {
     gutil.log(gutil.colors.red('exec error: ' + error));
   }
-  if (changedFile != styleguide) {
+  if (changedFile != config.styleguide) {
     generateStyleguide(); 
   }
   livereload.changed(paths.buildJs + config.jsFile);
@@ -116,6 +116,25 @@ var getPage = function(req){
 
 var contains = function(haystack, needle) {
   return haystack.indexOf(needle) > -1;
+};
+
+var stream = function(ls, task) {
+  var error = false;
+  ls.stdout.on('data', function (data) {
+    gutil.log(''+data);
+  });
+
+  ls.stderr.on('data', function (data) {
+    error = true;
+    gutil.log(gutil.colors.red(''+data));
+  });
+
+  ls.on('close', function (code) {
+    gutil.log('Process ended with code: ' + code);
+    if (!error && task) {
+      run(task);
+    }
+  });
 };
 
 process.argv.forEach(function (val, index, array) {
@@ -173,6 +192,16 @@ gulp.task('stylus', function() {
     .pipe(livereload());
 });
 
+gulp.task('stylus-success', function() {
+  run('stylus');
+  generateStyleguide();
+});
+
+gulp.task('stylint', function() {
+  ls = spawn('npm', ['run', 'stylint']);
+  stream(ls, 'stylus-success');
+});
+
 gulp.task('jade', function() {
   gulp.src(paths.srcJade)
     .pipe(jade({
@@ -214,25 +243,6 @@ var initServer = function() {
   });
 };
 
-var stream = function(ls, task) {
-  var error = false;
-  ls.stdout.on('data', function (data) {
-    gutil.log(''+data);
-  });
-
-  ls.stderr.on('data', function (data) {
-    error = true;
-    gutil.log(gutil.colors.red(''+data));
-  });
-
-  ls.on('close', function (code) {
-    gutil.log('Process ended with code: ' + code);
-    if (!error && task) {
-      run(task);
-    }
-  });
-};
-
 gulp.task('server', function(cb) {
   initServer();
   if (!featureEnabled.noserver) {
@@ -262,16 +272,6 @@ gulp.task('coffee', function() {
     .pipe(toggle(sourcemaps.write, featureEnabled.maps, '../maps'))
     .pipe(gulp.dest(paths.buildJs))
     .pipe(livereload());
-});
-
-gulp.task('stylus-success', function() {
-  run('stylus');
-  generateStyleguide();
-});
-
-gulp.task('stylint', function() {
-  ls = spawn('npm', ['run', 'stylint']);
-  stream(ls, 'stylus-success');
 });
 
 gulp.task('vendor-js', function() {

@@ -6,13 +6,15 @@ Global Dev Requirements
   * npm (http://nodejs.org/)
   * gulp
   * styledown
+  * uglifyjs
+  * stylint
 
 Install
 -------------
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp styledown
+npm install -g gulp styledown uglifyjs stylint
 cd $project-directory
 npm install
 ```
@@ -69,6 +71,7 @@ Coding Standards
 - Utilize the DRY principle in your code; do not repeat the same code in multiple areas; use stylus & jade mixins, JS functions etc to key code dry
 - CSS class/id names with dashed format: eg. .c-carousel, .icon-logo, #unique-element
 - If the project must be ADA compliant, make sure that you set up landmarks from the very start
+- Do NOT use browserify and shim in the project. See vendor/README.md for details.
 - !!IMPORTANT!! Markup should be built in modules and CSS classes should reflect the start of a module. Consider the following markup, notice that every area where a new module is, it is very distinct. Modules are clearly prefixed with `.c-`. 
 - Stylus files need to be documented so that the style guide can be automatically generated.
 ```
@@ -95,6 +98,10 @@ Coding Standards
   </div>
 </body>
 ```
+
+Linters
+------------
+- Stylint: To enforce the best practices in CSS and stylus, stylint is used. See the rules in bin/config.stylintrc file. Find out what these options mean at [stylint github](https://github.com/rossPatton/stylint): 
 
 Docs
 ------------

@@ -5,6 +5,7 @@
 $(document).ready ->
 
   testFunction = ->
+    console.log "testFunction"
     return true
 
   $('[data-js-plugin-name]').each ->

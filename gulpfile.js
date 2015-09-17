@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 114
+  Additional tools should be added as an option, as seen below beginning at ln 121
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -35,8 +35,9 @@ through = require('through2'),
 imagemin = null,
 styleguide = 'styleguide.html',
 sourcemaps = require('gulp-sourcemaps'),
-defaultTasks = ['server', 'jade', 'locale'],
+defaultTasks = ['server', 'jade', 'locale', 'watch-vendor'],
 spawn = require('child_process').spawn,
+run = require('run-sequence'),
 nib = require('nib');
 featureEnabled.noserver = featureEnabled.maps = false;
 featureEnabled.simpleWatch = true;
@@ -73,6 +74,7 @@ var paths = {
   img: config.build + 'assets/img',
   css: config.build + 'assets/css/',
   js: config.src + 'js/',
+  vendorJs: config.src + 'vendor/js/',
   coffee: config.src + 'coffee/',
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: config.src + 'js/_*.js',
@@ -84,10 +86,15 @@ var paths = {
   jade: config.src + 'jade/',
 };
 
-var generalCallback = function(error, stdout, stderr) {
+var printChanged = function(changedFile) {
   if (changedFile) {
     gutil.log(gutil.colors.blue(changedFile));
   }
+};
+
+var generalCallback = function(error, stdout, stderr) {
+  printChanged(changedFile);
+
   if (error) {
     gutil.log(gutil.colors.red('exec error: ' + error));
   }
@@ -207,6 +214,25 @@ var initServer = function() {
   });
 };
 
+var stream = function(ls, task) {
+  var error = false;
+  ls.stdout.on('data', function (data) {
+    gutil.log(''+data);
+  });
+
+  ls.stderr.on('data', function (data) {
+    error = true;
+    gutil.log(gutil.colors.red(''+data));
+  });
+
+  ls.on('close', function (code) {
+    gutil.log('Process ended with code: ' + code);
+    if (!error && task) {
+      run(task);
+    }
+  });
+};
+
 gulp.task('server', function(cb) {
   initServer();
   if (!featureEnabled.noserver) {
@@ -223,18 +249,7 @@ gulp.task('server', function(cb) {
       process.env.PORT = port;
       ls = spawn('nodemon', spawnOps.slice(2));
     }
-    
-    ls.stdout.on('data', function (data) {
-      gutil.log(''+data);
-    });
-
-    ls.stderr.on('data', function (data) {
-      gutil.log(gutil.colors.red(''+data));
-    });
-
-    ls.on('close', function (code) {
-      gutil.log('Process ended with code: ' + code);
-    });
+    stream(ls);
   }
 });
 
@@ -249,22 +264,43 @@ gulp.task('coffee', function() {
     .pipe(livereload());
 });
 
+gulp.task('stylus-success', function() {
+  run('stylus');
+  generateStyleguide();
+});
+
+gulp.task('stylint', function() {
+  ls = spawn('npm', ['run', 'stylint']);
+  stream(ls, 'stylus-success');
+});
+
+gulp.task('vendor-js', function() {
+  exec('cat '+ paths.vendorJs +'*.js | uglifyjs -m -c --overwrite > '+ paths.buildJs +'vendor.min.js', generalCallback);
+});
+
+gulp.task('watch-vendor', function() {
+  watch(paths.vendorJs, function(file) {
+    changedFile = file;
+    run('vendor-js');
+  });
+});
+
 gulp.task('watch-simple', function() {
   gutil.log(gutil.colors.yellow('Standard gulp.watch does not watch new and deleted files. Start gulp with -wall to watch all.'));
   gulp.watch(paths.jade+'**/*', ['jade', 'refresh']);
   gulp.watch(paths.coffee+'**/*', ['coffee', 'refresh']);
-  gulp.watch(paths.styles+'**/*', ['stylus', 'refresh']);
+  gulp.watch(paths.styles+'**/*', ['stylint', 'refresh']);
 });
 
 gulp.task('watch-all', function() {
   var args = (inputArguments.toString()).replace(/,/g, ' ');
   watch(paths.jade, function(file) {
-    changedFile = file;
-    exec('gulp jade', generalCallback);
+    printChanged(file);
+    run('jade');
   });
   watch(paths.styles, function(file) {
-    changedFile = file;
-    exec('gulp stylus', generalCallback);
+    printChanged(file);
+    run('stylint');
   });
   watch(paths.coffee, function(file) {
     changedFile = file;
@@ -274,7 +310,6 @@ gulp.task('watch-all', function() {
 });
 
 gulp.task('refresh', function() {
-  generateStyleguide();
   livereload.changed(paths.buildJs + config.jsFile);
 });
 

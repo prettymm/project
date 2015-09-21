@@ -4,7 +4,7 @@ FE Lab > Coffee Sources
 Instructions
 -------------
 
-- Do not attach behaviours via class name, use a standard attribute like data-js-plugin-name
+- Do not attach behaviours via class/id name, use a standard attribute like data-js-plugin-name
 ```
 // jade
 a(data-js-plugin-name).btn-next

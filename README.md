@@ -50,11 +50,13 @@ There are some options that can be enabled when running `gulp`:
 - `-maps` # enable sourcemaps  
 - `-wall` # watch all altered files, including deleted and new; slower than standard `gulp.watch`  
 - `-port=#` # change the server port #; default is 3000  
+- `-deploy` # app js will not be minified by default, add this option for production/live env
 
 Examples
 ```
 gulp -maps
 gulp -lr -img
+gulp coffee -deploy
 ```
 
 HTTPS

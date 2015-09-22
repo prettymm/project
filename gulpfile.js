@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 140
+  Additional tools should be added as an option, as seen below beginning at ln 142
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -61,7 +61,9 @@ var generateStyleguide = function() {
 
 var toggle = function(feature, featureEnabled, args) {
   if (featureEnabled) {
-    return args ? feature(args) : feature();
+    if (args && args.name)
+      gutil.log(gutil.colors.blue('..with ' + args.name +' enabled.'));
+    return args && args.params ? feature(args.params) : feature();
   } 
   return through.obj(function(file, enc, cb) {
     cb(null, file);
@@ -78,7 +80,7 @@ var paths = {
   coffee: config.src + 'coffee/',
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: config.src + 'js/_*.js',
-  srcCoffee: config.src + 'coffee/_*.coffee',
+  srcCoffee: config.src + 'coffee/**/_*.coffee',
   srcJade: config.src + 'jade/*.jade',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
@@ -162,6 +164,10 @@ process.argv.forEach(function (val, index, array) {
     case '-con':
       arg = val;
       featureEnabled.noserver = true;
+    break;
+    case '-deploy':
+      arg = val;
+      featureEnabled.deploy = true;
     break;
     default:
       if (contains(val, 'port='))
@@ -264,12 +270,12 @@ gulp.task('server', function(cb) {
 });
 
 gulp.task('coffee', function() {
-  return gulp.src(paths.srcCoffee)
+  return gulp.src(paths.srcCoffee) /* Use an array of files instead if need to concat in order. e.g gulp.src(['_file1.coffee', '_file2.coffee']) */
     .pipe(toggle(sourcemaps.init, featureEnabled.maps))
       .pipe(coffee({ bare: true }).on('error', gutil.log))
-      .pipe(uglify())
+      .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
       .pipe(concat(config.jsFile))
-    .pipe(toggle(sourcemaps.write, featureEnabled.maps, '../maps'))
+    .pipe(toggle(sourcemaps.write, featureEnabled.maps, {params: '../maps', name: 'source maps'}))
     .pipe(gulp.dest(paths.buildJs))
     .pipe(livereload());
 });
@@ -293,7 +299,6 @@ gulp.task('watch-simple', function() {
 });
 
 gulp.task('watch-all', function() {
-  var args = (inputArguments.toString()).replace(/,/g, ' ');
   watch(paths.jade, function(file) {
     printChanged(file);
     run('jade');
@@ -304,8 +309,7 @@ gulp.task('watch-all', function() {
   });
   watch(paths.coffee, function(file) {
     changedFile = file;
-    var arg = inputArguments.indexOf('-maps') ? '-maps' : '';
-    exec('gulp coffee ' + arg, generalCallback);
+    run('coffee');
   });
 });
 

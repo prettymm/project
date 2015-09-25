@@ -51,6 +51,7 @@ There are some options that can be enabled when running `gulp`:
 - `-wall` # watch all altered files, including deleted and new; slower than standard `gulp.watch`  
 - `-port=#` # change the server port #; default is 3000  
 - `-deploy` # app js will not be minified by default, add this option for production/live env
+- `-js`   # Use this option if you prefer coding with classic JS instead of CoffeeScript (src/js), default is CoffeeScript (src/coffee)
 
 Examples
 ```

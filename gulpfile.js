@@ -23,6 +23,8 @@ coffee = require('gulp-coffee'),
 concat = require('gulp-concat'),
 uglify = require('gulp-uglify'),
 stylus = require('gulp-stylus'),
+jshint = require('gulp-jshint-classic'),
+stylish = require('jshint-stylish'),
 livereload = require('gulp-livereload'),
 jade = require('gulp-jade'),
 gutil = require('gulp-util'),
@@ -51,7 +53,8 @@ var config = {
   language: 'en',
   build: './build/',
   jsFile: 'app.min.js',
-  src: './src/'
+  src: './src/',
+  jsLang: 'coffee'
 };
 
 var generateStyleguide = function() {
@@ -142,6 +145,9 @@ var stream = function(ls, task) {
 process.argv.forEach(function (val, index, array) {
   var arg = '';
   switch(val) {
+    case '-js':
+      config.jsLang = 'js';
+    break;
     case '-lr':
       arg = val; 
       gutil.log('livereload...');
@@ -280,6 +286,23 @@ gulp.task('coffee', function() {
     .pipe(livereload());
 });
 
+gulp.task('js', function() {
+  return gulp.src(paths.srcJs)
+    .pipe(jshint({ 
+      unused: true, 
+      camelcase: true, 
+      indent: 2, 
+      globals: ['$']
+    }))
+    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter('fail'))
+    .on('error', gutil.log)
+    .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
+    .pipe(concat(config.jsFile))
+    .pipe(gulp.dest(paths.buildJs))
+    .pipe(livereload());
+});
+
 gulp.task('vendor-js', function() {
   exec('cat '+ paths.vendorJs +'*.js | uglifyjs -m -c --overwrite > '+ paths.buildJs +'vendor.min.js', generalCallback);
 });
@@ -293,9 +316,9 @@ gulp.task('watch-vendor', function() {
 
 gulp.task('watch-simple', function() {
   gutil.log(gutil.colors.yellow('Standard gulp.watch does not watch new and deleted files. Start gulp with -wall to watch all.'));
-  gulp.watch(paths.jade+'**/*', ['jade']);
-  gulp.watch(paths.coffee+'**/*', ['coffee']);
-  gulp.watch(paths.styles+'**/*', ['stylint']);
+  gulp.watch(paths.jade + '**/*', ['jade']);
+  gulp.watch(paths[config.jsLang] + '**/*', [config.jsLang]);
+  gulp.watch(paths.styles + '**/*', ['stylint']);
 });
 
 gulp.task('watch-all', function() {
@@ -307,9 +330,9 @@ gulp.task('watch-all', function() {
     printChanged(file);
     run('stylint');
   });
-  watch(paths.coffee, function(file) {
+  watch(paths[config.jsLang], function(file) {
     changedFile = file;
-    run('coffee');
+    run(config.jsLang);
   });
 });
 

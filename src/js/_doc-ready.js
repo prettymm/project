@@ -2,8 +2,8 @@
   Every plugin initialization goes here.
  */
 $(document).ready(function() {
-  var testFunction;
-  testFunction = function() {
+  
+  var testFunction = function() {
     console.log("testFunction");
     return true;
   };

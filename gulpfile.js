@@ -257,7 +257,7 @@ gulp.task('server', function(cb) {
     port = process.env.PORT || port;
 
     var portOps = 'PORT=' + port, ls = null,
-    spawnOps = [portOps, 'nodemon', './bin/www', '-e', 'json', '--ignore', 'build/', '--ignore', 'node_modules'];
+    spawnOps = [portOps, 'nodemon', './bin/www', '--ignore', 'build/', '--ignore', 'node_modules'];
 
     if (port == 80) {
       ls = spawn('sudo', spawnOps);
@@ -293,9 +293,9 @@ gulp.task('watch-vendor', function() {
 
 gulp.task('watch-simple', function() {
   gutil.log(gutil.colors.yellow('Standard gulp.watch does not watch new and deleted files. Start gulp with -wall to watch all.'));
-  gulp.watch(paths.jade+'**/*', ['jade', 'refresh']);
-  gulp.watch(paths.coffee+'**/*', ['coffee', 'refresh']);
-  gulp.watch(paths.styles+'**/*', ['stylint', 'refresh']);
+  gulp.watch(paths.jade+'**/*', ['jade']);
+  gulp.watch(paths.coffee+'**/*', ['coffee']);
+  gulp.watch(paths.styles+'**/*', ['stylint']);
 });
 
 gulp.task('watch-all', function() {
@@ -318,7 +318,10 @@ gulp.task('refresh', function() {
 });
 
 gulp.task('locale', function() {
-  gulp.watch(paths.locale, ['jade']);
+  watch(paths.locale, function(file) {
+    printChanged(file);
+    exec('gulp jade', generalCallback);
+  });
 });
 
 gulp.task('default', defaultTasks);

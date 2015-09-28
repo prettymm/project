@@ -9,6 +9,7 @@ Global Dev Requirements
   * styledown
   * uglifyjs
   * stylint
+  * nodemon
 
 Cloning
 -------------
@@ -28,7 +29,7 @@ Install
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp styledown uglifyjs stylint
+npm install -g gulp styledown uglifyjs stylint nodemon
 cd $new-project-name
 npm install
 ```

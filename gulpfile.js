@@ -344,6 +344,7 @@ gulp.task('locale', function() {
   watch(paths.locale, function(file) {
     printChanged(file);
     exec('gulp jade', generalCallback);
+    exec('touch gulpfile.js', generalCallback);
   });
 });
 

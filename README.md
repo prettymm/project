@@ -11,9 +11,9 @@ Global Dev Requirements
   * stylint
   * nodemon
 
-Cloning
+Cloning FELab
 -------------
-- If you are about to start a new project, then clone this one as starter. Afterwards, change the origin url in git to point to the url of the new project repository.
+- If you are about to start a new project, then clone FELab as starter. Afterwards, for the clone, change the origin url in git to point to the url of the new project repository. (Remove this clone notice for the new project.)
 
 ```
 git clone https://$username@bitbucket.org/loweproferotech/fe-lab.git
@@ -59,6 +59,20 @@ Examples
 gulp -maps
 gulp -lr -img
 gulp coffee -deploy
+```
+
+Deploy
+-------------
+You can deploy this to http://loweproferotech.bitbucket.org/bb-felab/ by running:
+```
+npm run deploy
+```
+You must set up deploy.sh from the https://bitbucket.org/loweproferotech/loweproferotech.bitbucket.org repo.  
+Change vars in deploy.sh to:
+```
+projectName=bb-felab
+repo=https://{username}@bitbucket.org/loweproferotech/loweproferotech.bitbucket.org.git
+## set username OR use git@bitbucket.org:loweproferotech/loweproferotech.bitbucket.org.git as repo url
 ```
 
 HTTPS

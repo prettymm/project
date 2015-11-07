@@ -1,9 +1,10 @@
 {
   "name": "FELab",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": true,
   "scripts": {
     "start": "sudo PORT=80 gulp -wall",
+    "deploy": "gulp stylus coffee jade -d ; sh deploy.sh",
     "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html",
     "build": "gulp jade & gulp coffee & gulp stylus",
     "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc"

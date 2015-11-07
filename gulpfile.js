@@ -172,6 +172,7 @@ process.argv.forEach(function (val, index, array) {
       featureEnabled.noserver = true;
     break;
     case '-deploy':
+    case '-d':
       arg = val;
       featureEnabled.deploy = true;
     break;

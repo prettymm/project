@@ -4,9 +4,15 @@ var path = require('path')
 , app = require('../gulpfile')
 , fs = require('fs')
 , http = require('http')
-, https = require('https');
+, https = require('https')
+, args = {};
 
-app.init();
+process.argv.forEach(function (val, index, array) {
+  args[val] = val;
+});
+
+app.init(args);
+
 var credentials = {
     key: fs.readFileSync(path.join(__dirname, 'server.key'), 'utf8'),
     cert: fs.readFileSync(path.join(__dirname, 'server.crt'), 'utf8'),
@@ -14,7 +20,7 @@ var credentials = {
     rejectUnauthorized: false
 };
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || app.config.port);
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);

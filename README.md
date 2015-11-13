@@ -46,7 +46,7 @@ gulp # defaults with port 5000
 Options
 -------------
 There are some options that can be enabled when running `gulp`:  
-- `-lr`   # to enable live reloading with browser-sync
+- `-lr`   # to enable live reloading with browser-sync  
 - `-img`  # enable `gulp-imagemin`; The source images will then be loaded from the directory `src\img`. So make sure you have created that directory if you enable this option.  
 - `-maps` # enable sourcemaps  
 - `-wall` # watch all altered files, including deleted and new; slower than standard `gulp.watch`  

@@ -40,7 +40,7 @@ Run
 ```
 cd $new-project-name
 
-gulp # defaults with port 3000
+gulp # defaults with port 5000
 ```
 
 Options
@@ -50,7 +50,7 @@ There are some options that can be enabled when running `gulp`:
 - `-img`  # enable `gulp-imagemin`; The source images will then be loaded from the directory `src\img`. So make sure you have created that directory if you enable this option.  
 - `-maps` # enable sourcemaps  
 - `-wall` # watch all altered files, including deleted and new; slower than standard `gulp.watch`  
-- `-port=#` # change the server port #; default is 3000  
+- `-port=#` # change the server port #; default is 5000    
 - `-deploy` # app js will not be minified by default, add this option for production/live env  
 - `-js`   # Use this option if you prefer coding with classic JS (src/js) instead of CoffeeScript, default is CoffeeScript (src/coffee)
 

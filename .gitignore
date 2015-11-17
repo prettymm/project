@@ -1,4 +1,4 @@
-.DS_Store
+*.DS_Store
 .DS_Store?
 .DS_Store/*
 ._*
@@ -17,4 +17,10 @@ deploy.sh
 deploy
 deploy?
 deploy/*
+bb-static
+bb-static/*
 npm-debug.log*
+
+*.mp4
+*.pdf
+*.mov

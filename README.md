@@ -67,8 +67,8 @@ You can deploy this to http://loweproferotech.bitbucket.org/bb-felab/ by running
 ```
 npm run deploy
 ```
-You must set up deploy.sh from the https://bitbucket.org/loweproferotech/loweproferotech.bitbucket.org repo.  
-Change vars in deploy.sh to:
+You must set up (_)deploy.sh from the https://bitbucket.org/loweproferotech/loweproferotech.bitbucket.org repo.  
+If you downloaded _deploy.sh, change vars to:
 ```
 projectName=bb-felab
 repo=https://{username}@bitbucket.org/loweproferotech/loweproferotech.bitbucket.org.git

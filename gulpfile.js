@@ -28,6 +28,7 @@ stylish = require('jshint-stylish'),
 jade = require('gulp-jade'),
 gutil = require('gulp-util'),
 watch = require('node-watch'),
+insert = require('gulp-insert'),
 exec = require('child_process').exec,
 changedFile = null,
 featureEnabled = {},
@@ -39,6 +40,7 @@ defaultTasks = ['server', 'jade', 'locale', 'watch-vendor'],
 spawn = require('child_process').spawn,
 run = require('run-sequence'),
 kouto = require('kouto-swiss'),
+packageJson = require('./package.json'),
 nib = require('nib');
 featureEnabled.lr = '';
 featureEnabled.style = 'stylint';
@@ -60,7 +62,8 @@ var config = {
   host: 'http://127.0.0.1:5000',
   deployHost: '//host.proferochina.com',
   port: 5000,
-  name: 'FELab'
+  name: 'FELab',
+  header: '/* (c) '+packageJson.name+' v'+packageJson.version+' '+new Date()+' */'
 };
 
 var generateStyleguide = function() {
@@ -213,6 +216,7 @@ gulp.task('stylus', function() {
       compress: true
     }))
     .on('error', gutil.log)
+    .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
     .pipe(gulp.dest(paths.css));
 });
 
@@ -312,6 +316,8 @@ gulp.task('coffee', function() {
       .pipe(coffee({ bare: true }).on('error', gutil.log))
       .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
       .pipe(concat(config.jsFile))
+      .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
+      .pipe(toggle(insert.append, featureEnabled.deploy, {params: '\n})();', name: 'deploy - wrap append'}))
     .pipe(toggle(sourcemaps.write, featureEnabled.maps, {params: '../maps', name: 'source maps'}))
     .pipe(gulp.dest(paths.buildJs));
 });

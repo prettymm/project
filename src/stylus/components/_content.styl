@@ -12,20 +12,26 @@
 .c-content
   width 100%
   text-align center
+  background-color $dark-grey
+  color white
   .bar
-    padding $site-padding
-    min-height 80px
-    background-color $dark-grey
-    color white
+    padding ($site-padding - 10) 0
+    min-height 60px
+    background-color white
+    color black
     h1 
-      font-size 20px
+      font-size 30px
+      padding 10px
+      background-color $dark-grey
+      color white
   .screen
     background-color $profero-yellow
+    color black
     padding $site-padding
     padding-top $site-padding * 2
     min-height $site-padding * 7
     h1
-      font-size 60px
+      font-size 60px 
     h3
       background-color $dark-grey
       padding $site-padding - 10
@@ -37,6 +43,7 @@
   .details
     width 70%
     margin auto
+    color white
   .item
     display inline-block
     vertical-align top
@@ -49,3 +56,10 @@
       margin-bottom $site-padding - 10
     p 
       line-height 20px
+    a 
+      color white
+      text-decoration none
+      &:hover
+        text-decoration underline
+    li 
+      padding 5px 0

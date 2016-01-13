@@ -29,9 +29,10 @@ Install
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp styledown uglifyjs stylint nodemon
+npm install -g gulp styledown uglifyjs stylint
 cd $new-project-name
 npm install
+npm install nodemon@1.3.7
 ```
 
 Run
@@ -48,8 +49,7 @@ Options
 There are some options that can be enabled when running `gulp`:  
 - `-lr`   # to enable live reloading with browser-sync  
 - `-img`  # enable `gulp-imagemin`; The source images will then be loaded from the directory `src\img`. So make sure you have created that directory if you enable this option.  
-- `-maps` # enable sourcemaps  
-- `-wall` # watch all altered files, including deleted and new; slower than standard `gulp.watch`  
+- `-maps` # enable sourcemaps    
 - `-port=#` # change the server port #; default is 5000    
 - `-deploy` # app js will not be minified by default, add this option for production/live env  
 - `-js`   # Use this option if you prefer coding with classic JS (src/js) instead of CoffeeScript, default is CoffeeScript (src/coffee)

@@ -1,6 +1,13 @@
 include ../mixins/_helper
+
+- paths.root = './'
+- modifyPath = function(path) {return path.replace(config.build, paths.root); }
+- paths.img = modifyPath(paths.img)
+- paths.js = modifyPath(paths.js)
+- paths.js = modifyPath(paths.css)
+
 head
-  title: +stripTags(appName)
+  title=stripTags(app.name)
   meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
   meta(charset='utf-8')
   meta(name='description', content=appDescription)

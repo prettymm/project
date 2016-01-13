@@ -1,16 +1,20 @@
 extends partials/_template
 block content
-  div.c-content
-    div.bar
-      img(src="assets/img/logo-160.png", alt=appName, width="100")
+  .c-content
+    section.bar(aria-label='Company')
+      img(src=paths.img + 'logo-160.png', alt=stripTags(app.name), width='110')
       br
-      h1.name!=appName
-    div.screen
-      h1=titleStarterKit
-      h2=slogan
-      h3=forDetails
-    div.details
-      each feature in features
-        div.item
-          h1=feature.title
-          p=feature.detail
+      h1.name!=app.name
+    .c-main(role='main')
+      section.screen(aria-label='Introduction') 
+        h1=titleStarterKit
+        h2=slogan
+        h3=forDetails
+      section.details(aria-label='Details')
+        each feature in features
+          .item
+            h1!=feature.title
+            p=feature.detail
+  .c-footer
+    .copyright(role='contentinfo')
+      p!=app.copyright

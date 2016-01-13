@@ -1,6 +1,6 @@
 /**
   @name FE Starter Kit
-  @company Lowe Profero Beijing
+  @company MullenLowe Profero Beijing
   @author Lisa-Ann Bruney <lisa-ann.bruney@loweprofero.com>
 
   If this file is edited to add additional tools, 
@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 153
+  Additional tools should be added as an option, as seen below beginning at ln 162
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -17,6 +17,7 @@ app = express(),
 server = null,
 bs = null,
 logger = require('morgan'),
+fs = require('fs'),
 path = require('path'),
 gulp = require('gulp'),
 coffee = require('gulp-coffee'),
@@ -36,7 +37,7 @@ inputArguments = [],
 through = require('through2'),
 imagemin = null,
 sourcemaps = require('gulp-sourcemaps'),
-defaultTasks = ['server', 'jade', 'locale', 'watch-vendor'],
+defaultTasks = ['server', 'locale', 'watch-vendor', 'watch-all'],
 spawn = require('child_process').spawn,
 run = require('run-sequence'),
 kouto = require('kouto-swiss'),
@@ -54,15 +55,19 @@ var merge = function(object1, object2) {
 
 var config = {
   styleguide: 'styleguide.html',
+  home: 'index.html',
+  firstPage: '404.html',
+  busy: './bin/busy.json',
   language: 'en',
   build: './build/',
   jsFile: 'app.min.js',
+  root: './',
   src: './src/',
   jsLang: 'coffee',
   host: 'http://127.0.0.1:5000',
   deployHost: '//host.proferochina.com',
   port: 5000,
-  name: 'FELab',
+  name: packageJson.name,
   header: '/* (c) '+packageJson.name+' v'+packageJson.version+' '+new Date()+' */'
 };
 
@@ -84,15 +89,16 @@ var toggle = function(feature, featureEnabled, args) {
 
 var paths = {
   build: config.build,
+  static: config.build + 'assets/',
   buildJs: config.build + 'assets/js/',
-  img: config.build + 'assets/img',
+  img: config.build + 'assets/img/',
   css: config.build + 'assets/css/',
   js: config.src + 'js/',
   vendorJs: config.src + 'vendor/js/',
   coffee: config.src + 'coffee/',
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: config.src + 'js/_*.js',
-  srcCoffee: config.src + 'coffee/**/_*.coffee',
+  srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
   srcJade: config.src + 'jade/*.jade',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
@@ -112,13 +118,16 @@ var generalCallback = function(error, stdout, stderr) {
   if (error) {
     gutil.log(gutil.colors.red('exec error: ' + error));
   }
-  if (changedFile != config.styleguide) {
+  if (changedFile != config.styleguide && defaultTasks.indexOf('stylint') > -1) {
     generateStyleguide(); 
   }
 
 };
 
-var locals = merge(config, require(paths.locale));
+var getLocals = function() {
+  var locals = merge({'config': config}, require(paths.locale));
+  return merge({'paths': paths}, locals);
+};
 
 var getPage = function(req){
   if (req.params[0].indexOf('home/') != -1) {
@@ -176,14 +185,12 @@ process.argv.forEach(function (val, index, array) {
       arg = val; 
       featureEnabled.maps = true;
     break;
-    case '-wall':
-      arg = val; 
-      defaultTasks.push('watch-all')
-      featureEnabled.simpleWatch = false;
-    break;
     case '-con':
       arg = val;
       featureEnabled.noserver = true;
+    break;
+    case '-f':
+      config.singleJade = true;
     break;
     case '-deploy':
     case '-d':
@@ -196,8 +203,6 @@ process.argv.forEach(function (val, index, array) {
         config.port = parseInt(val.split('=')[1]);
     break;
   }
-  if (index == process.argv.length - 1 && featureEnabled.simpleWatch)
-    defaultTasks.push('watch-simple')
   if (index >= 2)
     inputArguments.push(arg);
 });
@@ -231,18 +236,44 @@ gulp.task('stylint', function() {
 });
 
 gulp.task('jade', function() {
-  gulp.src(paths.srcJade)
+  var _path = config._jadePath || paths.srcJade,
+  file = process.argv[3];
+  _path = config.singleJade ? config.jade + file.split('=')[1] : _path;
+  gutil.log(gutil.colors.yellow(_path));
+  config._jadePath = _path;
+  gulp.src(_path)
     .pipe(jade({
-      locals: locals,
+      locals: getLocals(),
       pretty: true
     }))
     .on('error', gutil.log)
     .pipe(gulp.dest(paths.build));
 });
 
-var reload = function() {
+var unsetBusy = function() {
+  setBusy('0');
+};
+
+var setBusy = function(busy) {
+  fs.writeFile(config.busy, '{ "busy": "'+busy+'"}', function (err) {
+    if (err)
+      gutil.log(gutil.colors.red(err));
+  });
+};
+
+var getBusy = function() {
+  return require(config.busy).busy;
+};
+
+var reload = function(file) {
+  if (file.indexOf('/'+config.firstPage) > -1) {
+    bs.reload(paths.build+config.home);
+  }
   setTimeout(function() {
-    bs.reload(['*.css', '*.js', '*.html']);
+    if (bs && (getBusy() == '0')) {
+      bs.reload(['*.css', '*.js']);
+    }
+    config._jadePath = null;
   }, 2000);
 };
 
@@ -251,11 +282,11 @@ var initServer = function(ops) {
   if (ops.lr && !bs) {
     bs = require('browser-sync')({
       logPrefix: config.name,
+      logSnippet: false,
       port: 8080
     });
     app.use(require('connect-browser-sync')(bs));
-    bs.watch(config.build + '**').on('change', reload);
-    bs.reload();
+    bs.watch(paths.build + '**').on('change', reload);
   }
 
   app.use(logger('dev'));
@@ -264,7 +295,7 @@ var initServer = function(ops) {
   app.set('view engine', 'jade');
   var render = function(req, res) {
     var page = getPage(req),
-    data = merge({page: page}, locals);
+    data = merge({page: page}, getLocals());
     res.render(page, data);
   };
   app.get('/*', function (req, res) {
@@ -298,13 +329,13 @@ gulp.task('server', function(cb) {
     config.port = process.env.PORT || config.port;
 
     var portOps = 'PORT=' + config.port, ls = null,
-    spawnOps = [portOps, 'nodemon', './bin/www', '--ignore', 'build/', '--ignore', 'node_modules', featureEnabled.lr];
+    spawnOps = [portOps, './node_modules/.bin/nodemon', './bin/www', '--ignore', 'build/', '--ignore', 'node_modules',  '--ignore', 'src/', featureEnabled.lr];
 
     if (config.port == 80) {
       ls = spawn('sudo', spawnOps);
     } else {
       process.env.PORT = config.port;
-      ls = spawn('nodemon', spawnOps.slice(2));
+      ls = spawn('./node_modules/.bin/nodemon', spawnOps.slice(2));
     }
     stream(ls);
   }
@@ -345,32 +376,34 @@ gulp.task('vendor-js', function() {
 gulp.task('watch-vendor', function() {
   watch(paths.vendorJs, function(file) {
     changedFile = file;
-    run('vendor-js');
+    unsetBusy();
+    gulp.start('vendor-js');
   });
-});
-
-gulp.task('watch-simple', function() {
-  gutil.log(gutil.colors.yellow('Standard gulp.watch does not watch new and deleted files. Start gulp with -wall to watch all.'));
-  gulp.watch(paths.jade + '**/*', ['jade']);
-  gulp.watch(paths[config.jsLang] + '**/*', [config.jsLang]);
-  gulp.watch(paths.styles + '**/*', [featureEnabled.style]);
 });
 
 gulp.task('watch-all', function() {
   watch(paths.jade, function(file) {
     printChanged(file);
-    ls = spawn('gulp', ['jade']);
-    stream(ls);
+    
+    if ((file.match(/\//g) || []).length >= 3) {
+      setBusy("1");
+      gutil.log(gutil.colors.blue('Partial file...'));
+    }
+    else {
+      unsetBusy();
+      config._jadePath = config.root + file;
+    }
+    gulp.start('jade');
   });
   watch(paths.styles, function(file) {
     printChanged(file);
-    ls = spawn('gulp', [featureEnabled.style]);
-    stream(ls);
+    unsetBusy();
+    gulp.start([featureEnabled.style]);
   });
   watch(paths[config.jsLang], function(file) {
     changedFile = file;
-    ls = spawn('gulp', [config.jsLang]);
-    stream(ls);
+    unsetBusy();
+    gulp.start([config.jsLang]);
   });
 });
 
@@ -383,6 +416,8 @@ gulp.task('locale', function() {
 });
 
 gulp.task('default', defaultTasks);
+
+unsetBusy();
 
 app.init = initServer;
 module.exports = app;

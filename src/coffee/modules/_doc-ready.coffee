@@ -8,5 +8,4 @@ $(document).ready ->
     console.log "testFunction"
     return true
 
-  $('[data-js-plugin-name]').each ->
-    $(@).PluginName()
+  $('[data-js-plugin-name]').PluginName()

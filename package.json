@@ -1,7 +1,7 @@
 {
   "name": "FELab",
-  "FELab-version": "3.0.0",
-  "version": "3.0.0",
+  "FELab-version": "3.0.1",
+  "version": "3.0.1x",
   "private": true,
   "scripts": {
     "start": "gulp -lr",

@@ -4,7 +4,7 @@ include ../mixins/_helper
 - modifyPath = function(path) {return path.replace(config.build, paths.root); }
 - paths.img = modifyPath(paths.img)
 - paths.js = modifyPath(paths.js)
-- paths.js = modifyPath(paths.css)
+- paths.css = modifyPath(paths.css)
 
 head
   title=stripTags(app.name)
@@ -13,9 +13,9 @@ head
   meta(name='description', content=appDescription)
   meta(name='keywords', content=appKeywords)
   <!--[if (gt IE 8)]><!-->
-  link(rel='stylesheet', href='./assets/css/app.css')
+  link(rel='stylesheet', href=paths.css + 'app.css')
   <!--<![endif]-->
   <!--[if (lte IE 8)]>
-  link(rel='stylesheet', href='./assets/css/app-ie.css')
+  link(rel='stylesheet', href=paths.css + 'app-ie.css')
   <![endif]--> 
-  link(rel='shortcut icon' href='./assets/img/favicon.ico' type='image/ico')
+  link(rel='shortcut icon' href=paths.img + 'favicon.ico' type='image/ico')

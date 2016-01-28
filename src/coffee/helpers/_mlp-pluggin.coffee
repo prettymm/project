@@ -1,11 +1,11 @@
 $.mlpFnName = (fn) ->
   fn.name || (fn + '').split(/\s|\(/)[1]
 
-$.mlpInit = (fn, set = true) ->
+$.mlpInit = (fn, name, set = true) ->
   window.MLP = window.MLP || {}
   window.MLP.apps = window.MLP.apps || {}
   if fn && set
-    name = $.mlpFnName(fn)
+    name = name || $.mlpFnName(fn)
     window.MLP.apps[name] = fn
   else 
     window.MLP.apps[fn]
@@ -109,4 +109,4 @@ class MLPModule
     bowser.msie && bowser.version == version
 
 ## Add plugin to window namespace.
-$.mlpInit(MLPModule)
+$.mlpInit(MLPModule, 'MLPModule')

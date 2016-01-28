@@ -16,6 +16,7 @@ var express = require('express'),
 app = express(),
 server = null,
 bs = null,
+locals = {},
 logger = require('morgan'),
 fs = require('fs'),
 path = require('path'),
@@ -125,7 +126,7 @@ var generalCallback = function(error, stdout, stderr) {
 };
 
 var getLocals = function() {
-  var locals = merge({'config': config}, require(paths.locale));
+  locals = merge({'config': config}, require(paths.locale));
   return merge({'paths': paths}, locals);
 };
 

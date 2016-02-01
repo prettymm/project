@@ -60,7 +60,7 @@ var config = {
   firstPage: '404.html',
   busy: './bin/busy.json',
   language: 'en',
-  build: './build/',
+  build: __dirname + '/build/',
   jsFile: 'app.min.js',
   root: './',
   src: './src/',

@@ -1,10 +1,6 @@
 include ../mixins/_helper
 
-- paths.root = './'
-- modifyPath = function(path) {return path.replace(config.build, paths.root); }
-- paths.img = modifyPath(paths.img)
-- paths.js = modifyPath(paths.js)
-- paths.css = modifyPath(paths.css)
+include _config
 
 head
   title=stripTags(app.name)

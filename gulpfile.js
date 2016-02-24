@@ -32,6 +32,7 @@ gutil = require('gulp-util'),
 watch = require('node-watch'),
 insert = require('gulp-insert'),
 exec = require('child_process').exec,
+rename = require('gulp-rename'),
 changedFile = null,
 featureEnabled = {},
 inputArguments = [],
@@ -55,6 +56,7 @@ var merge = function(object1, object2) {
 };
 
 var config = {
+  moduleTag: '__',
   styleguide: 'styleguide.html',
   home: 'index.html',
   firstPage: '404.html',
@@ -100,11 +102,11 @@ var paths = {
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: config.src + 'js/_*.js',
   srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
-  srcJade: config.src + 'jade/*.jade',
+  srcJade: config.src + 'jade/pages/**/*.jade',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
   locale: config.src + 'locale/'+ config.language +'.json',
-  jade: config.src + 'jade/',
+  jade: config.src + 'jade/'
 };
 
 var printChanged = function(changedFile) {
@@ -236,20 +238,64 @@ gulp.task('stylint', function() {
   stream(ls, 'stylus-success');
 });
 
-gulp.task('jade', function() {
+/* Jade */
+
+var jadePathIsSet = function(path) {
+  var pos = path.indexOf(config.moduleTag),
+  tagLength = config.moduleTag.length;
+  if (pos > -1) {
+    var pos2 = path.indexOf(config.moduleTag, (pos+tagLength)),
+    start = pos + tagLength;
+    if (pos2 > -1)
+      return path.substr(start, pos2 - start);
+    else 
+      return false;
+
+  } else {
+    return false;
+  }
+};
+
+var getJadePath = function() {
   var _path = config._jadePath || paths.srcJade,
   file = process.argv[3];
-  _path = config.singleJade ? config.jade + file.split('=')[1] : _path;
+  _path = config.singleJade ? paths.jade + 'pages/' + file.split('=')[1] : _path;
   gutil.log(gutil.colors.yellow(_path));
   config._jadePath = _path;
+  return _path;
+};
+
+gulp.task('jade', function() {
+  
+  var _path = getJadePath(),
+  _build = paths.build,
+  _root =  config.root,
+  _locals = getLocals(),
+  folderName = jadePathIsSet(_path);
+
+  if (folderName) {
+    _build += folderName + '/';
+    _root = config.root2;
+    ls = spawn('mkdir', ['-p', _build]);
+    stream(ls);
+  }
+
   gulp.src(_path)
     .pipe(jade({
-      locals: getLocals(),
+      locals: merge({_root: _root}, locals),
       pretty: true
     }))
     .on('error', gutil.log)
-    .pipe(gulp.dest(paths.build));
+    .pipe(rename(function (path) {
+      var fn = jadePathIsSet(path.dirname);
+      if (fn) {
+        path.dirname = fn;
+      }
+    }))
+    .pipe(gulp.dest(_build));
 });
+
+/* End Jade */
 
 var unsetBusy = function() {
   setBusy('0');
@@ -278,25 +324,28 @@ var reload = function(file) {
   }, 2000);
 };
 
-var initServer = function(ops) {
+var initServerBase = function(ops) {
   ops = ops || featureEnabled;
   if (ops.lr && !bs) {
     bs = require('browser-sync')({
       logPrefix: config.name,
       logSnippet: false,
       port: 8080
-    });
+    }); 
     app.use(require('connect-browser-sync')(bs));
     bs.watch(paths.build + '**').on('change', reload);
+    bs.reload();
   }
 
   app.use(logger('dev'));
   app.use(express.static(__dirname + '/build/'));
-  app.set('views', path.join(__dirname, paths.jade));
+  app.set('views', path.join(__dirname, paths.jade + 'pages/'));
   app.set('view engine', 'jade');
   var render = function(req, res) {
     var page = getPage(req),
-    data = merge({page: page}, getLocals());
+    _locals = getLocals(),
+    _root = jadePathIsSet(page) ? config.root2 : config.root;
+    var data = merge({page: page, _root: _root}, _locals);
     res.render(page, data);
   };
   app.get('/*', function (req, res) {
@@ -314,15 +363,15 @@ var initServer = function(ops) {
   });
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('index', merge(config, {
+    res.render('index', merge(getLocals(), {
         message: err.message,
-        error: err
+        error: err,
+        _root: jadePathIsSet(req.baseUrl) ? config.root2 : config.root
     }));
   });
 };
 
 gulp.task('server', function(cb) {
-  initServer();
 
   if (!featureEnabled.noserver) {
 
@@ -339,7 +388,10 @@ gulp.task('server', function(cb) {
       ls = spawn('./node_modules/.bin/nodemon', spawnOps.slice(2));
     }
     stream(ls);
+  } else {
+    initServerBase();
   }
+
 });
 
 gulp.task('coffee', function() {
@@ -386,8 +438,12 @@ gulp.task('watch-all', function() {
   watch(paths.jade, function(file) {
     printChanged(file);
     
-    if ((file.match(/\//g) || []).length >= 3) {
+    if (((file.match(/\//g) || []).length >= 3)) {
       setBusy("1");
+      var folderName = jadePathIsSet(file);
+      if (folderName) {
+        config._jadePath = paths.jade + 'pages/'+config.moduleTag+ folderName +config.moduleTag+'/*.jade';
+      }
       gutil.log(gutil.colors.blue('Partial file...'));
     }
     else {
@@ -420,5 +476,5 @@ gulp.task('default', defaultTasks);
 
 unsetBusy();
 
-app.init = initServer;
+app.init = initServerBase;
 module.exports = app;

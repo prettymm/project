@@ -52,7 +52,7 @@ There are some options that can be enabled when running `gulp`:
 - `-maps` # enable sourcemaps    
 - `-port=#` # change the server port #; default is 5000    
 - `-deploy` # app js will not be minified by default, add this option for production/live env  
-- `-js`   # Use this option if you prefer coding with classic JS (src/js) instead of CoffeeScript, default is CoffeeScript (src/coffee)
+- `-js`   # Use this option if you are importing an old project for which classic JS (src/js) is used instead of CoffeeScript. For the sake of organisation, a project cannot use both JS and CoffeeScript. If this is a new project, please only use CoffeeScript (src/coffee).
 
 Examples
 ```

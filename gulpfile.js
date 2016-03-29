@@ -100,7 +100,7 @@ var paths = {
   vendorJs: config.src + 'vendor/js/',
   coffee: config.src + 'coffee/',
   srcStylus: config.src + 'stylus/app*.styl',
-  srcJs: config.src + 'js/_*.js',
+  srcJs: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
   srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
   srcJade: config.src + 'jade/pages/**/*.jade',
   srcImg: config.src + 'img/*',
@@ -415,10 +415,12 @@ gulp.task('js', function() {
       globals: ['$']
     }))
     .pipe(jshint.reporter(stylish))
-    .pipe(jshint.reporter('fail'))
+    // .pipe(jshint.reporter('fail'))
     .on('error', gutil.log)
     .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
     .pipe(concat(config.jsFile))
+    .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
+    .pipe(toggle(insert.append, featureEnabled.deploy, {params: '\n})();', name: 'deploy - wrap append'}))
     .pipe(gulp.dest(paths.buildJs));
 });
 

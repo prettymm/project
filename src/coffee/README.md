@@ -10,7 +10,7 @@ Instructions
 a(data-js-plugin-name).btn-next
 
 // coffee
-$('[data-js-plugin-name]').trigger 'click'
+$('[data-js-plugin-name]').click()
 ```
 - Long functions should be split into bite sizes
 

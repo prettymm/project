@@ -15,4 +15,4 @@ class PluginName extends MLP.apps.MLPModule
   print: (echo) ->
     console.log(@ops.property + ': ' + echo)
 
-$.mlpPluggin(PluginName, 'PluginName')
+$.mlpPlugin(PluginName, 'PluginName')

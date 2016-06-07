@@ -31,4 +31,4 @@ PluginName = (function() {
   return PluginName;
 
 })();
-$.mlpPluggin(PluginName, 'PluginName');
+$.mlpPlugin(PluginName, 'PluginName');

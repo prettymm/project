@@ -17,7 +17,7 @@ $.mlpInit = function(fn, set) {
   }
 };
  
-$.mlpPluggin = function(fn, name, bypass, elPluggin) {
+$.mlpPlugin = function(fn, name, bypass, elPluggin) {
   var obj;
   if (bypass === null) {
     bypass = false;

@@ -4,17 +4,17 @@
  * 
  *     @example
  *     div.c-content
- *      div.bar
+ *      div.c-content__bar
  *       h1 Title
- *      div.screen
+ *      div.c-content__screen
  */
  
 .c-content
   width 100%
   text-align center
-  background-color $dark-grey
+  background-color $col-dark-grey
   color white
-  .bar
+  &__bar
     padding ($site-padding - 10) 0
     min-height 60px
     background-color white
@@ -22,10 +22,10 @@
     h1 
       font-size 30px
       padding 10px
-      background-color $dark-grey
+      background-color $col-dark-grey
       color white
-  .screen
-    background-color $profero-yellow
+  &__screen
+    background-color $col-profero-yellow
     color black
     padding $site-padding
     padding-top $site-padding * 2
@@ -33,18 +33,18 @@
     h1
       font-size 60px 
     h3
-      background-color $dark-grey
+      background-color $col-dark-grey
       padding $site-padding - 10
       color white
       max-width 500px
       margin auto
       margin-top $site-padding
       display block
-  .details
+  &__details
     width 70%
     margin auto
     color white
-  .item
+  &__item
     display inline-block
     vertical-align top
     margin $site-padding

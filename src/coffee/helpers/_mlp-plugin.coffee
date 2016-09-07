@@ -44,7 +44,7 @@ class MLPModule
 
   init: ->
     @classes =
-      active: 'active'
+      active: 'is-active'
       offscreen: 'l-offscreen'
 
     @keys =

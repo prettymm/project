@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 162
+  Additional tools should be added as an option, as seen below beginning at ln 169
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/

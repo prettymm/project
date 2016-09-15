@@ -55,7 +55,7 @@ BEM
 // 4. _ : A hack... Should not be repeated or re-used
 //--------------------------------------------------
 // ._<namespace>hack-name
-// ._m-footer-mobile
+// ._c-footer-mobile
 
 // 5. js- : The element has some JavaScript behaviour applied to it. Not used for styling.
 //--------------------------------------------------

@@ -21,6 +21,7 @@ logger = require('morgan'),
 fs = require('fs'),
 path = require('path'),
 gulp = require('gulp'),
+babel = require('gulp-babel'),
 coffee = require('gulp-coffee'),
 concat = require('gulp-concat'),
 uglify = require('gulp-uglify'),
@@ -408,19 +409,26 @@ gulp.task('coffee', function() {
 
 gulp.task('js', function() {
   return gulp.src(paths.srcJs)
+    .pipe(toggle(sourcemaps.init, featureEnabled.maps))
     .pipe(jshint({ 
       unused: true, 
-      camelcase: true, 
+      camelcase: true,
+      esnext: true,
       indent: 2, 
       globals: ['$']
     }))
     .pipe(jshint.reporter(stylish))
     // .pipe(jshint.reporter('fail'))
     .on('error', gutil.log)
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .on('error', gutil.log)
     .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
     .pipe(concat(config.jsFile))
     .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
     .pipe(toggle(insert.append, featureEnabled.deploy, {params: '\n})();', name: 'deploy - wrap append'}))
+    .pipe(toggle(sourcemaps.write, featureEnabled.maps, {params: '../maps', name: 'source maps'}))
     .pipe(gulp.dest(paths.buildJs));
 });
 

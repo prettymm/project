@@ -6,29 +6,21 @@
 # $('[data-js-plugin-name]').PluginName('print', 'Hello, world');
 */
 
-var PluginName;
-PluginName = (function() {
-  PluginName.prototype.defaults = {
-    property: 'foo'
-  };
+class PluginName extends MLP.apps.MLPModule {
 
-  function PluginName(element, options) {
-    this.ops = $.extend({}, this.defaults, options);
-    this.el = $(element);
-    this.init();
+  defaults() {
+    this.defaults = {
+      property: 'foo'
+    };
   }
 
-  PluginName.prototype.init = function() {
-    return this.el.click(function() {
-      return false;
-    });
-  };
+  init() {
+    super.init();
+    return this.el.click(() => false);
+  }
 
-  PluginName.prototype.print = function(echo) {
-    return console.log(this.ops.property + ': ' + echo);
-  };
-
-  return PluginName;
-
-})();
+  print(echo) {
+    return console.log(`${this.ops.property}: ${echo}`);
+  }
+}
 $.mlpPlugin(PluginName, 'PluginName');

@@ -25,6 +25,7 @@
     "gulp-insert": "^0.5.0",
     "gulp-jade": "^1.0.1",
     "gulp-jshint-classic": "1.5.1",
+    "gulp-pug": "^3.0.4",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-stylus": "^2.0.2",

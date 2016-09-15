@@ -28,7 +28,7 @@ uglify = require('gulp-uglify'),
 stylus = require('gulp-stylus'),
 jshint = require('gulp-jshint-classic'),
 stylish = require('jshint-stylish'),
-jade = require('gulp-jade'),
+jade = require('gulp-pug'),
 gutil = require('gulp-util'),
 watch = require('node-watch'),
 insert = require('gulp-insert'),
@@ -57,7 +57,8 @@ var merge = function(object1, object2) {
 };
 
 var config = {
-  moduleTag: '__',
+  dirPrefix: '__',
+  dirSuffix: '__',
   styleguide: 'styleguide.html',
   home: 'index.html',
   firstPage: '404.html',
@@ -66,6 +67,7 @@ var config = {
   build: __dirname + '/build/',
   jsFile: 'app.min.js',
   root: './',
+  root2: '/',
   src: './src/',
   jsLang: 'coffee',
   host: 'http://127.0.0.1:5000',
@@ -93,6 +95,7 @@ var toggle = function(feature, featureEnabled, args) {
 
 var paths = {
   build: config.build,
+  pages: 'pages/',
   static: config.build + 'assets/',
   buildJs: config.build + 'assets/js/',
   img: config.build + 'assets/img/',
@@ -103,11 +106,11 @@ var paths = {
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
   srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
-  srcJade: config.src + 'jade/pages/**/*.jade',
+  srcJade: config.src + 'pug/pages/**/*.pug',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
   locale: config.src + 'locale/'+ config.language +'.json',
-  jade: config.src + 'jade/'
+  jade: config.src + 'pug/'
 };
 
 var printChanged = function(changedFile) {
@@ -242,10 +245,10 @@ gulp.task('stylint', function() {
 /* Jade */
 
 var jadePathIsSet = function(path) {
-  var pos = path.indexOf(config.moduleTag),
-  tagLength = config.moduleTag.length;
+  var pos = path.indexOf(config.dirPrefix),
+  tagLength = config.dirPrefix.length;
   if (pos > -1) {
-    var pos2 = path.indexOf(config.moduleTag, (pos+tagLength)),
+    var pos2 = path.indexOf(config.dirSuffix, (pos+tagLength)),
     start = pos + tagLength;
     if (pos2 > -1)
       return path.substr(start, pos2 - start);
@@ -260,13 +263,29 @@ var jadePathIsSet = function(path) {
 var getJadePath = function() {
   var _path = config._jadePath || paths.srcJade,
   file = process.argv[3];
-  _path = config.singleJade ? paths.jade + 'pages/' + file.split('=')[1] : _path;
+  _path = config.singleJade ? paths.jade + paths.pages + file.split('=')[1] : _path;
   gutil.log(gutil.colors.yellow(_path));
   config._jadePath = _path;
   return _path;
 };
 
-gulp.task('jade', function() {
+function getDirectories(srcpath) {
+  return fs.readdirSync(srcpath).filter(function(file) {
+    return fs.statSync(path.join(srcpath, file)).isDirectory();
+  });
+}
+
+gulp.task("jade", function() {
+  var file = process.argv[3],
+  dir = file ? file.split('=')[1]+'/' : 'sections/',
+  list = getDirectories(paths.jade + paths.pages + dir);
+  for(var i=0; i < list.length; i++) {
+    var ls = spawn('gulp', ['jade-one', '-f='+dir+list[i]+'/*.jade']);
+    stream(ls);
+  }
+});
+
+gulp.task('jade-one', function() {
   
   var _path = getJadePath(),
   _build = paths.build,
@@ -339,8 +358,8 @@ var initServerBase = function(ops) {
   }
 
   app.use(logger('dev'));
-  app.use(express.static(__dirname + '/build/'));
-  app.set('views', path.join(__dirname, paths.jade + 'pages/'));
+  app.use(express.static(paths.build));
+  app.set('views', path.join(__dirname, paths.jade + paths.pages));
   app.set('view engine', 'jade');
   var render = function(req, res) {
     var page = getPage(req),
@@ -447,20 +466,24 @@ gulp.task('watch-vendor', function() {
 gulp.task('watch-all', function() {
   watch(paths.jade, function(file) {
     printChanged(file);
-    
+    var task = 'jade';
+
     if (((file.match(/\//g) || []).length >= 3)) {
       setBusy("1");
       var folderName = jadePathIsSet(file);
       if (folderName) {
-        config._jadePath = paths.jade + 'pages/'+config.moduleTag+ folderName +config.moduleTag+'/*.jade';
+        task = 'jade-one'; 
+        config._jadePath = paths.jade + paths.pages + config.dirPrefix + folderName + config.dirSuffix + '/*.jade';
+      } else {
+        gutil.log(gutil.colors.blue('Partial file...'));
       }
-      gutil.log(gutil.colors.blue('Partial file...'));
+      
     }
     else {
       unsetBusy();
       config._jadePath = config.root + file;
     }
-    gulp.start('jade');
+    gulp.start(task);
   });
   watch(paths.styles, function(file) {
     printChanged(file);

@@ -99,15 +99,15 @@ Git Standards
 Coding Standards
 --------------
 - Before you do anything else, please make sure you have read this document: [Design Pattern Overview](https://loweproferotech.atlassian.net/wiki/display/IL/Design+Pattern+Overview)  
-- Use BEM for Stylus. 
+- Use BEM for Stylus  
 - 2 spaces as a tab for JS, CSS, CoffeeScript, Stylus, Jade  
 - camelCase JS variable/function names  
-- Utilize the DRY principle in your code; do not repeat the same code in multiple areas; use stylus & jade mixins, JS functions etc to key code dry
+- Utilize the DRY principle in your code; do not repeat the same code in multiple areas; use stylus & jade mixins, JS functions etc to keep code dry  
 - CSS class/id names with dashed format: eg. .c-carousel, .icon-logo, #unique-element
-- If the project must be ADA compliant, make sure that you set up landmarks from the very start
-- Do NOT use browserify and shim in the project. See vendor/README.md for details.
-- Stylus files need to be documented so that the style guide can be automatically generated.  
-- !!IMPORTANT!! Markup should be built in modules and CSS classes should reflect the start of a module. Consider the following markup, notice that every area where a new module is, it is very distinct. Modules are clearly prefixed with `.c-`. 
+- If the project must be ADA compliant, make sure that you set up landmarks from the very start    
+- Do NOT use browserify and shim in the project. See vendor/README.md for details  
+- Stylus files need to be documented so that the style guide can be automatically generated   
+- Build reusable blocks and utilities; keep the markup meaningful  
 ```
 <body>
   <div class="c-header">
@@ -117,13 +117,13 @@ Coding Standards
     </div>
   <div>
   <div class="c-main" role="main">
-  <section class="c-article">
-    <section class="c-breadcrumbs">
+  <section class="c-article" aria-label="Article">
+    <section class="c-breadcrumbs" aria-label="Breadcrumbs">
       <span class="l-inline-block ic-bread">
       <span class="l-inline-block meta">Home > Rules</span>
     </section>
-    <section class="c-article-main">...</section>
-    <section class="c-article-footer">...</section>
+    <section class="c-article-main" aria-label="Article main">...</section>
+    <section class="c-article-footer" aria-label="Article footer">...</section>
   </section>
   </div>
   <div class="c-footer">

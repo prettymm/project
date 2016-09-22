@@ -28,7 +28,7 @@ uglify = require('gulp-uglify'),
 stylus = require('gulp-stylus'),
 jshint = require('gulp-jshint-classic'),
 stylish = require('jshint-stylish'),
-jade = require('gulp-pug'),
+jade = require('gulp-jade'),
 gutil = require('gulp-util'),
 watch = require('node-watch'),
 insert = require('gulp-insert'),
@@ -57,6 +57,7 @@ var merge = function(object1, object2) {
 };
 
 var config = {
+  sections: '', // 'sections/'
   dirPrefix: '__',
   dirSuffix: '__',
   styleguide: 'styleguide.html',
@@ -106,11 +107,11 @@ var paths = {
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
   srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
-  srcJade: config.src + 'pug/pages/**/*.pug',
+  srcJade: config.src + 'jade/pages/**/*.jade',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
   locale: config.src + 'locale/'+ config.language +'.json',
-  jade: config.src + 'pug/'
+  jade: config.src + 'jade/'
 };
 
 var printChanged = function(changedFile) {
@@ -277,8 +278,11 @@ function getDirectories(srcpath) {
 
 gulp.task("jade", function() {
   var file = process.argv[3],
-  dir = file ? file.split('=')[1]+'/' : 'sections/',
-  list = getDirectories(paths.jade + paths.pages + dir);
+  dir = file ? file.split('=')[1]+'/' : config.sections,
+  _path = paths.jade + paths.pages + dir,
+  list = getDirectories(_path);
+  var ls = spawn('gulp', ['jade-one', '-f='+_path+'*.jade']);
+  stream(ls);
   for(var i=0; i < list.length; i++) {
     var ls = spawn('gulp', ['jade-one', '-f='+dir+list[i]+'/*.jade']);
     stream(ls);

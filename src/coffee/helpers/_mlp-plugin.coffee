@@ -10,9 +10,9 @@ $.mlpInit = (fn, name, set = true) ->
   else 
     window.MLP.apps[fn]
 
-$.mlpPluggin = (fn, name, bypass = false, elPluggin = true) ->
+$.mlpPlugin = (fn, name, bypass = false, elPluggin = true) ->
   obj = {}
-  $.mlpInit()
+  $.mlpInit(fn, name)
   name = name || $.mlpFnName(fn)
   obj[name] = (option, args...) ->
     @each -> 

@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 169
+  Additional tools should be added as an option, as seen below beginning at ln 179
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -94,9 +94,15 @@ var toggle = function(feature, featureEnabled, args) {
   });
 };
 
+var swallowError = function(error) {
+  console.log(error.toString());
+  this.emit('end');
+};
+
 var paths = {
   build: config.build,
   pages: 'pages/',
+  basePages: config.src + 'jade/pages/*.jade',
   static: config.build + 'assets/',
   buildJs: config.build + 'assets/js/',
   img: config.build + 'assets/img/',
@@ -228,7 +234,7 @@ gulp.task('stylus', function() {
       import:['nib'],
       compress: true
     }))
-    .on('error', gutil.log)
+    .on('error', swallowError)
     .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
     .pipe(gulp.dest(paths.css));
 });
@@ -277,11 +283,11 @@ function getDirectories(srcpath) {
 }
 
 gulp.task("jade", function() {
-  var file = process.argv[3],
-  dir = file ? file.split('=')[1]+'/' : config.sections,
-  _path = paths.jade + paths.pages + dir,
+  var file = process.argv[3];
+  dir = (file && file.indexOf('-f=') > -1) ? file.split('=')[1]+'/' : config.sections;
+  _path = paths.jade + paths.pages + dir;
   list = getDirectories(_path);
-  var ls = spawn('gulp', ['jade-one', '-f='+_path+'*.jade']);
+  var ls = spawn('gulp', ['jade-one', '-f='+paths.basePages]);
   stream(ls);
   for(var i=0; i < list.length; i++) {
     var ls = spawn('gulp', ['jade-one', '-f='+dir+list[i]+'/*.jade']);
@@ -309,7 +315,7 @@ gulp.task('jade-one', function() {
       locals: merge({_root: _root}, locals),
       pretty: true
     }))
-    .on('error', gutil.log)
+    .on('error', swallowError)
     .pipe(rename(function (path) {
       var fn = jadePathIsSet(path.dirname);
       if (fn) {
@@ -421,7 +427,8 @@ gulp.task('server', function(cb) {
 gulp.task('coffee', function() {
   return gulp.src(paths.srcCoffee) /* Use an array of files instead if need to concat in order. e.g gulp.src(['_file1.coffee', '_file2.coffee']) */
     .pipe(toggle(sourcemaps.init, featureEnabled.maps))
-      .pipe(coffee({ bare: true }).on('error', gutil.log))
+      .pipe(coffee({ bare: true })
+        .on('error', swallowError))
       .pipe(toggle(uglify, featureEnabled.deploy, {name: 'deploy - uglifyjs'}))
       .pipe(concat(config.jsFile))
       .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
@@ -442,7 +449,7 @@ gulp.task('js', function() {
     }))
     .pipe(jshint.reporter(stylish))
     // .pipe(jshint.reporter('fail'))
-    .on('error', gutil.log)
+    .on('error', swallowError)
     .pipe(babel({
       presets: ['es2015']
     }))
@@ -471,7 +478,6 @@ gulp.task('watch-all', function() {
   watch(paths.jade, function(file) {
     printChanged(file);
     var task = 'jade';
-
     if (((file.match(/\//g) || []).length >= 3)) {
       setBusy("1");
       var folderName = jadePathIsSet(file);
@@ -479,9 +485,12 @@ gulp.task('watch-all', function() {
         task = 'jade-one'; 
         config._jadePath = paths.jade + paths.pages + config.dirPrefix + folderName + config.dirSuffix + '/*.jade';
       } else {
-        gutil.log(gutil.colors.blue('Partial file...'));
+        if (file.indexOf(paths.pages) > -1) {
+          config._jadePath = paths.basePages;
+        } else {
+          gutil.log(gutil.colors.blue('Partial file...'));
+        }
       }
-      
     }
     else {
       unsetBusy();

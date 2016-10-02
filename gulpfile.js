@@ -243,7 +243,7 @@ gulp.task('stylus', function() {
       compress: true
     }))
     .on('error', swallowError)
-    // .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
+    .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
     .pipe(gulp.dest(paths.css));
     // console.timeEnd("Loading plugins");
 });
@@ -469,6 +469,7 @@ gulp.task('vendor-js', function (cb) {
     gulp.src(paths.vendorJs +'*.js'),
     concat('vendor.min.js'),
     uglify(),
+    toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - wrap prepend'}),
     gulp.dest(paths.buildJs)], cb
   );
 });

@@ -4,6 +4,8 @@ $.mlpFnName = (fn) ->
 $.mlpInit = (fn, name, set = true) ->
   window.MLP = window.MLP || {}
   window.MLP.apps = window.MLP.apps || {}
+  window.MLP.instances = window.MLP.instances || {}
+  window.MLP.config = window.MLP.config || {}
   if fn && set
     name = name || $.mlpFnName(fn)
     window.MLP.apps[name] = fn

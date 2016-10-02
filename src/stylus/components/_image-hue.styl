@@ -1,0 +1,23 @@
+/**
+ * Image hue - grayscale:
+ * `.c-image-hue` - With `.is-active` state. Supported in IE10+ and other modern browsers.
+ *
+ *     @example
+ *     svg#svgroot.c-image-hue(xmlns='http://www.w3.org/2000/svg', viewbox='0 0 325 203', width='100%', height='100%', style='background-image: url(./assets/img/thumb-global-hotels.jpg)')
+ *      defs
+ *       filter#filtersPicture
+ *        fecomposite(result='inputTo_38', in='SourceGraphic', in2='SourceGraphic', operator='arithmetic', k1='0', k2='1', k3='0', k4='0')
+ *        fecolormatrix#filter_38(type='saturate', values='0', data-filterid='38')
+ *      image#js-svg-img0(filter='url("#filtersPicture")', x='0', y='0', xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='./assets/img/thumb-global-hotels.jpg', width='100%', height='100%', data-width='325', data-height='203')
+ *
+ */
+   
+.c-image-hue 
+  bg-size(100%, true)
+  background-repeat no-repeat
+  image
+    transition all .6s ease
+    display block
+    &:hover, &.is-active
+      cursor pointer
+      opacity 0

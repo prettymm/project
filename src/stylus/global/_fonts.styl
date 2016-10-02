@@ -1,0 +1,35 @@
+/***
+ * Fonts: `.font`
+ */
+ 
+/**
+ * Name:
+ * `.font--name` - Name Light|Regular|Medium
+ * 
+ *     @example
+ *     p.font--name-light Light Hello world
+ *     p.font--name-regular Regular Hello world
+ *     p.font--name-medium Medium Hello world
+ */
+
+   
+// @import 'fonts/_*.styl'
+
+font($name, $important = false)
+  $style = "Avenir"
+  if $important 
+    $style = $style !important  
+
+  font-family $name, "Verdana", $style
+  
+
+font-fa()
+  font-family 'FontAwesome'
+  
+
+$fontNames = "Font name" 
+$classNames = "font-name"
+
+for $name, $i in $fontNames
+  .font--{$classNames[$i]}
+    font($name, true)

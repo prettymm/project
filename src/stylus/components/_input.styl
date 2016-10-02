@@ -1,0 +1,100 @@
+/***
+ * Input: `.c-input`
+ */
+ 
+ /**
+ * Input:
+ * `.c-input--default` - Add a default button.
+ *
+ *     @example
+ *     button.c-input.c-input--default Default button
+ *     button.c-input.c-input--default.c-input--primary-blue Primary blue button
+ */
+   
+ /**
+ * Input Next Blue:
+ * `.c-input--next` 
+ *
+ *     @example
+ *     a.c-input.c-input--next(href='#')
+ *      span.text--uppercase View more
+ */
+   
+ /**
+ * Input Next White:
+ * `.c-input--next` 
+ *
+ *     @example
+ *     div.bg--primary-blue.l-padding-top-1.l-padding-bottom-1
+ *      a.c-input.c-input--next.c-input--outlined.c-input--white(href='#')
+ *       span.text--uppercase View more
+ */
+   
+.c-input
+  &--default
+    appearance none
+    border none
+    padding 1em 
+    font-size 100%
+    &:focus
+      outline-color transparent
+      outline-width 1px
+  &--next
+    border solid 1px $col-profero-yellow
+    color white
+    text-align center
+    position relative
+    text-decoration none
+    display table
+    span 
+      padding .5em 
+      display block
+      top 2px
+      color $col-profero-yellow
+      position relative
+    &:after
+      padding .5em
+      content '>'
+      width 20px
+      height 20px
+      color white
+      display table-cell
+      vertical-align middle
+      background-color $col-profero-yellow
+    &.c-input
+      &--outlined
+        &.c-input
+          &--white
+            color $col-profero-yellow
+            span 
+              color white
+            &:after
+              color $col-profero-yellow
+              background-color white
+            
+        
+  &--white
+    background-color white
+    color $col-profero-yellow
+  &--small
+    @extend .c-input--default
+    padding .5em
+  &--primary-blue
+    background-color $col-profero-yellow 
+    color white
+    // &:hover
+    //   background-color darken($col-profero-yellow, 10%)
+  &--outlined
+    border solid 1px transparent
+    background-color transparent
+    &.c-input
+      &--primary-blue
+        border-color $col-profero-yellow 
+        color $col-profero-yellow 
+        &:focus 
+          outline-color blue
+      &--white
+        border-color white
+        color white
+        &:focus 
+          outline-color white

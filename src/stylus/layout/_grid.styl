@@ -1,0 +1,26 @@
+/***
+ * Grid: `.l-grid`
+ */
+ 
+/**
+ * Column:
+ * `.l-grid__col` 
+ * 
+ *     @example
+ *     div.l-grid
+ *      p.l-grid__col.l-width-40p Column 1, combine me with a <code>.l-width-*</code> size to adjust
+ *      p.l-grid__col.l-width-50p Column 2, combine me with a <code>.l-width-*</code> size to adjust
+ */
+ 
+.l-grid
+  clearfix()
+  &.has-gutter
+    .l-grid__col
+      margin 1em
+  &__col
+    inline-block(top)
+    &--table
+      display table
+    
+  &__cell
+    inline-block(middle)

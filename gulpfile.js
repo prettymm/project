@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 179
+  Additional tools should be added as an option, as seen below beginning at ln 186
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -34,6 +34,7 @@ watch = require('node-watch'),
 insert = require('gulp-insert'),
 exec = require('child_process').exec,
 rename = require('gulp-rename'),
+pump = require('pump'),
 changedFile = null,
 featureEnabled = {},
 inputArguments = [],
@@ -44,6 +45,7 @@ defaultTasks = ['server', 'locale', 'watch-vendor', 'watch-all'],
 spawn = require('child_process').spawn,
 run = require('run-sequence'),
 kouto = require('kouto-swiss'),
+recursiveFolder = require('gulp-recursive-folder'),
 packageJson = require('./package.json'),
 nib = require('nib');
 featureEnabled.lr = '';
@@ -96,6 +98,7 @@ var toggle = function(feature, featureEnabled, args) {
 
 var swallowError = function(error) {
   console.log(error.toString());
+  console.log("\007")
   this.emit('end');
 };
 
@@ -112,7 +115,11 @@ var paths = {
   coffee: config.src + 'coffee/',
   srcStylus: config.src + 'stylus/app*.styl',
   srcJs: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
-  srcCoffee: [config.src + 'coffee/helpers/_*.coffee', config.src + 'coffee/modules/_*.coffee'],
+  srcCoffee: 
+  [ config.src + 'coffee/helpers/_*.coffee', 
+    config.src + 'coffee/modules/_menu.coffee', 
+    config.src + 'coffee/modules/_*.coffee',
+    config.src + 'coffee/modules/_doc-ready.coffee'],
   srcJade: config.src + 'jade/pages/**/*.jade',
   srcImg: config.src + 'img/*',
   styles: config.src + 'stylus/',
@@ -223,20 +230,22 @@ process.argv.forEach(function (val, index, array) {
 
 gulp.task('images', function() {
   return gulp.src(paths.srcImg)
-    .pipe(imagemin({ optimizationLevel: 5 }))
+    .pipe(imagemin({optimizationLevel: 5 }))
     .pipe(gulp.dest(paths.img));
 });
 
 gulp.task('stylus', function() {
+    // console.time("Loading plugins"); 
     gulp.src(paths.srcStylus)
     .pipe(stylus({
-      use: [nib(), kouto()],
-      import:['nib'],
+      use: [nib()],
+      import:['nib'], // uncomment this and change above to [nib()] if prefer nib
       compress: true
     }))
     .on('error', swallowError)
-    .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
+    // .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
     .pipe(gulp.dest(paths.css));
+    // console.timeEnd("Loading plugins");
 });
 
 gulp.task('stylus-success', function() {
@@ -276,24 +285,17 @@ var getJadePath = function() {
   return _path;
 };
 
-function getDirectories(srcpath) {
-  return fs.readdirSync(srcpath).filter(function(file) {
-    return fs.statSync(path.join(srcpath, file)).isDirectory();
-  });
-}
-
-gulp.task("jade", function() {
-  var file = process.argv[3];
-  dir = (file && file.indexOf('-f=') > -1) ? file.split('=')[1]+'/' : config.sections;
-  _path = paths.jade + paths.pages + dir;
-  list = getDirectories(_path);
-  var ls = spawn('gulp', ['jade-one', '-f='+paths.basePages]);
-  stream(ls);
-  for(var i=0; i < list.length; i++) {
-    var ls = spawn('gulp', ['jade-one', '-f='+dir+list[i]+'/*.jade']);
-    stream(ls);
-  }
-});
+gulp.task('jade', recursiveFolder({
+  base: paths.jade + paths.pages 
+  }, function(folderFound){
+  return gulp.src(folderFound.path + '/*.jade')
+    .pipe(jade({
+      locals: merge({_root: config.root}, getLocals()),
+      pretty: true
+    }))
+    .on('error', swallowError)
+    .pipe(gulp.dest(paths.build));
+}));
 
 gulp.task('jade-one', function() {
   
@@ -312,7 +314,7 @@ gulp.task('jade-one', function() {
 
   gulp.src(_path)
     .pipe(jade({
-      locals: merge({_root: _root}, locals),
+      locals: merge({_root: _root}, _locals),
       pretty: true
     }))
     .on('error', swallowError)
@@ -462,8 +464,13 @@ gulp.task('js', function() {
     .pipe(gulp.dest(paths.buildJs));
 });
 
-gulp.task('vendor-js', function() {
-  exec('cat '+ paths.vendorJs +'*.js | uglifyjs -m -c --overwrite > '+ paths.buildJs +'vendor.min.js', generalCallback);
+gulp.task('vendor-js', function (cb) {
+  pump([
+    gulp.src(paths.vendorJs +'*.js'),
+    concat('vendor.min.js'),
+    uglify(),
+    gulp.dest(paths.buildJs)], cb
+  );
 });
 
 gulp.task('watch-vendor', function() {
@@ -486,11 +493,13 @@ gulp.task('watch-all', function() {
         config._jadePath = paths.jade + paths.pages + config.dirPrefix + folderName + config.dirSuffix + '/*.jade';
       } else {
         if (file.indexOf(paths.pages) > -1) {
+          task = 'jade-one'; 
           config._jadePath = paths.basePages;
         } else {
           gutil.log(gutil.colors.blue('Partial file...'));
         }
       }
+
     }
     else {
       unsetBusy();

@@ -1,0 +1,56 @@
+/***
+ * Theme: `.theme` - profero-yellow|dark-grey 
+ */
+ 
+/**
+ * Theme children: Flexible. control what elements take on the background colour of the theme
+ * `.theme--*` - profero-yellow|dark-grey 
+ * 
+ *     @example
+ *     div.theme--profero-yello
+ *      p.theme__text My text colour is based on the colour of the theme set directly on me
+ *      p.theme__bg My background colour is based on the colour of the theme set directly on me
+ */
+ 
+ /**
+ * Theme children 2: Automatic. set the text and background colours on the theme element
+ * `.theme--*` - profero-yellow|dark-grey 
+ * 
+ *     @example
+ *     div.theme--profero-yellow.theme--colored-bg.theme--colored-text
+ *      p.bg--white My text colour is based on the colour of the theme set by `.theme--colored-text`
+ *      p.text--white We take on the background colour of on the the theme set by `.theme--colored-bg`
+ *      
+ */
+ 
+$imgNames = "dark-grey", "profero-yellow" 
+$colorNames = "dark-grey", "profero-yellow"
+
+$colors = $col-dark-grey, $col-profero-yellow
+
+for $color, $colorIndex in $colors
+  $img = $imgNames[$colorIndex]
+  .theme
+
+    &--{$colorNames[$colorIndex]}
+
+      &.theme
+        &--colored-text
+          color $color
+            
+        &--colored-bg
+          background-color $color
+  
+      .theme__text
+        color $color
+        
+      .theme__bg
+        background-color $color
+        
+      .theme__link
+        color white
+        &.is-active
+          color $color
+        &.has-hover
+          &:hover 
+            color $color

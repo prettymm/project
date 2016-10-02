@@ -1,0 +1,245 @@
+/***
+ * Layout: `.l` - Look through src/layout/*.styl for more styles.
+ */
+ 
+ /**
+ * Visibility:
+ * `.l-` - mobile|desktop|tablet|tablet-min|tablet-max
+ *
+ *     @example
+ *     div.l-mobile Mobile only
+ *     div.l-desktop Desktop only
+ *     div.l-tablet-min Tablet and higher
+ *     div.l-tablet-max Tablet and lower
+ *     div.l-tablet Tablet only
+ */
+   
+ /**
+ * Display:
+ * `.l-` - block|inline-block|hidden
+ *
+ *     @example
+ *     div.l-block Block display
+ *     div.l-inline-block Inline block display
+ *     div.l-inline-block Inline block display
+ */
+   
+ /**
+ * Vertical Alignment:
+ * `.l-vcenter` - left|right
+ *
+ *     @example
+ *     div.l-relative(style="height: 200px;")
+ *      div.l-vcenter--left Left align
+ *      div.l-vcenter Middle align
+ *      div.l-vcenter--right Right align
+ */
+   
+ /**
+ * Paddings:
+ * `.l-padding-` - [top|left|bottom|right]-[desktop|tablet[-min|-max]|mobile]-[fp-]$x
+ *
+ *     @example
+ *     div.l-padding-2 2em padding all around
+ *     div.l-padding-left-3 3em padding left
+ *     div.l-padding-left-tablet-min-2 2em padding left in tablet and higher
+ *     div.l-padding-right-desktop-2 2em padding top in desktop
+ *     div.l-padding-bottom-fp-2 0.2em padding bottom
+ *     div.l-padding-top-mobile-fp-12 1.2em padding top in mobile
+ */
+   
+ /**
+ * Margins:
+ * `.l-margin-` - [top|left|bottom|right]-[desktop|tablet[-min|-max]|mobile]-[fp-]$x
+ *
+ *     @example
+ *     div.l-margin-2 2em margin all around
+ *     div.l-margin-left-3 3em margin left
+ *     div.l-margin-left-tablet-min-2 2em margin left in tablet and higher
+ *     div.l-margin-right-desktop-2 2em margin top in desktop
+ *     div.l-margin-bottom-fp-2 0.2em margin bottom
+ *     div.l-margin-top-mobile-fp-12 1.2em margin top in mobile
+ */
+   
+.l-mobile 
+  display none !important
+  +bp(max, $mobile-max)
+    display block !important
+    
+.l-desktop
+  +bp(max, $tablet-max)
+    display none !important
+    
+.l-tablet-max
+  +bp(min, $desktop-min)
+    display none !important
+
+  +bp(max, $tablet-max)
+    display block !important
+    
+.l-tablet
+  +bp(min, $desktop-min)
+    display none !important
+
+  +bp(max, $tablet-max)
+    display block !important
+    
+  +bp(max, $mobile-max)
+    display none !important
+    
+.l-tablet-min
+  display none !important
+  +bp(min, $tablet-min)
+    display block !important
+    
+.l-float-right
+  float right !important
+  
+.l-float-left
+  float left !important
+  
+.l-hidden 
+  display none !important
+  
+.l-block 
+  display block !important
+  
+.l-inline-block 
+  display inline-block !important
+
+.l-relative
+  position relative !important
+  
+/* Vertical center */
+.l-vcenter--left
+  position absolute
+  top 50%
+  transform translate(0, -50%)
+  
+.l-vcenter
+  @extend .l-vcenter--left
+  left 50%
+  margin-right -50%
+  transform translate(-50%, -50%)
+  
+.l-vcenter--right
+  @extend .l-vcenter--left
+  right 0 
+
+.l-center 
+  margin-left auto !important
+  margin-right auto !important
+  
+
+for $x in (0..100)
+  .l-width-{$x}p
+    width $x * 1% !important
+    
+  .l-width-desktop-{$x}p
+    @media $large
+      width $x * 1% !important
+      
+  .l-width-tablet-{$x}p
+    @media $medium
+      width $x * 1% !important
+      
+  .l-width-tablet-min-{$x}p
+    @media $medium-min
+      width $x * 1% !important
+      
+  .l-width-tablet-max-{$x}p
+    @media $medium-max
+      width $x * 1% !important
+      
+  .l-width-mobile-{$x}p
+    @media $small
+      width $x * 1% !important
+  
+// fp-$x or floating point $x 
+for $x in (0..70) 
+  for $spacing in "margin" "padding"
+    .l-{$spacing}-{$x}
+      {$spacing} $x * 1em !important
+      
+    .l-{$spacing}-mobile-{$x}
+      @media $small
+        {$spacing} $x * 1em !important
+        
+    .l-{$spacing}-tablet-{$x}
+      @media $medium
+        {$spacing} $x * 1em !important
+        
+    .l-{$spacing}-tablet-max-{$x}
+      @media $medium-max
+        {$spacing} $x * 1em !important
+        
+    .l-{$spacing}-desktop-{$x}
+      @media $large
+        {$spacing} $x * 1em !important
+        
+  
+  for $value in "left" "right" "top" "bottom"
+      
+    .l-margin-{$value}-{$x}
+      margin-{$value} $x * 1em !important
+      
+    .l-margin-{$value}-fp-{$x}
+      margin-{$value} ($x/10em) !important
+      
+    .l-margin-{$value}-tablet-min-fp-{$x}
+      @media $medium-min
+        margin-{$value} ($x/10em) !important
+        
+    .l-margin-{$value}-tablet-max-fp-{$x}
+      @media $medium-max
+        margin-{$value} ($x/10em) !important
+        
+    .l-margin-{$value}-mobile-fp-{$x}
+      @media $small
+        margin-{$value} ($x/10em) !important
+      
+    .l-margin-{$value}-desktop-{$x}
+      @media $large
+        margin-{$value} $x * 1em !important
+      +ie(8)
+        margin-{$value} $x * 1em !important
+        
+    .l-margin-{$value}-tablet-{$x}
+      @media $medium
+        margin-{$value} $x * 1em !important
+        
+    .l-margin-{$value}-mobile-{$x}
+      @media $small
+        margin-{$value} $x * 1em !important
+        
+    .l-padding-{$value}-mobile-{$x}
+      @media $mobile
+        padding-{$value} $x * 1em !important
+        
+    .l-padding-{$value}-tablet-{$x}
+      @media $medium
+        padding-{$value} $x * 1em !important
+        
+    .l-padding-{$value}-tablet-min-{$x}
+      @media $medium
+        padding-{$value} $x * 1em !important
+        
+    .l-padding-{$value}-tablet-max-{$x}
+      @media $medium-max
+        padding-{$value} $x * 1em !important
+        
+    .l-padding-{$value}-desktop-{$x}
+      @media $large
+        padding-{$value} $x * 1em !important
+      
+    .l-padding-{$value}-{$x}
+      padding-{$value} $x * 1em !important
+      
+    .l-padding-{$value}-fp-{$x}
+      padding-{$value} ($x/10em) !important
+      
+    .l-padding-{$value}-mobile-fp-{$x}
+      @media $small
+        padding-{$value} ($x/10em) !important
+
+        

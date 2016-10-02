@@ -1,0 +1,36 @@
+/***
+ * Content: `.c-intro`
+ */
+ 
+ /**
+ * Intro:
+ * `.c-intro` - 
+ *
+ *     @example
+ *     div.c-intro
+ *      h1.c-intro.c-intro__title Intro title
+ *      p.c-intro.c-intro__text Some description text.
+ *      p.c-intro.c-intro__footer Footer of intro.
+ */
+   
+.c-intro
+  clearfix()
+  text-align center
+  &__title
+    @extend .h2
+    text-transform uppercase
+  &__text 
+    font-size 110%
+    line-height 140%
+    width 65%
+    margin-left auto 
+    margin-right auto
+    padding-top 1em
+    padding-bottom .5em
+    +bp(max, $mobile-max)
+      width 80%
+  &__footer
+    padding-top 2em
+    padding-bottom 2em
+  
+    

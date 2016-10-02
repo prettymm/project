@@ -8,6 +8,7 @@ $.mlpInit = function(fn, name, set) {
   }
   window.MLP = window.MLP || {};
   window.MLP.apps = window.MLP.apps || {};
+  window.MLP.instances = window.MLP.instances || {};
   if (fn && set) {
     name = name || $.mlpFnName(fn);
     window.MLP.apps[name] = fn;

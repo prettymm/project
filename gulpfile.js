@@ -327,7 +327,7 @@ gulp.task('jade', recursiveFolder({
       pretty: true
     }))
     .on('error', swallowError)
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build + '/' + folderFound.pathTarget));
 }));
 
 gulp.task('jade-one', function() {

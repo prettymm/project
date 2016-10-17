@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 186
+  Additional tools should be added as an option, as seen below beginning at ln 219
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -145,8 +145,41 @@ var generalCallback = function(error, stdout, stderr) {
 
 };
 
-var getLocals = function() {
-  locals = merge({'config': config}, require(paths.locale));
+var getLocalePath = function() {
+  var localePath = paths.locale;
+  if (config._jadePath) {
+
+    var fn = getSubDirectoryName(path.dirname(config._jadePath)),
+    _path = config._jadePath;
+
+    if (fn && !featureEnabled.setLang) {
+      fs.stat(config.src + 'locale/'+ fn +'.json', function(err, stat) {
+
+        if(err == null) {
+    
+          localePath = config.src + 'locale/'+ fn +'.json';
+          
+          gulp.src(_path)
+            .pipe(jade({
+              locals: merge({_root: config.root2}, getLocals(localePath)),
+              pretty: true
+            }))
+            .on('error', swallowError)
+            .pipe(rename(function (path) {
+              path.dirname = fn;
+            })).pipe(gulp.dest(paths.build));
+        } 
+      });
+    } 
+  }
+ 
+  return localePath;
+
+};
+
+var getLocals = function(p) {
+  p = p || getLocalePath();
+  locals = merge({'config': config}, require(p));
   return merge({'paths': paths}, locals);
 };
 
@@ -210,9 +243,6 @@ process.argv.forEach(function (val, index, array) {
       arg = val;
       featureEnabled.noserver = true;
     break;
-    case '-f':
-      config.singleJade = true;
-    break;
     case '-deploy':
     case '-d':
       arg = val;
@@ -220,8 +250,16 @@ process.argv.forEach(function (val, index, array) {
       featureEnabled.deploy = true;
     break;
     default:
+      if (contains(val, '-f'))
+        config.singleJade = true;
       if (contains(val, 'port='))
         config.port = parseInt(val.split('=')[1]);
+      if (contains(val, 'lang=')) {
+        featureEnabled.setLang = true;
+        config.language = val.split('=')[1];
+        paths.locale = config.src + 'locale/'+ config.language +'.json';
+
+      }
     break;
   }
   if (index >= 2)
@@ -260,17 +298,12 @@ gulp.task('stylint', function() {
 
 /* Jade */
 
-var jadePathIsSet = function(path) {
-  var pos = path.indexOf(config.dirPrefix),
-  tagLength = config.dirPrefix.length;
+var getSubDirectoryName = function(p) {
+  var pos = p.indexOf(paths.pages);
   if (pos > -1) {
-    var pos2 = path.indexOf(config.dirSuffix, (pos+tagLength)),
-    start = pos + tagLength;
-    if (pos2 > -1)
-      return path.substr(start, pos2 - start);
-    else 
-      return false;
-
+   p = p.substr(pos + paths.pages.length);
+   gutil.log(gutil.colors.yellow(p));
+   return p;
   } else {
     return false;
   }
@@ -290,7 +323,7 @@ gulp.task('jade', recursiveFolder({
   }, function(folderFound){
   return gulp.src(folderFound.path + '/*.jade')
     .pipe(jade({
-      locals: merge({_root: config.root}, getLocals()),
+      locals: merge({_root: config.root2}, getLocals()),
       pretty: true
     }))
     .on('error', swallowError)
@@ -300,31 +333,20 @@ gulp.task('jade', recursiveFolder({
 gulp.task('jade-one', function() {
   
   var _path = getJadePath(),
-  _build = paths.build,
-  _root =  config.root,
-  _locals = getLocals(),
-  folderName = jadePathIsSet(_path);
-
-  if (folderName) {
-    _build += folderName + '/';
-    _root = config.root2;
-    ls = spawn('mkdir', ['-p', _build]);
-    stream(ls);
-  }
+  directoryName = getSubDirectoryName(path.dirname(_path));
 
   gulp.src(_path)
     .pipe(jade({
-      locals: merge({_root: _root}, _locals),
+      locals: merge({_root: config.root2}, getLocals()),
       pretty: true
     }))
     .on('error', swallowError)
     .pipe(rename(function (path) {
-      var fn = jadePathIsSet(path.dirname);
-      if (fn) {
-        path.dirname = fn;
+      if (directoryName) {
+        path.dirname = directoryName;
       }
     }))
-    .pipe(gulp.dest(_build));
+    .pipe(gulp.dest(paths.build));
 });
 
 /* End Jade */
@@ -374,10 +396,8 @@ var initServerBase = function(ops) {
   app.set('views', path.join(__dirname, paths.jade + paths.pages));
   app.set('view engine', 'jade');
   var render = function(req, res) {
-    var page = getPage(req),
-    _locals = getLocals(),
-    _root = jadePathIsSet(page) ? config.root2 : config.root;
-    var data = merge({page: page, _root: _root}, _locals);
+    var page = getPage(req);
+    var data = merge({page: page, _root: config.root2}, getLocals());
     res.render(page, data);
   };
   app.get('/*', function (req, res) {
@@ -398,7 +418,7 @@ var initServerBase = function(ops) {
     res.render('index', merge(getLocals(), {
         message: err.message,
         error: err,
-        _root: jadePathIsSet(req.baseUrl) ? config.root2 : config.root
+        _root: config.root2
     }));
   });
 };
@@ -469,7 +489,6 @@ gulp.task('vendor-js', function (cb) {
     gulp.src(paths.vendorJs +'*.js'),
     concat('vendor.min.js'),
     uglify(),
-    toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - wrap prepend'}),
     gulp.dest(paths.buildJs)], cb
   );
 });
@@ -486,24 +505,12 @@ gulp.task('watch-all', function() {
   watch(paths.jade, function(file) {
     printChanged(file);
     var task = 'jade';
-    if (((file.match(/\//g) || []).length >= 3)) {
+    if (file.match('/_')) {
       setBusy("1");
-      var folderName = jadePathIsSet(file);
-      if (folderName) {
-        task = 'jade-one'; 
-        config._jadePath = paths.jade + paths.pages + config.dirPrefix + folderName + config.dirSuffix + '/*.jade';
-      } else {
-        if (file.indexOf(paths.pages) > -1) {
-          task = 'jade-one'; 
-          config._jadePath = paths.basePages;
-        } else {
-          gutil.log(gutil.colors.blue('Partial file...'));
-        }
-      }
-
-    }
-    else {
+      config._jadePath = paths.srcJade;
+    } else {
       unsetBusy();
+      task = 'jade-one';
       config._jadePath = config.root + file;
     }
     gulp.start(task);

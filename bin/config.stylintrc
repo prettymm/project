@@ -14,7 +14,7 @@
   "depthLimit": 7,
   "indentPref": {
     "expect": 2,
-    "error": true
+    "error": false
   },
   "placeholder": "never",
   "namingConvention": "lowercase-dash",

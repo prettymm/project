@@ -23,16 +23,16 @@
  *      
  */
  
-$imgNames = "dark-grey", "profero-yellow" 
-$colorNames = "dark-grey", "profero-yellow"
+$img-names = "dark-grey", "profero-yellow" 
+$color-names = "dark-grey", "profero-yellow"
 
 $colors = $col-dark-grey, $col-profero-yellow
 
-for $color, $colorIndex in $colors
-  $img = $imgNames[$colorIndex]
+for $color, $color-index in $colors
+  $img = $img-names[$colorIndex]
   .theme
 
-    &--{$colorNames[$colorIndex]}
+    &--{$color-names[$color-index]}
 
       &.theme
         &--colored-text

@@ -8,7 +8,7 @@
     "ssl": "sudo PORT=80 gulp -lr",
     "deploy": "gulp stylus coffee jade -d ; sh deploy.sh",
     "style": "styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html",
-    "css": "stylus -c src/stylus/app*.styl -o ./build/assets/css/",
+    "css": "stylus -w -c src/stylus/app*.styl -o ./build/assets/css/",
     "build": "gulp jade & gulp coffee & gulp stylus",
     "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc"
   },

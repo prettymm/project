@@ -13,15 +13,15 @@ class BgExchange extends MLP.apps.MLPModule
 
   events: ->
     @el.target.on 'mouseenter', (e) =>
-      @activeBackground()
+      @activeBg()
 
     @el.target.on 'mouseout', (e) =>
-      @inactiveBackground()      
+      @inactiveBg()      
 
-  inactiveBackground: ->
+  inactiveBg: ->
     @exchangeBg(@getDefaultBg())
 
-  activeBackground: ->
+  activeBg: ->
     @exchangeBg(@el.target.data('bg-active'))
 
   getDefaultBg: ->

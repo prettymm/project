@@ -29,10 +29,10 @@ $.mlpPlugin = function(fn, name, bypass, elPluggin) {
   $.mlpInit(fn, name);
   name = name || $.mlpFnName(fn);
   obj[name] = function() {
-    var args, option;
+    var args, option, _el, _this = [];
     option = arguments[0];
     args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-    return $(this).each(function() {
+    _el = $(this).each(function() {
       var $this, data, key;
       $this = $(this);
       key = 'mlp-' + name;
@@ -44,14 +44,17 @@ $.mlpPlugin = function(fn, name, bypass, elPluggin) {
       if (typeof option === 'string') {
         return data[option].apply(data, args);
       }
+      _this.push(data);
+      
     });
+    return {mlp: _this, el: _el};
   };
   $.fn.extend(obj);
   if (!elPluggin) {
     obj[name] = function(option) {
       return new fn(option);
     };
-    return $.extend(obj);
+    $.extend(obj);
   }
 };
 
@@ -105,7 +108,6 @@ class MLPModule {
     this.attr = {
       tabindex: 'tabindex'
     };
-
   }
 
   stop(e) {

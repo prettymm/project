@@ -31,7 +31,7 @@ $.mlpPlugin = function(fn, name, bypass, elPluggin) {
   obj[name] = function() {
     var args, option, _el, _this = [];
     option = arguments[0];
-    args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+    args = 2 <= arguments.length ? Array.prototype.slice.call(arguments, 1) : [];
     _el = $(this).each(function() {
       var $this, data, key;
       $this = $(this);

@@ -12,12 +12,24 @@ $.mlpInit = (fn, name, set = true) ->
   else 
     window.MLP.apps[fn]
 
-$.mlpPlugin = (fn, name, bypass = false, elPluggin = true) ->
+###
+@fn (obj) - the JS object class
+@name (str) - the name of the class
+@bypass (bool) - whether or not the plugin can be instantiated multiple times
+@elPlugin (bool) - whether to create an element based plugin $(...).pluginName 
+or regular JQuery method $.methodName
+@returnContext (bool) - whether to return an object with class context 
+and the element which instantiated the plugin (@elPlugin must be true)
+###
+
+$.mlpPlugin = (fn, name, bypass = false, elPlugin = true, returnContext = true) ->
   obj = {}
   $.mlpInit(fn, name)
   name = name || $.mlpFnName(fn)
   obj[name] = (option, args...) ->
-    @each -> 
+    _this = []
+    _el = null
+    _el = @each -> 
       $this = $(this)
       key = 'mlp-'+name
       data = $this.data(key)
@@ -26,10 +38,13 @@ $.mlpPlugin = (fn, name, bypass = false, elPluggin = true) ->
         $this.data key, (data = new fn(option, this))
       if typeof option == 'string'
         data[option].apply(data, args)
-    return
+      _this.push data
+
+    result = if returnContext then {mlp: _this, el: _el} else null
+    return result
   $.fn.extend obj 
 
-  if !elPluggin
+  if !elPlugin
     obj[name] = (option) ->
       new fn(option)
     $.extend obj

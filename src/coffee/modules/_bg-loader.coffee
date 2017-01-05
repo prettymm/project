@@ -1,6 +1,6 @@
 ###
   Loads backgrounds via JS. (Useful for CMS type sites which need to control background images.)
-  Usage: div(data-js-bg-loader='$url', data-background-mobile='$url2')
+  Usage: div(data-js-bg-loader='$url', data-bg-mobile='$url2')
 ###
 
 class BgLoader extends MLP.apps.MLPModule
@@ -22,7 +22,7 @@ class BgLoader extends MLP.apps.MLPModule
   setBackground: ->
 
     if $(window).width() <= @ops.screen.mobile
-      bg = @getBackground('background-mobile')
+      bg = @getBackground('bg-mobile')
 
     if !bg 
       bg = @getBackground()

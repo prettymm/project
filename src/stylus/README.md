@@ -5,6 +5,10 @@ Instructions
 -------------
 
 - Use BEM
+- Use sensible names for the steams of a selector name  
+- Long words can use meaningful abbreviations if:  
+-- The selector is a utility class (1. Global below), in which case it is most likely frequently used
+-- The abbreviation is meaningful and/or universally accepted. If you do not know what abbreviation to use, try finding a meaningful one from http://www.abbreviations.com/abbreviation/margin  
 - Namespace class/id names with appropriate namespace prefix: .c-, .ic-, .l-, .txt 
 - Beware heavy nesting and/or long definitions where it requires excessive scrolling to realise the context parent class/id
 - Do not tightly couple styles based on location, code the css in terms of components. What do we mean by components? See here, (example only): [Ionic](http://ionicframework.com/docs/components/)
@@ -26,7 +30,7 @@ BEM
 -------------
 ```
 // BEM: Block Element Modifier
-// Use __ for sub-level objects, and -- for style differentiators
+// Use __ for sub-level objects/elements, and -- for style differentiators
 // e.g. .c-bar, .c-bar__nav, .c-bar--small, .c-bar__nav--small, .hr
 
 // 1. Global: These are random styles or utilities that can be used in unrelated places. 
@@ -37,8 +41,8 @@ BEM
 
   // l- : Layout
   //--------------------------------------------------
-  // .l-desktop
-  // .l-margin-left-10
+  // .l-desk
+  // .l-mgn-l-10
 
 // 2. c- : A component; a piece of concrete, implementation-specific UI; changing styles should not affect any other components
 //--------------------------------------------------

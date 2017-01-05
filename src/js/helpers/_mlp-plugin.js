@@ -17,7 +17,17 @@ $.mlpInit = function(fn, name, set) {
   }
 };
  
-$.mlpPlugin = function(fn, name, bypass, elPluggin) {
+/***
+@fn (obj) - the JS object class
+@name (str) - the name of the class
+@bypass (bool) - whether or not the plugin can be instantiated multiple times
+@elPlugin (bool) - whether to create an element based plugin $(...).pluginName 
+or regular JQuery method $.methodName
+@returnContext (bool) - whether to return an object with class context 
+and the element which instantiated the plugin (@elPlugin must be true)
+**/
+
+$.mlpPlugin = function(fn, name, bypass, elPlugin, returnContext) {
   var obj;
   if (typeof bypass == "undefined") {
     bypass = false;
@@ -25,11 +35,14 @@ $.mlpPlugin = function(fn, name, bypass, elPluggin) {
   if (typeof elPluggin == "undefined") {
     elPluggin = true;
   }
+  if (typeof returnContext == "undefined") {
+    returnContext = true;
+  }
   obj = {};
   $.mlpInit(fn, name);
   name = name || $.mlpFnName(fn);
   obj[name] = function() {
-    var args, option, _el, _this = [];
+    var args, option, _el, _this = [], result;
     option = arguments[0];
     args = 2 <= arguments.length ? Array.prototype.slice.call(arguments, 1) : [];
     _el = $(this).each(function() {
@@ -47,10 +60,11 @@ $.mlpPlugin = function(fn, name, bypass, elPluggin) {
       _this.push(data);
       
     });
-    return {mlp: _this, el: _el};
+    result = returnContext ? {mlp: _this, el: _el} : null;
+    return result;
   };
   $.fn.extend(obj);
-  if (!elPluggin) {
+  if (!elPlugin) {
     obj[name] = function(option) {
       return new fn(option);
     };

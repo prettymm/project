@@ -4,80 +4,79 @@
  
  /**
  * Visibility:
- * `.l-` - mobile|desktop|tablet|tablet-min|tablet-max
+ * `.l-` - mobi|desk|tabt[-min|-max]
  *
  *     @example
- *     div.l-mobile Mobile only
- *     div.l-desktop Desktop only
- *     div.l-tablet-min Tablet and higher
- *     div.l-tablet-max Tablet and lower
- *     div.l-tablet Tablet only
+ *     div.l-mobi Mobile only
+ *     div.l-desk Desktop only
+ *     div.l-tabt-min Tablet and higher
+ *     div.l-tabt-max Tablet and lower
+ *     div.l-tabt Tablet only
  */
    
  /**
  * Display:
- * `.l-` - block|inline-block|hidden
+ * `.l-` - block|inl-block|hidden
  *
  *     @example
  *     div.l-block Block display
- *     div.l-inline-block Inline block display
- *     div.l-inline-block Inline block display
+ *     div.l-inl-block Inline block display
  */
    
  /**
  * Vertical Alignment:
- * `.l-vcenter` - left|right
+ * `.l-vcenter` - l|r
  *
  *     @example
  *     div.l-relative(style="height: 200px;")
- *      div.l-vcenter--left Left align
+ *      div.l-vcenter--l Left align
  *      div.l-vcenter Middle align
- *      div.l-vcenter--right Right align
+ *      div.l-vcenter--r Right align
  */
    
  /**
  * Paddings:
- * `.l-padding-` - [top|left|bottom|right]-[desktop|tablet[-min|-max]|mobile]-[fp-]$x
+ * `.l-pad-` - [l|r|t|b]-[desk|tabt[-min|-max]|mobi]-[fp-]$x
  *
  *     @example
- *     div.l-padding-2 2em padding all around
- *     div.l-padding-left-3 3em padding left
- *     div.l-padding-left-tablet-min-2 2em padding left in tablet and higher
- *     div.l-padding-right-desktop-2 2em padding top in desktop
- *     div.l-padding-bottom-fp-2 0.2em padding bottom
- *     div.l-padding-top-mobile-fp-12 1.2em padding top in mobile
+ *     div.l-pad-2 2em padding all around
+ *     div.l-pad-l-3 3em padding left
+ *     div.l-pad-l-tabt-min-2 2em padding left in tablet and higher
+ *     div.l-pad-r-desk-2 2em padding top in desktop
+ *     div.l-pad-b-fp-2 0.2em padding bottom
+ *     div.l-pad-t-mobi-fp-12 1.2em padding top in mobile
  */
    
  /**
  * Margins:
- * `.l-margin-` - [top|left|bottom|right]-[desktop|tablet[-min|-max]|mobile]-[fp-]$x
+ * `.l-mgn-` - [l|r|t|b]-[desk|tabt[-min|-max]|mobi]-[fp-]$x
  *
  *     @example
- *     div.l-margin-2 2em margin all around
- *     div.l-margin-left-3 3em margin left
- *     div.l-margin-left-tablet-min-2 2em margin left in tablet and higher
- *     div.l-margin-right-desktop-2 2em margin top in desktop
- *     div.l-margin-bottom-fp-2 0.2em margin bottom
- *     div.l-margin-top-mobile-fp-12 1.2em margin top in mobile
+ *     div.l-mgn-2 2em margin all around
+ *     div.l-mgn-l-3 3em margin left
+ *     div.l-mgn-l-tabt-min-2 2em margin left in tablet and higher
+ *     div.l-mgn-r-desk-2 2em margin top in desktop
+ *     div.l-mgn-b-fp-2 0.2em margin bottom
+ *     div.l-mgn-t-mobi-fp-12 1.2em margin top in mobile
  */
    
-.l-mobile 
+.l-mobi 
   display none !important
   +bp(max, $mobile-max)
     display block !important
     
-.l-desktop
+.l-desk
   +bp(max, $tablet-max)
     display none !important
     
-.l-tablet-max
+.l-tabt-max
   +bp(min, $desktop-min)
     display none !important
 
   +bp(max, $tablet-max)
     display block !important
     
-.l-tablet
+.l-tabt
   +bp(min, $desktop-min)
     display none !important
 
@@ -87,15 +86,15 @@
   +bp(max, $mobile-max)
     display none !important
     
-.l-tablet-min
+.l-tabt-min
   display none !important
   +bp(min, $tablet-min)
     display block !important
     
-.l-float-right
+.l-flt--r
   float right !important
   
-.l-float-left
+.l-flt--l
   float left !important
   
 .l-hidden 
@@ -104,26 +103,42 @@
 .l-block 
   display block !important
   
-.l-inline-block 
+.l-block--mobi
+  @media $small
+    display block !important
+    
+.l-block--tabt-min
+  @media $medium-min
+    display block !important
+    
+.l-block--tabt-max
+  @media $medium-max
+    display block !important
+    
+.l-block--tabt
+  @media $medium
+    display block !important
+  
+.l-inl-block 
   display inline-block !important
 
 .l-relative
   position relative !important
   
 /* Vertical center */
-.l-vcenter--left
+.l-vcenter--l
   position absolute
   top 50%
   transform translate(0, -50%)
   
 .l-vcenter
-  @extend .l-vcenter--left
+  @extend .l-vcenter--l
   left 50%
   margin-right -50%
   transform translate(-50%, -50%)
   
-.l-vcenter--right
-  @extend .l-vcenter--left
+.l-vcenter--r
+  @extend .l-vcenter--l
   right 0 
 
 .l-center 
@@ -135,110 +150,117 @@ for $x in (0..100)
   .l-width-{$x}p
     width $x * 1% !important
     
-  .l-width-desktop-{$x}p
+  .l-width-desk-{$x}p
     @media $large
       width $x * 1% !important
       
-  .l-width-tablet-{$x}p
+  .l-width-tabt-{$x}p
     @media $medium
       width $x * 1% !important
       
-  .l-width-tablet-min-{$x}p
+  .l-width-tabt-min-{$x}p
     @media $medium-min
       width $x * 1% !important
       
-  .l-width-tablet-max-{$x}p
+  .l-width-tabt-max-{$x}p
     @media $medium-max
       width $x * 1% !important
       
-  .l-width-mobile-{$x}p
+  .l-width-mobi-{$x}p
     @media $small
       width $x * 1% !important
   
 // fp-$x or floating point $x 
+$positions = "l", "r", "t", "b"
+$spaces = "mgn", "pad"
+
 for $x in (0..70) 
-  for $spacing in "margin" "padding"
-    .l-{$spacing}-{$x}
+  for $spacing, $space in "margin" "padding"
+    .l-{$spaces[$space]}-{$x}
       {$spacing} $x * 1em !important
       
-    .l-{$spacing}-mobile-{$x}
+    .l-{$spaces[$space]}-mobi-{$x}
       @media $small
         {$spacing} $x * 1em !important
         
-    .l-{$spacing}-tablet-{$x}
+    .l-{$spaces[$space]}-tabt-{$x}
       @media $medium
         {$spacing} $x * 1em !important
-        
-    .l-{$spacing}-tablet-max-{$x}
+    
+    .l-{$spaces[$space]}-tabt-min-{$x}
+      @media $medium-min
+        {$spacing} $x * 1em !important
+            
+    .l-{$spaces[$space]}-tabt-max-{$x}
       @media $medium-max
         {$spacing} $x * 1em !important
         
-    .l-{$spacing}-desktop-{$x}
+    .l-{$spaces[$space]}-desk-{$x}
       @media $large
         {$spacing} $x * 1em !important
         
   
-  for $value in "left" "right" "top" "bottom"
+  for $value, $pos in "left" "right" "top" "bottom"
       
-    .l-margin-{$value}-{$x}
+    .l-mgn-{$positions[$pos]}-{$x}
       margin-{$value} $x * 1em !important
       
-    .l-margin-{$value}-fp-{$x}
+    .l-mgn-{$positions[$pos]}-fp-{$x}
       margin-{$value} ($x/10em) !important
       
-    .l-margin-{$value}-tablet-min-fp-{$x}
+    .l-mgn-{$positions[$pos]}-tabt-min-fp-{$x}
       @media $medium-min
         margin-{$value} ($x/10em) !important
         
-    .l-margin-{$value}-tablet-max-fp-{$x}
+    .l-mgn-{$positions[$pos]}-tabt-max-fp-{$x}
       @media $medium-max
         margin-{$value} ($x/10em) !important
         
-    .l-margin-{$value}-mobile-fp-{$x}
+    .l-mgn-{$positions[$pos]}-mobi-fp-{$x}
       @media $small
         margin-{$value} ($x/10em) !important
       
-    .l-margin-{$value}-desktop-{$x}
+    .l-mgn-{$positions[$pos]}-desk-{$x}
       @media $large
         margin-{$value} $x * 1em !important
       +ie(8)
         margin-{$value} $x * 1em !important
         
-    .l-margin-{$value}-tablet-{$x}
+    .l-mgn-{$positions[$pos]}-tabt-{$x}
       @media $medium
         margin-{$value} $x * 1em !important
         
-    .l-margin-{$value}-mobile-{$x}
+    .l-mgn-{$positions[$pos]}-mobi-{$x}
       @media $small
         margin-{$value} $x * 1em !important
         
-    .l-padding-{$value}-mobile-{$x}
-      @media $mobile
+    .l-pad-{$positions[$pos]}-mobi-{$x}
+      @media $small
         padding-{$value} $x * 1em !important
         
-    .l-padding-{$value}-tablet-{$x}
+    .l-pad-{$positions[$pos]}-tabt-{$x}
       @media $medium
         padding-{$value} $x * 1em !important
         
-    .l-padding-{$value}-tablet-min-{$x}
-      @media $medium
+    .l-pad-{$positions[$pos]}-tabt-min-{$x}
+      @media $medium-min
         padding-{$value} $x * 1em !important
         
-    .l-padding-{$value}-tablet-max-{$x}
+    .l-pad-{$positions[$pos]}-tabt-max-{$x}
       @media $medium-max
         padding-{$value} $x * 1em !important
         
-    .l-padding-{$value}-desktop-{$x}
+    .l-pad-{$positions[$pos]}-desk-{$x}
       @media $large
         padding-{$value} $x * 1em !important
       
-    .l-padding-{$value}-{$x}
+    .l-pad-{$positions[$pos]}-{$x}
       padding-{$value} $x * 1em !important
       
-    .l-padding-{$value}-fp-{$x}
+    .l-pad-{$positions[$pos]}-fp-{$x}
       padding-{$value} ($x/10em) !important
       
-    .l-padding-{$value}-mobile-fp-{$x}
+    .l-pad-{$positions[$pos]}-mobi-fp-{$x}
       @media $small
         padding-{$value} ($x/10em) !important
 

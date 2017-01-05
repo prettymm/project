@@ -7,7 +7,7 @@ Instructions
 - Use BEM
 - Use sensible names for the steams of a selector name  
 - Long words can use meaningful abbreviations if:  
--- The selector is a utility class (1. Global below), in which case it is most likely frequently used
+-- The selector is a utility class (1. Global below), in which case it is most likely frequently used  
 -- The abbreviation is meaningful and/or universally accepted. If you do not know what abbreviation to use, try finding a meaningful one from http://www.abbreviations.com/abbreviation/margin  
 - Namespace class/id names with appropriate namespace prefix: .c-, .ic-, .l-, .txt 
 - Beware heavy nesting and/or long definitions where it requires excessive scrolling to realise the context parent class/id

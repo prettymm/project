@@ -381,7 +381,7 @@ var getBusy = function() {
 };
 
 var reload = function(file) {
-  if (file.indexOf('/'+config.firstPage) > -1) {
+  if (file.indexOf('/' + config.firstPage) > -1) {
     bs.reload(paths.dest.base + config.home);
   }
   setTimeout(function() {

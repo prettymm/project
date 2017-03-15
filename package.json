@@ -1,13 +1,12 @@
 {
   "name": "FELab",
-  "FELab-version": "6.1.0",
-  "version": "6.1.0",
+  "FELab-version": "7.0.0",
+  "version": "7.0.0",
   "private": true,
   "scripts": {
     "start": "gulp -lr",
     "ssl": "sudo PORT=80 gulp -lr",
     "deploy": "gulp stylus coffee jade -d ; sh deploy.sh",
-    "style": "./node_modules/styledown/bin/styledown src/stylus/**/*.styl src/stylus/config.md > build/styleguide.html",
     "css": "stylus -w -c src/stylus/app*.styl -o ./build/assets/css/",
     "build": "gulp jade & gulp coffee & gulp stylus",
     "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc"
@@ -25,6 +24,7 @@
     "gulp-imagemin": "^2.2.1",
     "gulp-insert": "^0.5.0",
     "gulp-jade": "^1.0.1",
+    "gulp-kss": "0.0.2",
     "gulp-jshint-classic": "1.5.1",
     "gulp-recursive-folder": "^0.9.4",
     "gulp-rename": "^1.2.2",

@@ -6,7 +6,6 @@ Global Dev Requirements
 -------------
   * npm (http://nodejs.org/)
   * gulp
-  * styledown
   * uglifyjs
   * stylint
   * nodemon
@@ -29,7 +28,7 @@ Install
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp styledown uglifyjs stylint
+npm install -g gulp uglifyjs stylint
 cd $new-project-name
 npm install
 npm install nodemon@1.3.7
@@ -51,14 +50,14 @@ There are some options that can be enabled when running `gulp`:
 - `-img`  # enable `gulp-imagemin`; The source images will then be loaded from the directory `src\img`. So make sure you have created that directory if you enable this option.  
 - `-maps` # enable sourcemaps    
 - `-port=#` # change the server port #; default is 5000    
-- `-deploy` # app js will not be minified by default, add this option for production/live env  
+- `-deploy` or `-d` # app js will not be minified by default, add this option for production/live env  
 - `-js`   # Use this option if you are importing an old project for which classic JS (src/js) is used instead of CoffeeScript. For the sake of organisation, a project cannot use both JS and CoffeeScript. If this is a new project, please only use CoffeeScript (src/coffee).
 
 Examples
 ```
 gulp -maps
 gulp -lr -img
-gulp coffee -deploy
+gulp coffee -d # minifiy the JS build for production
 ```
 
 Deploy
@@ -84,9 +83,9 @@ npm start # enter your password and browse https://localhost
 
 Styleguide
 -------------
-Stylus files need to be documented so that the style guide can be automatically generated. We use a very simple generator which does all the heavy lifting called [Styledown](https://github.com/styledown/styledown). 
+Stylus files need to be documented so that the style guide can be automatically generated. 
 ```
-npm run style # generates updated style guide
+gulp sg # generates updated style guide
 ```
 
 Git Standards
@@ -103,7 +102,7 @@ Coding Standards
 - 2 spaces as a tab for JS, CSS, CoffeeScript, Stylus, Jade  
 - camelCase JS variable/function names  
 - Utilize the DRY principle in your code; do not repeat the same code in multiple areas; use stylus & jade mixins, JS functions etc to keep code dry  
-- CSS class/id names with dashed format: eg. .c-carousel, .icon-logo, #unique-element
+- CSS class/id names with dashed format: eg. .c-carousel, .ic-logo, #unique-element
 - If the project must be ADA compliant, make sure that you set up landmarks from the very start    
 - Do NOT use browserify and shim in the project. See vendor/README.md for details  
 - Stylus files need to be documented so that the style guide can be automatically generated   
@@ -119,8 +118,8 @@ Coding Standards
   <div class="c-main" role="main">
   <section class="c-article" aria-label="Article">
     <section class="c-breadcrumbs" aria-label="Breadcrumbs">
-      <span class="l-inline-block ic-bread">
-      <span class="l-inline-block meta">Home > Rules</span>
+      <span class="l-inl-block ic-bread">
+      <span class="l-inl-block meta">Home > Rules</span>
     </section>
     <section class="c-article-main" aria-label="Article main">...</section>
     <section class="c-article-footer" aria-label="Article footer">...</section>

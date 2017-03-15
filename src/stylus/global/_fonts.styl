@@ -1,16 +1,17 @@
-/***
- * Fonts: `.font`
- */
+// Typography
+//
+// Styleguide 2
  
-/**
- * Name:
- * `.font--name` - Name Light|Regular|Medium
- * 
- *     @example
- *     p.font--name-light Light Hello world
- *     p.font--name-regular Regular Hello world
- *     p.font--name-medium Medium Hello world
- */
+// Fonts
+//
+// `.font--[modifier]`
+// 
+// .font--modifier - Font modifier
+// 
+// Markup:
+// <h1 class="{$modifiers}">Font</h1>
+//
+// Styleguide 2.1
 
    
 // @import 'fonts/_*.styl'
@@ -27,8 +28,8 @@ font-fa()
   font-family 'FontAwesome'
   
 
-$font-names = "Font name" 
-$class-names = "font-name"
+$font-names = "Font name", "Font name 2" 
+$class-names = "font-name", "font-name2"
 
 for $name, $i in $font-names
   .font--{$class-names[$i]}

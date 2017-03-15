@@ -1,38 +1,41 @@
-/***
- * Theme: `.theme` - profero-yellow|dark-grey 
- */
- 
-/**
- * Theme children: Flexible. control what elements take on the background colour of the theme
- * `.theme--*` - profero-yellow|dark-grey 
- * 
- *     @example
- *     div.theme--profero-yello
- *      p.theme__txt My text colour is based on the colour of the theme set directly on me
- *      p.theme__bg My background colour is based on the colour of the theme set directly on me
- */
- 
- /**
- * Theme children 2: Automatic. set the text and background colours on the theme element
- * `.theme--*` - profero-yellow|dark-grey 
- * 
- *     @example
- *     div.theme--profero-yellow.theme--colored-bg.theme--colored-txt
- *      p.bg--white My text colour is based on the colour of the theme set by `.theme--colored-txt`
- *      p.text--white We take on the background colour of on the the theme set by `.theme--colored-bg`
- *      
- */
- 
-$img-names = "dark-grey", "profero-yellow" 
-$color-names = "dark-grey", "profero-yellow"
+// Theme Flexible
+//
+// `.theme__[txt|bg]` Control what elements take on the text/background colour of the theme by manually setting appropriate class on the desired child element.
+// In this way the developer can individually set the class on a per element basis.
+//
+// .theme__txt - Translates text colour of children elements to that of the theme
+// .theme__bg - Translates background colour of children elements to that of the theme
+// 
+// Markup:
+// <div class="theme--primary-yellow">
+//   <h1>Hello World</h1>
+//   <p class="{$modifiers}">My property colour is based on the colour of the theme set directly on me</p>
+// </div>
+//
+// Styleguide 5.2
 
-$colors = $col-dark-grey, $col-profero-yellow
+// Theme Automatic
+//
+// `.theme--colored-[txt|bg]` Automatically use the selected theme colour as a text or background colour for the element and all its children.
+// In this way all children will take on the colour of the theme. 
+//
+// .theme--colored-txt - Text colour of element and children is based on the colour of the theme
+// .theme--colored-bg - Background colour of element and children is based on the colour of the theme  
+// 
+// Markup:
+// <div class="theme--primary-yellow {$modifiers}">
+//   <h1>Hello World</h1>
+//   <p>My property colour is based on the colour of the theme set on <code>$(this).parents('.theme--$color')</code></p>
+// </div>
+//
+// Styleguide 5.3
+ 
+ 
 
-for $color, $color-index in $colors
-  $img = $img-names[$colorIndex]
+for $color, $colorIndex in colors()
   .theme
 
-    &--{$color-names[$color-index]}
+    &--{$color-names[$colorIndex]}
 
       &.theme
         &--colored-txt

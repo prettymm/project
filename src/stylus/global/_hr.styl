@@ -1,23 +1,34 @@
-/***
- * Horizontal Rule: `.hr` - Look through src/global/_hr.styl for more styles.
- */
- 
- /**
- * Text alignment:
- * `.hr--` - full|white|white-blue
- *
- *     @example
- *     div.bg--primary-blue.txt--white.l-pad-2 
- *      hr.hr--full
- *      p Text
- *      hr.hr--white
- *      p Text 2
- */
+// Presentation
+//
+// Styleguide 5
+
+// Separators/Dividers
+//
+// `.hr` Horizontal Rules
+//
+// .hr--content - Content 
+// .hr--headline - Headline
+// 
+// Markup:
+// <hr class="hr {$modifiers}">
+//
+// Styleguide 5.1
    
-.hr
-  &--full
+hr, div
+  &.hr
+    clearfix()
+    text-align left
+    display block
+    border none
+    width 100px
+    margin 25px 0
+    height 1px
+    
+  &.hr--content
+    background-color $col-dark-grey
     width 100%
-    margin-top 1em
-    margin-bottom 1em
-  &--white 
-    border-color white
+    
+  &.hr--headline
+    background-color $col-profero-yellow
+    height 2px
+    width 70px

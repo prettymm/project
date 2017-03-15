@@ -1,26 +1,35 @@
-/***
- * Backgrounds: `.bg` - Look through src/global/_bg.styl for more styles.
- */
- 
- /**
- * Text alignment:
- * `.bg--` - transparent|primary-blue|secondary-blue|white
- *
- *     @example
- *     p.bg--primary-blue.txt--white Primary blue bg
- *     p.bg--white.txt--yellow White bg
- *     p.bg--secondary-blue.txt--white Secondary blue bg
- */
+// Background
+//
+// Styleguide 4
+
+// Colors
+//
+// `.bg` - Look through common/base/bg.styl for more styles.
+//
+// .bg--white - White background
+// .bg--black.txt--white - Black background
+// .bg--primary-yellow - Primary yellow background
+//
+// Markup:
+// <div class="{$modifiers}">BG Color</div>
+// 
+// Styleguide 4.1
    
 
+.bg--cover
+  bg-size(cover)
+  
 .bg--transparent 
   background-color transparent !important
   
-.bg--primary-blue
-  background-color $col-profero-yellow !important
-  
-.bg--secondary-blue
-  background-color $col-secondary-blue !important
-  
-.bg--white
-  background-color white !important
+for $color, $colorIndex in colors()
+  .bg--{$color-names[$colorIndex]}--hover
+    &:hover, &.is-active 
+      background-color $color !important
+  .bg--{$color-names[$colorIndex]}
+    background-color $color !important
+    &.is-inactive
+      background-color darken($color, 20%) !important 
+    &.has-hover
+      &:hover
+        background-color darken($color, 20%) !important

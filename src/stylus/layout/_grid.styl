@@ -1,26 +1,27 @@
-/***
- * Grid: `.l-grid`
- */
- 
-/**
- * Column:
- * `.l-grid__col` 
- * 
- *     @example
- *     div.l-grid
- *      p.l-grid__col.l-width-40p Column 1, combine me with a <code>.l-width-*</code> size to adjust
- *      p.l-grid__col.l-width-50p Column 2, combine me with a <code>.l-width-*</code> size to adjust
- */
+// Grid
+//
+// `.l-grid`
+//
+// .l-grid - 2 Column grid at 50% width each
+//
+// Markup:
+// <div class="l-grid">
+//   <div class="l-grid__col l-w--tabt-min-50p">
+//     <div class="bg--grey">Col 1</div>
+//   </div>
+//   <div class="l-grid__col l-w--tabt-min-50p">
+//     <div class="bg--grey">Col 2</div>
+//   </div>
+// </div>
+//
+// Styleguide 3.7
  
 .l-grid
-  clearfix()
-  &.has-gutter
-    .l-grid__col
-      margin 1em
+  >* 
+    padding-left 40px
+    &.l-grid__col--mobi-collapse
+      @media $small
+        padding-left 0
+      
   &__col
-    inline-block(top)
-    &--table
-      display table
-    
-  &__cell
-    inline-block(middle)
+    fl()

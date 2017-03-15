@@ -63,6 +63,7 @@ class MLPModule
     @classes =
       active: 'is-active'
       offscreen: 'l-offscreen'
+      ghost: 'l-ghost'
 
     @keys =
       esc: 27

@@ -8,7 +8,7 @@
   slow down the script performance for server loads, and tasks (jade, stylus, coffee etc) 
   time execution.
 
-  Additional tools should be added as an option, as seen below beginning at ln 219
+  Additional tools should be added as an option, as seen below beginning at ln 217
   "process.argv...". Please ask for help when unsure. See README.md for additional
   details.
 **/
@@ -45,6 +45,7 @@ defaultTasks = ['server', 'locale', 'watch-vendor', 'watch-all'],
 spawn = require('child_process').spawn,
 run = require('run-sequence'),
 kouto = require('kouto-swiss'),
+kss = require('gulp-kss'),
 recursiveFolder = require('gulp-recursive-folder'),
 packageJson = require('./package.json'),
 nib = require('nib');
@@ -59,9 +60,6 @@ var merge = function(object1, object2) {
 };
 
 var config = {
-  sections: '', // 'sections/'
-  dirPrefix: '__',
-  dirSuffix: '__',
   styleguide: 'styleguide.html',
   home: 'index.html',
   firstPage: '404.html',
@@ -74,7 +72,7 @@ var config = {
   src: './src/',
   jsLang: 'coffee',
   host: 'http://127.0.0.1:5000',
-  deployHost: '//host.proferochina.com',
+  deployHost: '//host.uidev.proferochina.com',
   port: 5000,
   name: packageJson.name,
   header: '/* (c) '+packageJson.name+' v'+packageJson.version+' '+new Date()+' */'
@@ -82,7 +80,7 @@ var config = {
 
 var generateStyleguide = function() {
   changedFile = config.styleguide;
-  exec('npm run style', generalCallback);
+  run('sg');
 };
 
 var toggle = function(feature, featureEnabled, args) {
@@ -103,28 +101,35 @@ var swallowError = function(error) {
 };
 
 var paths = {
-  build: config.build,
+  regex: {
+    js: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
+    coffee:
+      [ config.src + 'coffee/helpers/_*.coffee', 
+      config.src + 'coffee/modules/_menu.coffee', 
+      config.src + 'coffee/modules/_*.coffee',
+      config.src + 'coffee/modules/_doc-ready.coffee'],
+    stylus: config.src + 'stylus/app*.styl',
+    img: config.src + 'img/*',
+    vendorJs: config.src + 'vendor/js/*.js',
+    jade: config.src + 'jade/pages/**/*.jade',
+    pages: config.src + 'jade/pages/*.jade'
+  },
+  src: {
+    stylus: config.src + 'stylus/',
+    coffee: config.src + 'coffee/',
+    js: config.src + 'js/',
+    vendorJs: config.src + 'vendor/js/',
+    jade: config.src + 'jade/'
+  },
+  dest: {
+    base: config.build,
+    css: config.build + 'assets/css/',
+    js: config.build + 'assets/js/',
+    img: config.build + 'assets/img/',
+    static: config.build + 'assets/'
+  },
   pages: 'pages/',
-  basePages: config.src + 'jade/pages/*.jade',
-  static: config.build + 'assets/',
-  buildJs: config.build + 'assets/js/',
-  img: config.build + 'assets/img/',
-  css: config.build + 'assets/css/',
-  js: config.src + 'js/',
-  vendorJs: config.src + 'vendor/js/',
-  coffee: config.src + 'coffee/',
-  srcStylus: config.src + 'stylus/app*.styl',
-  srcJs: [config.src + 'js/helpers/_*.js', config.src + 'js/modules/_*.js'],
-  srcCoffee: 
-  [ config.src + 'coffee/helpers/_*.coffee', 
-    config.src + 'coffee/modules/_menu.coffee', 
-    config.src + 'coffee/modules/_*.coffee',
-    config.src + 'coffee/modules/_doc-ready.coffee'],
-  srcJade: config.src + 'jade/pages/**/*.jade',
-  srcImg: config.src + 'img/*',
-  styles: config.src + 'stylus/',
-  locale: config.src + 'locale/'+ config.language +'.json',
-  jade: config.src + 'jade/'
+  locale: config.src + 'locale/'+ config.language +'.json'
 };
 
 var printChanged = function(changedFile) {
@@ -167,7 +172,7 @@ var getLocalePath = function() {
             .on('error', swallowError)
             .pipe(rename(function (path) {
               path.dirname = fn;
-            })).pipe(gulp.dest(paths.build));
+            })).pipe(gulp.dest(paths.dest.base));
         } 
       });
     } 
@@ -267,33 +272,42 @@ process.argv.forEach(function (val, index, array) {
 });
 
 gulp.task('images', function() {
-  return gulp.src(paths.srcImg)
+  return gulp.src(paths.regex.img)
     .pipe(imagemin({optimizationLevel: 5 }))
-    .pipe(gulp.dest(paths.img));
+    .pipe(gulp.dest(paths.dest.img));
 });
 
 gulp.task('stylus', function() {
     // console.time("Loading plugins"); 
-    gulp.src(paths.srcStylus)
+    gulp.src(paths.regex.stylus)
     .pipe(stylus({
-      use: [nib()],
-      import:['nib'], // uncomment this and change above to [nib()] if prefer nib
+      use: [kouto()],
+      // import:['nib'], // uncomment this and change above to [nib()] if prefer nib
       compress: true
     }))
     .on('error', swallowError)
     .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header, name: 'deploy - css header'}))
-    .pipe(gulp.dest(paths.css));
+    .pipe(gulp.dest(paths.dest.css));
     // console.timeEnd("Loading plugins");
 });
 
-gulp.task('stylus-success', function() {
+gulp.task('stylus-ok', function() {
   run('stylus');
   generateStyleguide();
 });
 
+gulp.task('sg', function() {
+  gulp.src(paths.src.stylus + '**/*.styl')
+    .pipe(kss({
+      overview:  __dirname + '/src/stylus/styleguide.md',
+      templateDirectory: __dirname + '/build/sg/template/'
+    }))
+    .pipe(gulp.dest(paths.dest.base + 'sg/'));
+});
+
 gulp.task('stylint', function() {
   ls = spawn('npm', ['run', 'stylint']);
-  stream(ls, 'stylus-success');
+  stream(ls, 'stylus-ok');
 });
 
 /* Jade */
@@ -310,16 +324,16 @@ var getSubDirectoryName = function(p) {
 };
 
 var getJadePath = function() {
-  var _path = config._jadePath || paths.srcJade,
+  var _path = config._jadePath || paths.regex.jade,
   file = process.argv[3];
-  _path = config.singleJade ? paths.jade + paths.pages + file.split('=')[1] : _path;
+  _path = config.singleJade ? paths.src.jade + paths.pages + file.split('=')[1] : _path;
   gutil.log(gutil.colors.yellow(_path));
   config._jadePath = _path;
   return _path;
 };
 
 gulp.task('jade', recursiveFolder({
-  base: paths.jade + paths.pages 
+  base: paths.src.jade + paths.pages 
   }, function(folderFound){
   return gulp.src(folderFound.path + '/*.jade')
     .pipe(jade({
@@ -327,7 +341,7 @@ gulp.task('jade', recursiveFolder({
       pretty: true
     }))
     .on('error', swallowError)
-    .pipe(gulp.dest(paths.build + '/' + folderFound.pathTarget));
+    .pipe(gulp.dest(paths.dest.base + '/' + folderFound.pathTarget));
 }));
 
 gulp.task('jade-one', function() {
@@ -346,7 +360,7 @@ gulp.task('jade-one', function() {
         path.dirname = directoryName;
       }
     }))
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.dest.base));
 });
 
 /* End Jade */
@@ -368,7 +382,7 @@ var getBusy = function() {
 
 var reload = function(file) {
   if (file.indexOf('/'+config.firstPage) > -1) {
-    bs.reload(paths.build+config.home);
+    bs.reload(paths.dest.base + config.home);
   }
   setTimeout(function() {
     if (bs && (getBusy() == '0')) {
@@ -387,13 +401,13 @@ var initServerBase = function(ops) {
       port: 8080
     }); 
     app.use(require('connect-browser-sync')(bs));
-    bs.watch(paths.build + '**').on('change', reload);
+    bs.watch(paths.dest.base + '**').on('change', reload);
     bs.reload();
   }
 
   app.use(logger('dev'));
-  app.use(express.static(paths.build));
-  app.set('views', path.join(__dirname, paths.jade + paths.pages));
+  app.use(express.static(paths.dest.base));
+  app.set('views', path.join(__dirname, paths.src.jade + paths.pages));
   app.set('view engine', 'jade');
   var render = function(req, res) {
     var page = getPage(req);
@@ -447,7 +461,7 @@ gulp.task('server', function(cb) {
 });
 
 gulp.task('coffee', function() {
-  return gulp.src(paths.srcCoffee) /* Use an array of files instead if need to concat in order. e.g gulp.src(['_file1.coffee', '_file2.coffee']) */
+  return gulp.src(paths.regex.coffee) /* Use an array of files instead if need to concat in order. e.g gulp.src(['_file1.coffee', '_file2.coffee']) */
     .pipe(toggle(sourcemaps.init, featureEnabled.maps))
       .pipe(coffee({ bare: true })
         .on('error', swallowError))
@@ -456,11 +470,11 @@ gulp.task('coffee', function() {
       .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
       .pipe(toggle(insert.append, featureEnabled.deploy, {params: '\n})();', name: 'deploy - wrap append'}))
     .pipe(toggle(sourcemaps.write, featureEnabled.maps, {params: '../maps', name: 'source maps'}))
-    .pipe(gulp.dest(paths.buildJs));
+    .pipe(gulp.dest(paths.dest.js));
 });
 
 gulp.task('js', function() {
-  return gulp.src(paths.srcJs)
+  return gulp.src(paths.regex.js)
     .pipe(toggle(sourcemaps.init, featureEnabled.maps))
     .pipe(jshint({ 
       unused: true, 
@@ -481,20 +495,20 @@ gulp.task('js', function() {
     .pipe(toggle(insert.prepend, featureEnabled.deploy, {params: config.header + '\n(function(){"use strict";', name: 'deploy - wrap prepend'}))
     .pipe(toggle(insert.append, featureEnabled.deploy, {params: '\n})();', name: 'deploy - wrap append'}))
     .pipe(toggle(sourcemaps.write, featureEnabled.maps, {params: '../maps', name: 'source maps'}))
-    .pipe(gulp.dest(paths.buildJs));
+    .pipe(gulp.dest(paths.dest.js));
 });
 
 gulp.task('vendor-js', function (cb) {
   pump([
-    gulp.src(paths.vendorJs +'*.js'),
+    gulp.src(paths.regex.vendorJs),
     concat('vendor.min.js'),
     uglify(),
-    gulp.dest(paths.buildJs)], cb
+    gulp.dest(paths.dest.js)], cb
   );
 });
 
 gulp.task('watch-vendor', function() {
-  watch(paths.vendorJs, function(file) {
+  watch(paths.src.vendorJs, function(file) {
     changedFile = file;
     unsetBusy();
     gulp.start('vendor-js');
@@ -502,12 +516,12 @@ gulp.task('watch-vendor', function() {
 });
 
 gulp.task('watch-all', function() {
-  watch(paths.jade, function(file) {
+  watch(paths.src.jade, function(file) {
     printChanged(file);
     var task = 'jade';
     if (file.match('/_')) {
-      setBusy("1");
-      config._jadePath = paths.srcJade;
+      setBusy('1');
+      config._jadePath = paths.regex.jade;
     } else {
       unsetBusy();
       task = 'jade-one';
@@ -515,7 +529,7 @@ gulp.task('watch-all', function() {
     }
     gulp.start(task);
   });
-  watch(paths.styles, function(file) {
+  watch(paths.src.stylus, function(file) {
     printChanged(file);
     unsetBusy();
     gulp.start([featureEnabled.style]);

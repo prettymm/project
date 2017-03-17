@@ -42,7 +42,7 @@
     "open": "0.0.5",
     "pump": "^1.0.1",
     "run-sequence": "^1.1.3",
-    "styledown": "^2.0.0-pre1",
+    "stylus": "0.54.0",
     "through2": "^0.6.5",
     "try-thread-sleep": "^1.0.0"
   },

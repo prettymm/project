@@ -50,6 +50,14 @@ $bar = '&__bar'
     width 70%
     margin auto
     color white
+  &__columns
+    li 
+      fl()
+      width 33%
+      +medium() 
+        width 50% 
+      +small()
+        width 100%
   &__item
     inl-block(top)
     margin $site-padding
@@ -68,3 +76,4 @@ $bar = '&__bar'
         text-decoration underline
     li 
       padding 5px 0
+      list-style none

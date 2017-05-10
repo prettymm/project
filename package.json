@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp -lr",
     "ssl": "sudo PORT=80 gulp -lr",
-    "deploy": "gulp stylus coffee jade -d ; sh deploy.sh",
+    "deploy": "gulp stylus coffee jade -p ; sh deploy.sh",
     "css": "stylus -w -c src/stylus/app*.styl -o ./build/assets/css/",
     "build": "gulp jade & gulp coffee & gulp stylus",
     "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc"

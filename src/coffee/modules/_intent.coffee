@@ -44,5 +44,4 @@ class Intent extends MLP.apps.MLPModule
         @formatFax()
       
 
-## Add plugin to jQuery namespace.
-$.mlpPlugin(Intent, 'Intent', true)
+$.mlpModule(Intent, 'Intent', true)

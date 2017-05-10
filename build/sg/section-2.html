@@ -30,8 +30,7 @@
               <li class="kss-menu-item"><a href="#section-2.3"><span class="kss-ref">2.3</span><span class="kss-name">Links</span></a></li>              
               <li class="kss-menu-item"><a href="#section-2.4"><span class="kss-ref">2.4</span><span class="kss-name">Text Alignments</span></a></li>              
               <li class="kss-menu-item"><a href="#section-2.5"><span class="kss-ref">2.5</span><span class="kss-name">Text Colors</span></a></li>              
-              <li class="kss-menu-item"><a href="#section-2.6"><span class="kss-ref">2.6</span><span class="kss-name">Font Sizes</span></a></li>              
-              <li class="kss-menu-item"><a href="#section-2.7"><span class="kss-ref">2.7</span><span class="kss-name">Line Heights</span></a></li>              
+              <li class="kss-menu-item"><a href="#section-2.6"><span class="kss-ref">2.6</span><span class="kss-name">Paragraphs</span></a></li>              
             </ul>            
           </nav>
         </div>
@@ -62,7 +61,7 @@
               </div>
             </div>                      </section>                    <section id="section-2.2" class="kss-section kss-depth-2">
             <h1 class="kss-title"><span class="kss-ref">2.2</span> Rank Headings</h1>            
-            <div class="kss-description"><p><code>.h[1|2|3|4]</code> - Make any H rank look like another H rank with the appropriate class</p>
+            <div class="kss-description"><p><code>.h[1|2|3|4|5|6|7]</code> - Make any H rank look like another H rank with the appropriate class</p>
 </div>            
             <div class="kss-modifier-block">
               <div class="kss-modifier kss-modifier-original">
@@ -157,6 +156,14 @@
                 </div>
                 <div class="kss-modifier-example ksskss"><p class="txt--r">Font</p></div>
               </div>              
+              <div class="kss-modifier">
+                <div class="kss-modifier-head">
+                  <div class="kss-modifier-name">.txt--j</div>
+                  <div class="kss-modifier-description"><p>Justify text</p>
+</div>
+                </div>
+                <div class="kss-modifier-example ksskss"><p class="txt--j">Font</p></div>
+              </div>              
               <div class="kss-markup">
                 <pre><code data-language="html">&lt;p class=&quot;{$modifiers}&quot;&gt;Font&lt;/p&gt;</code></pre>
               </div>
@@ -205,71 +212,43 @@ from besides what is currently documented. See src for details.</p>
                 <pre><code data-language="html">&lt;p class=&quot;{$modifiers}&quot;&gt;Text color&lt;/p&gt;</code></pre>
               </div>
             </div>                      </section>                    <section id="section-2.6" class="kss-section kss-depth-2">
-            <h1 class="kss-title"><span class="kss-ref">2.6</span> Font Sizes</h1>            
-            <div class="kss-description"><p><code>.txt--[mobi|tabt[-min|max]|desk]-sz[p]-$x</code> - where <code>$x</code> are numbers (even to 1 decimal place) from 0 - 30.</p>
-</div>            
+            <h1 class="kss-title"><span class="kss-ref">2.6</span> Paragraphs</h1>            
+
             <div class="kss-modifier-block">
               <div class="kss-modifier kss-modifier-original">
                 <div class="kss-modifier-example ksskss"><p class="{$modifiers}">Font</p></div>
               </div>              
               <div class="kss-modifier">
                 <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--sz-1</div>
-                  <div class="kss-modifier-description"><p>1em font-size</p>
+                  <div class="kss-modifier-name">.p1</div>
+                  <div class="kss-modifier-description"><p>P1 - Introduction</p>
 </div>
                 </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--sz-1">Font</p></div>
+                <div class="kss-modifier-example ksskss"><p class="p1">Font</p></div>
               </div>              
               <div class="kss-modifier">
                 <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--tabt-min-sz-2</div>
-                  <div class="kss-modifier-description"><p>2em font-size in tablet or higher</p>
+                  <div class="kss-modifier-name">.p2</div>
+                  <div class="kss-modifier-description"><p>P2 – Featured Body Copy</p>
 </div>
                 </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--tabt-min-sz-2">Font</p></div>
+                <div class="kss-modifier-example ksskss"><p class="p2">Font</p></div>
               </div>              
               <div class="kss-modifier">
                 <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--szp-15</div>
-                  <div class="kss-modifier-description"><p>1.5em font-size</p>
+                  <div class="kss-modifier-name">.p3</div>
+                  <div class="kss-modifier-description"><p>P3 – Regular Body Copy</p>
 </div>
                 </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--szp-15">Font</p></div>
-              </div>              
-              <div class="kss-markup">
-                <pre><code data-language="html">&lt;p class=&quot;{$modifiers}&quot;&gt;Font&lt;/p&gt;</code></pre>
-              </div>
-            </div>                      </section>                    <section id="section-2.7" class="kss-section kss-depth-2">
-            <h1 class="kss-title"><span class="kss-ref">2.7</span> Line Heights</h1>            
-            <div class="kss-description"><p><code>.txt--[mobi|tabt[-min|max]|desk]-lh[p]-$x</code> - where <code>$x</code> are numbers (even to 1 decimal place) from 0 - 30.</p>
-</div>            
-            <div class="kss-modifier-block">
-              <div class="kss-modifier kss-modifier-original">
-                <div class="kss-modifier-example ksskss"><p class="{$modifiers}">Font</p></div>
+                <div class="kss-modifier-example ksskss"><p class="p3">Font</p></div>
               </div>              
               <div class="kss-modifier">
                 <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--lh-1</div>
-                  <div class="kss-modifier-description"><p>1em line-height</p>
+                  <div class="kss-modifier-name">.p4</div>
+                  <div class="kss-modifier-description"><p>P4 – Detailed - Legal Content</p>
 </div>
                 </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--lh-1">Font</p></div>
-              </div>              
-              <div class="kss-modifier">
-                <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--tabt-min-lh-2</div>
-                  <div class="kss-modifier-description"><p>2em line-height in tablet or higher</p>
-</div>
-                </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--tabt-min-lh-2">Font</p></div>
-              </div>              
-              <div class="kss-modifier">
-                <div class="kss-modifier-head">
-                  <div class="kss-modifier-name">.txt--lhp-15</div>
-                  <div class="kss-modifier-description"><p>1.5em line-height</p>
-</div>
-                </div>
-                <div class="kss-modifier-example ksskss"><p class="txt--lhp-15">Font</p></div>
+                <div class="kss-modifier-example ksskss"><p class="p4">Font</p></div>
               </div>              
               <div class="kss-markup">
                 <pre><code data-language="html">&lt;p class=&quot;{$modifiers}&quot;&gt;Font&lt;/p&gt;</code></pre>

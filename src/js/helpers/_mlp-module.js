@@ -9,6 +9,7 @@ $.mlpInit = function(fn, name, set) {
   window.MLP = window.MLP || {};
   window.MLP.apps = window.MLP.apps || {};
   window.MLP.instances = window.MLP.instances || {};
+  window.MLP.config = window.MLP.config || {};
   if (fn && set) {
     name = name || $.mlpFnName(fn);
     window.MLP.apps[name] = fn;
@@ -20,20 +21,20 @@ $.mlpInit = function(fn, name, set) {
 /***
 @fn (obj) - the JS object class
 @name (str) - the name of the class
-@bypass (bool) - whether or not the plugin can be instantiated multiple times
-@elPlugin (bool) - whether to create an element based plugin $(...).pluginName 
-or regular JQuery method $.methodName
+@bypass (bool) - whether or not the module can be instantiated multiple times
+@elModule (bool) - whether to create an element based module $(...).ModuleName 
+or regular JQuery method $.MethodName
 @returnContext (bool) - whether to return an object with class context 
-and the element which instantiated the plugin (@elPlugin must be true)
+and the element which instantiated the module (@elModule must be true)
 **/
 
-$.mlpPlugin = function(fn, name, bypass, elPlugin, returnContext) {
+$.mlpModule = function(fn, name, bypass, elModule, returnContext) {
   var obj;
   if (typeof bypass == "undefined") {
     bypass = false;
   }
-  if (typeof elPluggin == "undefined") {
-    elPluggin = true;
+  if (typeof elModule == "undefined") {
+    elModule = true;
   }
   if (typeof returnContext == "undefined") {
     returnContext = true;
@@ -63,8 +64,9 @@ $.mlpPlugin = function(fn, name, bypass, elPlugin, returnContext) {
     result = returnContext ? {mlp: _this, el: _el} : null;
     return result;
   };
-  $.fn.extend(obj);
-  if (!elPlugin) {
+  if (elModule) {
+    $.fn.extend(obj);
+  } else {
     obj[name] = function(option) {
       return new fn(option);
     };

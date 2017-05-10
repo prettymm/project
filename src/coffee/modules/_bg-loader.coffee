@@ -35,5 +35,5 @@ class BgLoader extends MLP.apps.MLPModule
     bg = @el.target.data key
     if bg then bg else @ops.bg[key]
 
-## Add plugin to jQuery namespace.
-$.mlpPlugin(BgLoader, 'BgLoader', true)
+
+$.mlpModule(BgLoader, 'BgLoader', true)

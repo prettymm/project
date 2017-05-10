@@ -27,4 +27,4 @@ class Carousel extends MLP.apps.MLPModule
       'nextArrow': '<div class="c-parallax__next c-parallax__btn"><img data-role="none" alt="next" src="' + this.el.target.data('btn-next') + '"> </div>')
 
 
-$.mlpPlugin(Carousel, 'Carousel')
+$.mlpModule(Carousel, 'Carousel')

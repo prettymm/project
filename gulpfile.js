@@ -248,8 +248,7 @@ process.argv.forEach(function (val, index, array) {
       arg = val;
       featureEnabled.noserver = true;
     break;
-    case '-deploy':
-    case '-d':
+    case '-p':
       arg = val;
       locals.host = config.deployHost;
       featureEnabled.deploy = true;
@@ -534,7 +533,7 @@ gulp.task('watch-all', function() {
     unsetBusy();
     gulp.start([featureEnabled.style]);
   });
-  watch(paths.regex[config.jsLang], function(file) {
+  watch(paths.src[config.jsLang], function(file) {
     changedFile = file;
     unsetBusy();
     gulp.start([config.jsLang]);

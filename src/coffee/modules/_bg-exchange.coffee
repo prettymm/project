@@ -30,4 +30,4 @@ class BgExchange extends MLP.apps.MLPModule
   exchangeBg: (bg) ->
     @el.target.css('background-image', 'url('+bg+')')
 
-$.mlpPlugin(BgExchange, 'BgExchange', true)
+$.mlpModule(BgExchange, 'BgExchange', true)

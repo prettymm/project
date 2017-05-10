@@ -15,14 +15,14 @@ $.mlpInit = (fn, name, set = true) ->
 ###
 @fn (obj) - the JS object class
 @name (str) - the name of the class
-@bypass (bool) - whether or not the plugin can be instantiated multiple times
-@elPlugin (bool) - whether to create an element based plugin $(...).pluginName 
-or regular JQuery method $.methodName
+@bypass (bool) - whether or not the module can be instantiated multiple times
+@elModule (bool) - whether to create an element based module $(...).ModuleName 
+or regular JQuery method $.MethodName
 @returnContext (bool) - whether to return an object with class context 
-and the element which instantiated the plugin (@elPlugin must be true)
+and the element which instantiated the module (@elModule must be true)
 ###
 
-$.mlpPlugin = (fn, name, bypass = false, elPlugin = true, returnContext = true) ->
+$.mlpModule = (fn, name, bypass = false, elModule = true, returnContext = true) ->
   obj = {}
   $.mlpInit(fn, name)
   name = name || $.mlpFnName(fn)
@@ -42,9 +42,9 @@ $.mlpPlugin = (fn, name, bypass = false, elPlugin = true, returnContext = true) 
 
     result = if returnContext then {mlp: _this, el: _el} else null
     return result
-  $.fn.extend obj 
-
-  if !elPlugin
+  if elModule
+    $.fn.extend obj 
+  else
     obj[name] = (option) ->
       new fn(option)
     $.extend obj
@@ -126,5 +126,5 @@ class MLPModule
   isIE: (version = 8) ->
     bowser.msie && bowser.version == version
 
-## Add plugin to window namespace.
+## Add module to window namespace.
 $.mlpInit(MLPModule, 'MLPModule')

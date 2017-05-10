@@ -50,14 +50,14 @@ There are some options that can be enabled when running `gulp`:
 - `-img`  # enable `gulp-imagemin`; The source images will then be loaded from the directory `src\img`. So make sure you have created that directory if you enable this option.  
 - `-maps` # enable sourcemaps    
 - `-port=#` # change the server port #; default is 5000    
-- `-deploy` or `-d` # app js will not be minified by default, add this option for production/live env  
+- `-p`    # app js will not be minified by default, add this option for production/live env  
 - `-js`   # Use this option if you are importing an old project for which classic JS (src/js) is used instead of CoffeeScript. For the sake of organisation, a project cannot use both JS and CoffeeScript. If this is a new project, please only use CoffeeScript (src/coffee).
 
 Examples
 ```
 gulp -maps
 gulp -lr -img
-gulp coffee -d # minifiy the JS build for production
+gulp coffee -p # minifiy the JS build for production
 ```
 
 Deploy

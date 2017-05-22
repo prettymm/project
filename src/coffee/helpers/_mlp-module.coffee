@@ -49,7 +49,7 @@ $.mlpModule = (fn, name, bypass = false, elModule = true, returnContext = true) 
       new fn(option)
     $.extend obj
 
-class MLPModule 
+class MLPModule
   defaults: {}
 
   constructor: (options, element) ->
@@ -60,7 +60,7 @@ class MLPModule
     @init()
 
   init: ->
-    @classes =
+    @klass =
       active: 'is-active'
       offscreen: 'l-offscreen'
       ghost: 'l-ghost'
@@ -92,6 +92,15 @@ class MLPModule
     @attr =
       tabindex: 'tabindex'
 
+    @setUpProps()
+    @mountApp()
+
+  setUpProps: ->
+    return true
+
+  mountApp: ->
+    return true
+
   stop: (e) ->
     e.preventDefault()
     e.stopPropagation()
@@ -102,28 +111,41 @@ class MLPModule
   currentTarget: (e) ->
     $(e.currentTarget)
 
-  isEnter: (e) ->
+
+  isRight: (e) =>
+    @keycode(e) == @keys.right
+
+  isLeft: (e) =>
+    @keycode(e) == @keys.left
+
+  isUp: (e) =>
+    @keycode(e) == @keys.up
+
+  isDown: (e) =>
+    @keycode(e) == @keys.down
+
+  isEnter: (e) =>
     @keycode(e) == @keys.enter
 
-  isSpace: (e) ->
+  isSpace: (e) =>
     @keycode(e) == @keys.space
 
-  isTab: (e) ->
+  isTab: (e) =>
     @keycode(e) == @keys.tab
 
-  isBackTab: (e) ->
+  isBackTab: (e) =>
     e.shiftKey && @isTab(e)
 
-  isEsc: (e) ->
+  isEsc: (e) =>
     @keycode(e) == @keys.esc
 
-  isEnterOrSpace: (e) ->
+  isEnterOrSpace: (e) =>
     @isEnter(e) || @isSpace(e)
 
-  keycode: (e) ->
+  keycode: (e) =>
     e.which
 
-  isIE: (version = 8) ->
+  isIE: (version = 8) =>
     bowser.msie && bowser.version == version
 
 ## Add module to window namespace.

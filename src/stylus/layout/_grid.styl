@@ -19,9 +19,32 @@
 .l-grid
   >* 
     padding-left 40px
-    &.l-grid__col--mobi-collapse
+    &.l-grid__col--gut-xlg
+      padding-left 60px
+    &.l-grid__col--gut-lg
+      padding-left 50px
+    &.l-grid__col--gut-md
+      padding-left 30px
+    &.l-grid__col--gut-sm
+      padding-left 20px
+    &.l-grid__col--no-gut
+      padding-left 0
+    &.l-grid__col--no-gut-desk
+      @media $large
+        padding-left 0
+    &.l-grid__col--no-gut-tabt-min
+      @media $medium-min
+        padding-left 0
+    &.l-grid__col--no-gut-tabt-max
+      @media $medium-max
+        padding-left 0
+    &.l-grid__col--no-gut-tabt
+      @media $medium
+        padding-left 0
+    &.l-grid__col--no-gut-mobi
       @media $small
         padding-left 0
       
   &__col
     fl()
+    

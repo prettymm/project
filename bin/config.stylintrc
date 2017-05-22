@@ -17,7 +17,7 @@
     "error": false
   },
   "placeholder": "never",
-  "namingConvention": "lowercase-dash",
+  "namingConvention": "BEM",
   "namingConventionStrict": true,
   "extendPref": "@extend",
   "zIndexNormalize": 10

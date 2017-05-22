@@ -1,15 +1,13 @@
-<!--[if (gt IE 8)]><!-->
 script(src=paths.js + 'vendor/jquery.js')
-<!--<![endif]-->
 
-<!--[if (lte IE 8)]>
-script(src=paths.js + 'vendor/old-ie/jquery-1.9.0.js')
+<!--[if (lte IE 9)]>
 script(src=paths.js + 'vendor/old-ie/html5shiv.js')
 script(src=paths.js + 'vendor/old-ie/selectivizr-min.js')
 <![endif]-->
 script.
   var MLP = MLP || {};
-  MLP.paths = !{JSON.stringify(paths)};
+  MLP.paths = !{JSON.stringify({static: paths.static, img: paths.img, css: paths.css, js: paths.js})};
+  
 script(src=paths.js + 'vendor.min.js')
 script(src=paths.js + 'app.min.js')
 

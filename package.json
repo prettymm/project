@@ -1,7 +1,7 @@
 {
   "name": "FELab",
-  "FELab-version": "7.1.0",
-  "version": "7.1.0",
+  "FELab-version": "7.2.0",
+  "version": "7.2.0",
   "private": true,
   "scripts": {
     "start": "gulp -lr",
@@ -9,7 +9,8 @@
     "deploy": "gulp stylus coffee jade -p ; sh deploy.sh",
     "css": "stylus -w -c src/stylus/app*.styl -o ./build/assets/css/",
     "build": "gulp jade & gulp coffee & gulp stylus",
-    "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc"
+    "stylint": "stylint ./src/stylus -c ./bin/config.stylintrc",
+    "ie": "blessc build/assets/css/app-ie.css -f"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.14.0",

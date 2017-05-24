@@ -28,7 +28,7 @@ Install
 First install all global requirements if not already on system
 
 ```
-npm install -g gulp uglifyjs stylint
+npm install -g gulp uglifyjs stylint bless
 cd $new-project-name
 npm install
 npm install nodemon@1.3.7
@@ -86,6 +86,13 @@ Styleguide
 Stylus files need to be documented so that the style guide can be automatically generated. 
 ```
 gulp sg # generates updated style guide
+```
+
+Legacy IE
+-------------
+If you are working on a very large project, you may end up with many styles and a large CSS file, which lte IE9 does not load completely. Handle this issue with `bless` module:
+```
+npm run ie
 ```
 
 Git Standards

@@ -92,7 +92,8 @@ class MLPModule {
   init() {
     this.classes = {
       active: 'is-active',
-      offscreen: 'l-offscreen'
+      offscreen: 'l-offscreen',
+      ghost: 'l-ghost'
     };
     
     this.keys = {
@@ -139,6 +140,22 @@ class MLPModule {
     return $(e.currentTarget);
   }
 
+  isRight(e) {
+    return this.keycode(e) === this.keys.right;
+  }
+
+  isLeft(e) {
+    return this.keycode(e) === this.keys.left;
+  }
+
+  isUp(e) {
+    return this.keycode(e) === this.keys.up;
+  }
+
+  isDown(e) {
+    return this.keycode(e) === this.keys.down;
+  }
+
   isEnter(e) {
     return this.keycode(e) === this.keys.enter;
   }
@@ -169,7 +186,7 @@ class MLPModule {
 
   isIE(version) {
     if (typeof version == "undefined") {
-      version = 8;
+      version = 9;
     }
     return bowser.msie && bowser.version === version;
   }

@@ -4,13 +4,13 @@ FE Lab > Coffee Sources
 Instructions
 -------------
 
-- Do not attach plugins via class/id name, use a standard attribute like data-js-plugin-name 
+- Do not attach plugins via class/id name, use a standard attribute like data-js-module-name 
 ```
 // jade
-a(data-js-plugin-name).btn-next
+a(data-js-module-name).btn-next
 
 // coffee
-$('[data-js-plugin-name]').PluginName()
+$('[data-js-module-name]').ModuleName()
 ```
 
 - Use js- selector names to show that certain elements have JS behaviour attached  

@@ -92,15 +92,6 @@ class MLPModule
     @attr =
       tabindex: 'tabindex'
 
-    @setUpProps()
-    @mountApp()
-
-  setUpProps: ->
-    return true
-
-  mountApp: ->
-    return true
-
   stop: (e) ->
     e.preventDefault()
     e.stopPropagation()
@@ -110,7 +101,6 @@ class MLPModule
 
   currentTarget: (e) ->
     $(e.currentTarget)
-
 
   isRight: (e) =>
     @keycode(e) == @keys.right
@@ -145,7 +135,7 @@ class MLPModule
   keycode: (e) =>
     e.which
 
-  isIE: (version = 8) =>
+  isIE: (version = 9) =>
     bowser.msie && bowser.version == version
 
 ## Add module to window namespace.

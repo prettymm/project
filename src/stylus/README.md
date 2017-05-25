@@ -18,11 +18,11 @@ Instructions
 
 Internet Explorer
 -------------
-- Handle IE8 supported projects through the _ie.styl/mixin, example:
+- Handle lte IE9 supported projects through the _ie.styl/mixin, example:
 ```
 .c-carousel
   display inline-block
-  +ie(8)
+  +ie(9)
     display inline  // This will only appear in app-ie.css file
 ```
 

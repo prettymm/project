@@ -14,9 +14,6 @@ tmp
 .idea
 *.swp
 deploy.sh
-deploy
-deploy?
-deploy/*
 bb-static
 bb-static/*
 npm-debug.log*

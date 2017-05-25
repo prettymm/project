@@ -4,7 +4,7 @@ FE Lab > JS Sources
 Instructions
 -------------
 
-- Do not attach plugins via class/id name, use a standard attribute like data-js-module-name
+- Do not attach modules via class/id name, use a standard attribute like data-js-module-name
 ```
 // jade
 a(data-js-module-name="foo").btn-next
@@ -12,6 +12,12 @@ a(data-js-module-name="foo").btn-next
 // js
 $('[data-js-module-name]').ModuleName();
 ```
+
+- Options passed to the module in the form:
+```
+a(data-js-module-name="some-value", data-option-name="some-value2").btn-next
+```
+
 - Use js- selector names to show that certain elements have JS behaviour attached  
 ``` 
 // jade

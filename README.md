@@ -62,16 +62,17 @@ gulp coffee -p # minifiy the JS build for production
 
 Deploy
 -------------
-You can deploy this to http://loweproferotech.bitbucket.org/bb-felab/ by running:
+You can deploy this to felab.uidev.proferochina.com by running:
 ```
-npm run deploy
+npm run deploy # builds all files for production  OR
+sh deploy.sh # to simply push site files to `*uidev.proferochina.com`
 ```
 You must set up (_)deploy.sh from the https://bitbucket.org/loweproferotech/loweproferotech.bitbucket.org repo.  
 If you downloaded _deploy.sh, change vars to:
 ```
-projectName=bb-felab
+projectName=bb-$new-project-name  # e.g. bb-felab
 repo=https://{username}@bitbucket.org/loweproferotech/loweproferotech.bitbucket.org.git
-## set username OR use git@bitbucket.org:loweproferotech/loweproferotech.bitbucket.org.git as repo url
+## set username OR use git@bitbucket.org:loweproferotech/loweproferotech.bitbucket.org.git as repo url if you have set up SSH
 ```
 
 HTTPS
@@ -97,10 +98,10 @@ npm run ie
 
 Git Standards
 --------------
-- Please use proper commit message being consistent with either the present or past tense. You may use the continuous tense in cases where you are committing to an unfinished feature.  
-- A proper commit message must have a noun and a verb. A commit like "update" is not good. Instead "Update _carousel.styl header"  
-- Fixed issues should have issue # in commit message  
-- Do NOT merge anything to `master`  
+- Please use proper commit messages being consistent with either the present or past tense. You may use the continuous tense in cases where you are committing to an unfinished feature.  
+- A proper commit message must have a noun and a verb. A commit like `"update"` is not good. Instead `"Update _carousel.styl header"` 
+- Fixed issues should have issue # in commit message. e.g. `"Fix header font - KP-111"`  
+- Do NOT merge dev files to `master` until having confirmed for live. See [Feature Workflow](http://docs.uidev.proferochina.com/#/6/page-1)
   
 Coding Standards
 --------------

@@ -6,64 +6,65 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="keywords" content=""><!--[if (gt IE 9)]><!-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/fonts_catalent.css">
     <link rel="stylesheet" href="/assets/css/app.css"><!--<![endif]-->
     <!--[if (lte IE 9)]>
     <link rel="stylesheet" href="/assets/css/app-ie.css"><![endif]--> 
     <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/ico">
   </head>
   <body>
-    <div class="c-content l-pad--b-15">
-      <section aria-label="Company" class="c-content__bar"><img src="/assets/img/logo-160.png" alt="MullenLowe Profero Tech" width="110"><br>
-        <h1 class="name">MullenLowe Profero <span class="text-yellow">Tech</string></h1>
-      </section>
-      <div role="main" class="c-content__main">
-        <section aria-label="Introduction" class="c-content__screen"> 
-          <h1>FE Web Starter Kit v7</h1>
-          <p class="c-content__screen__sub-title">Boilerplate and Tooling for FE development.</p>
-          <p class="c-content__screen__unit-title">See the README.md file of this repository for usage details.</p>
-        </section>
-        <section aria-label="Details" class="c-content__details">
-          <div class="c-content__item">
-            <h1>Live Browser Reloading</h1>
-            <p>Reload the browser in real-time anytime an edit is made with BrowserSync across multiple connected devices.</p>
+    <div class="main-content">
+      <div class="navbar">
+        <div class="kit-content-default">
+          <div class="top-nav-links-block">
+            <div class="main-nav-links"><a href="#" class="sub-link">Subscribe</a>
+              <div class="separator"></div><a href="#" class="sub-link">Careers</a>
+              <div class="separator"></div><a href="#" class="sub-link">Locations</a>
+              <div class="separator"></div><a href="#" class="sub-link">Investors</a>
+              <div class="separator"></div><a href="#" class="sub-link">Fusion</a>
+              <div class="separator"></div>
+            </div><a href="#" data-js-language-global id="language-global" class="language-global"> Global</a>
+            <form action="" method="get" class="searchForm">
+              <input type="text" placeholder="Search" name="searchText" class="searchText">
+              <button type="submit" class="searchButton"></button>
+            </form>
+            <div id="language-div" class="language-div">
+              <p class="lang-title">Visit Another Site <span class="lang-close"></span></p>
+              <p id="language-global" class="language-global"><a href="#">Global</a></p>
+              <p class="regional-sites">Our Regional Sites</p>
+              <ul>
+                <li><a href="#" class="f-l-w-50">China</a><a href="#" class="f-l-w-50">Korea</a></li>
+                <li><a href="#">Japan</a></li>
+                <li><a href="#" class="f-l-w-33">South America</a><a href="#" style="text-align:center" class="f-l-w-33">Spanish</a><a href="#" style="text-align:center" class="f-l-w-33">Portuguese</a></li>
+              </ul>
+            </div>
+          </div><a href="#" class="logo"><img src="assets/img/Page-Head_large.png" width="165" height="66" alt="Catalent" title="Catalent"></a>
+          <div class="links-container">
+            <div class="nav-menu"><a href="#">DEVELOPMENT</a></div>
+            <div class="nav-menu"><a href="#">DELIVERY</a></div>
+            <div class="nav-menu"><a href="#">SUPPLY</a></div>
+            <div class="nav-menu"><a href="#">OFFERINGS</a><i class="arrow-down"></i>
+              <div data-type="offerings" class="drop-down menu_fliter_false"><a href="#">VIEW ALL</a><a href="#">BIOLOGICS</a><a href="#">ORAL TECHNOLOGIES</a><a href="#">INHALATION </a><a href="#">DEVELOPMENT SOLUTIONS</a><a href="#">sterile technologies</a><a href="#">CLINICAL SUPPLY SERVICES</a><a href="#">CONSUMER</a></div>
+            </div>
+            <div class="nav-menu"><a href="#">THINKING</a><i class="arrow-down"></i>
+              <div data-type="offerings" class="drop-down menu_fliter_false"><a href="#">VIEW ALL</a><a href="#">article/whitepaper</a><a href="#">brochure</a><a href="#">case study  </a><a href="#">ebook</a><a href="#">sterile technologies</a><a href="#">offering info</a><a href="#">poster</a><a href="#">PRESENTATION</a><a href="#">WEBINARS</a></div>
+            </div>
+            <div class="nav-menu"><a href="#">NEWS & EVENTS</a></div>
+            <div class="nav-menu"><a href="#">ABOUT US</a></div>
+            <div class="nav-menu"><a href="#">CONTACT US</a></div>
           </div>
-          <div class="c-content__item">
-            <h1>Performance optimization</h1>
-            <p>Minify and concatenate JavaScript, CSS, HTML and Images to help keep pages lean.</p>
-          </div>
-          <div class="c-content__item">
-            <h1><a href=https://pugjs.org/api/getting-started.html>Jade</a> Support</h1>
-            <p>Never worry about unclosed HTML tags again. Jade also supports dynamic code and reusability.</p>
-          </div>
-          <div class="c-content__item">
-            <h1><a href=http://stylus-lang.com/>Stylus</a> + <a href=http://nibstyl.us/docs/>Nib</a> / <a href=http://kouto-swiss.io/>Kouto-Swiss Support</a></h1>
-            <p>Expressive, dynamic, robust CSS. Includes automated prefixing and more.</p>
-          </div>
-          <div class="c-content__item">
-            <h1><a href=http://coffeescript.org/>CoffeeScript</a> Support</h1>
-            <p>Code quick, code concise; output 'clean' JavaScript/JQuery</p>
-          </div>
-          <div class="c-content__item">
-            <h1><a href=https://babeljs.io/docs/learn-es2015/>Babel (ES2015)</a> Support</h1>
-            <p>For the Babel lovers, we've got you.</p>
-          </div>
-        </section>
+        </div>
       </div>
+      <script src="/assets/js/vendor/jquery.js"></script><!--[if (lte IE 9)]>
+      <script src="/assets/js/vendor/old-ie/html5shiv.js"></script>
+      <script src="/assets/js/vendor/old-ie/selectivizr-min.js"></script><![endif]-->
+      <script>
+        var MLP = MLP || {};
+        MLP.paths = {"static":"/assets/","img":"/assets/img/","css":"/assets/css/","js":"/assets/js/"};
+        
+      </script>
+      <script src="/assets/js/vendor.min.js"></script>
+      <script src="/assets/js/app.min.js"></script>
     </div>
-    <div class="c-footer l-pad--15">
-      <div role="contentinfo" class="c-footer__copyright">
-        <p>&copy; 2017 MullenLowe Profero Ltd.</p>
-      </div>
-    </div>
-    <script src="/assets/js/vendor/jquery.js"></script><!--[if (lte IE 9)]>
-    <script src="/assets/js/vendor/old-ie/html5shiv.js"></script>
-    <script src="/assets/js/vendor/old-ie/selectivizr-min.js"></script><![endif]-->
-    <script>
-      var MLP = MLP || {};
-      MLP.paths = {"static":"/assets/","img":"/assets/img/","css":"/assets/css/","js":"/assets/js/"};
-      
-    </script>
-    <script src="/assets/js/vendor.min.js"></script>
-    <script src="/assets/js/app.min.js"></script>
   </body>
 </html>

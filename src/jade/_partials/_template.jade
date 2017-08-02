@@ -2,5 +2,7 @@ doctype html
 html(lang=config.language)
   include _head
   body
-    block content
-    include _foot
+    .main-content
+      include _nav
+      block content
+      include _foot

@@ -1,8 +1,10 @@
 .navbar
-  background-color #f6f6f6
+  background-color $col-grey
   height 148px
-  border-bottom solid 1px #e0e0e0
+  border-bottom solid 1px $col-lignt-grey
   position relative
+  +small()
+    display none
   .kit-content-default
     width 100%
     max-width 960px
@@ -32,7 +34,7 @@
           font-weight 400
           font-style normal
           cursor pointer
-          color #000
+          color $col-black
           text-decoration none
         a:hover
           text-decoration underline
@@ -80,7 +82,7 @@
           background-color transparent
           outline 0
           padding 0 30px 0 5px
-          color #000
+          color $col-black
           width 100%
           
         button
@@ -109,7 +111,7 @@
         .lang-title
           font-size 14px
           font-weight 400
-          color #000
+          color $col-black
           font-family "Whitney SSm A", sans-serif
           line-height 13px
           
@@ -150,7 +152,7 @@
             
             a
               text-decoration none
-              color #000!important
+              color $col-black!important
               padding-left 0!important
               padding-right 0!important
               height auto!important
@@ -166,7 +168,7 @@
               width 33%
               
             a:hover
-              color #0056a6
+              color $col-blue
               text-decoration underline
               
           li:after
@@ -207,11 +209,11 @@
           font-style normal
           text-decoration none
           float left
-          color #000
+          color $col-black
         
         a:hover
           font-weight 700
-          color #0056a6
+          color $col-blue
           text-decoration underline
           
         .drop-down
@@ -221,7 +223,7 @@
           left -10px
           top 40px
           border 1px #e8e8e8 solid
-          background #fff
+          background $col-white
           display none
           
           a
@@ -243,59 +245,227 @@
           z-index 10
           cursor pointer
           
+.sidebar
+  display none
+  position fixed
+  overflow-y scroll
+  top 0
+  bottom 0
+  left 0
+  right 0
+  z-index 1
+  background #f6f8f9
+  -webkit-overflow-scrolling touch
+  padding-top 47px
+  +small()
+    display block
+    
+  .drop-down-mobile
+    display none
+    
+  .side-shadow
+    -moz-transition left ease-in-out .5s
+    -webkit-transition left ease-in-out .5s
+    -o-transition left ease-in-out .5s
+    -ms-transition left ease-in-out .5s
+    transition left ease-in-out .5s
+    position fixed
+    left 80%
+    width 3px
+    top -1000px
+    bottom -1000px
+    -moz-box-shadow -2px 0 6px #000
+    -webkit-box-shadow -2px 0 6px #000
+    -o-box-shadow -2px 0 6px #000
+    -ms-box-shadow -2px 0 6px #000
+    box-shadow -2px 0 6px #000
+    z-index 3
+    
+  .separator
+    width 100%
+    height 1px
+    background-color #dbddde
+    
+  a
+    -moz-box-sizing border-box
+    -webkit-box-sizing border-box
+    box-sizing border-box
+    display block
+    width 100%
+    padding-left 80px
+    padding-right 25%
+    color #9fa2a3
+    height 48px
+    line-height 48px
+    text-decoration none
+    
+  .language-outer
+    background #F6F6F6
+    padding 0
+    margin 0
+    
+  .language-div-mobile
+    background #F6F6F6
+    padding 28px 15px 25px 30px
+    max-width 280px
+    font-size 11px
+    line-height 13px
+    min-width 210px
+    z-index 999
+    font-family "Whitney SSm A",sans-serif
+    
+    .lang-title
+      font-size 14px
+      font-weight 400
+      color #000
+      font-family "Whitney SSm A",sans-serif
+      line-height 13px
+    
+    .language-global
+      background url(../img/global.png) left 5px no-repeat
+      padding 8px 10px 5px 30px
+      height 26px
+      color #0069aa
+      margin 14px 0 22px
+      text-transform uppercase
+      
+      a 
+        color #0069aa
+        text-transform uppercase
+        text-decoration none
+        padding-left 0
+        line-height 13px
+        height 13px
+      
+    .regional-sites
+      padding-bottom 17px
+      font-weight 400
+      
+    ul
+      padding-bottom 30px
+      overflow hidden
+      
+      li
+        list-style none
+        padding 0 0 13px
         
+        a
+          float left
+          color #000
+          display inline-block
+          padding-left 0
+          padding-right 0
+          
+        a.f-l-w-50
+          width 50%
+          
+        a.f-l-w-33
+          width 33%
+          
+      li:after
+        content ' '
+        clear both
+        display block
+    
+.navbar-mobile
+  transition left ease-in-out .5s,top ease-in-out .3s
+  position fixed
+  top 0
+  left 0
+  right 0
+  min-height 46px
+  width 100%
+  background-color #d9d9d9
+  border 1px solid #c4c4c4
+  z-index 2
+  overflow hidden
+  display none
+  +small()
+    display block
+    
+  form
+    width 100%
+    height 46px
+    margin 0
+    display none
+    
+    input
+      -moz-box-sizing border-box
+      -webkit-box-sizing border-box
+      -o-box-sizing border-box
+      -ms-box-sizing border-box
+      box-sizing border-box
+      background-color transparent
+      padding 0 10px
+      line-height 46px
+      width 100%
+      height 46px
+      border none
+      margin 0
+      -moz-box-shadow none
+      -webkit-box-shadow none
+      -o-box-shadow none
+      -ms-box-shadow none
+      box-shadow none
+      outline none
       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .active-d-b
+    display block
       
+  .navbar-mobile-container
+    position relative
+    height 46px
+    
+    a
+      position absolute
+      left 46px
+      top 0
+      display inline-block
+      -moz-box-sizing border-box
+      -webkit-box-sizing border-box
+      -o-box-sizing border-box
+      -ms-box-sizing border-box
+      box-sizing border-box
+      height 46px
+      text-align center
+      z-index 2
+      border-top solid 1px #c4c4c4
+      right 46px
+      
+      img
+        height 100%
+        width 115px
+    
+    .sidebar-display
+      -moz-transition all .3s ease
+      -webkit-transition all .3s ease
+      -o-transition all .3s ease
+      -ms-transition all .3s ease
+      transition all .3s ease
+      z-index 3
+      position absolute
+      height 46px
+      width 46px
+      left 0
+      display inline-block
+      background url(../img/navbar-mobile-side.png) center center no-repeat
+      border-right solid 1px #c4c4c4
+      border-top solid 1px #c4c4c4
+      cursor pointer
+      
+    .sidebar-search
+      position absolute
+      height 46px
+      width 46px
+      right 0
+      z-index 3
+      display inline-block
+      background url(../img/navbar-mobile-search.png) center center no-repeat
+      border-left solid 1px #c4c4c4
+      cursor pointer
+    
+    .sidebar-search-changebg
+      background url(../img/navbar-mobile-search-close.png) center center no-repeat
+
+.active-l-80
+  left 80%

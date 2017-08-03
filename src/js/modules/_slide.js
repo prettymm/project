@@ -61,7 +61,7 @@ class Slide extends MLP.apps.MLPModule {
   navbarEvents() {
     var _this = this;
     this.el.sidebarDisplay.on("click", function(){
-      _this.el.catalent.toggleClass("active");
+      _this.el.catalent.toggleClass("side-active");
       _this.el.navbarMobile.toggleClass("active-l-80");
     });
 

@@ -97,7 +97,7 @@
       
       .language-div
         border 1px solid #b3b3b3
-        background #F6F6F6
+        background $col-grey
         padding 30px 15px 25px 30px
         position absolute
         top 54px
@@ -129,12 +129,12 @@
           padding 8px 10px 5px 30px
           height 27px
           line-height 17px
-          color #0069aa
+          color $col-aa-blue
           margin 14px 0 22px
           text-transform uppercase
           
           a 
-            color #0069aa
+            color $col-aa-blue
             text-decoration none
             
           a:hover 
@@ -254,7 +254,7 @@
   left 0
   right 0
   z-index 1
-  background #f6f8f9
+  background $col-lignt-blue
   -webkit-overflow-scrolling touch
   padding-top 47px
   +small()
@@ -274,17 +274,17 @@
     width 3px
     top -1000px
     bottom -1000px
-    -moz-box-shadow -2px 0 6px #000
-    -webkit-box-shadow -2px 0 6px #000
-    -o-box-shadow -2px 0 6px #000
-    -ms-box-shadow -2px 0 6px #000
-    box-shadow -2px 0 6px #000
+    -moz-box-shadow -2px 0 6px $col-black
+    -webkit-box-shadow -2px 0 6px $col-black
+    -o-box-shadow -2px 0 6px $col-black
+    -ms-box-shadow -2px 0 6px $col-black
+    box-shadow -2px 0 6px $col-black
     z-index 3
     
   .separator
     width 100%
     height 1px
-    background-color #dbddde
+    background-color $col-lignt-greyblue
     
   a
     -moz-box-sizing border-box
@@ -294,18 +294,18 @@
     width 100%
     padding-left 80px
     padding-right 25%
-    color #9fa2a3
+    color $col-fa-blue
     height 48px
     line-height 48px
     text-decoration none
     
   .language-outer
-    background #F6F6F6
+    background $col-grey
     padding 0
     margin 0
     
   .language-div-mobile
-    background #F6F6F6
+    background $col-grey
     padding 28px 15px 25px 30px
     max-width 280px
     font-size 11px
@@ -317,7 +317,7 @@
     .lang-title
       font-size 14px
       font-weight 400
-      color #000
+      color $col-black
       font-family "Whitney SSm A",sans-serif
       line-height 13px
     
@@ -325,12 +325,12 @@
       background url(../img/global.png) left 5px no-repeat
       padding 8px 10px 5px 30px
       height 26px
-      color #0069aa
+      color $col-aa-blue
       margin 14px 0 22px
       text-transform uppercase
       
       a 
-        color #0069aa
+        color $col-aa-blue
         text-transform uppercase
         text-decoration none
         padding-left 0
@@ -351,7 +351,7 @@
         
         a
           float left
-          color #000
+          color $col-black
           display inline-block
           padding-left 0
           padding-right 0
@@ -375,8 +375,8 @@
   right 0
   min-height 46px
   width 100%
-  background-color #d9d9d9
-  border 1px solid #c4c4c4
+  background-color $col-d9-grey
+  border 1px solid $col-c4-grey
   z-index 2
   overflow hidden
   display none
@@ -429,7 +429,7 @@
       height 46px
       text-align center
       z-index 2
-      border-top solid 1px #c4c4c4
+      border-top solid 1px $col-c4-grey
       right 46px
       
       img
@@ -449,8 +449,8 @@
       left 0
       display inline-block
       background url(../img/navbar-mobile-side.png) center center no-repeat
-      border-right solid 1px #c4c4c4
-      border-top solid 1px #c4c4c4
+      border-right solid 1px $col-c4-grey
+      border-top solid 1px $col-c4-grey
       cursor pointer
       
     .sidebar-search
@@ -461,7 +461,7 @@
       z-index 3
       display inline-block
       background url(../img/navbar-mobile-search.png) center center no-repeat
-      border-left solid 1px #c4c4c4
+      border-left solid 1px $col-c4-grey
       cursor pointer
     
     .sidebar-search-changebg

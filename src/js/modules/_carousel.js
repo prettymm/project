@@ -12,7 +12,8 @@ class Carousel extends MLP.apps.MLPModule {
       btnNext: $('.btn-next'),
       slice: $('.slice'),
       topCarousel: $('.top-carousel'),
-      dot: $('.dot')
+      dot: $('.dot'),
+      homepageCarousel: $('.homepage-carousel')
     };
     this.sel = {
       acount: 0,
@@ -23,12 +24,12 @@ class Carousel extends MLP.apps.MLPModule {
     super.init();
     this.events();
     this.setCarousel();
-
-    /*var timer = null;
-    $(window).resize(() => {
-      clearTimeout(timer);
-      timer = null;
-      timer = setTimeout(function(){
+    this.animTime;
+    this.timer = null;
+    /*$(window).resize(() => {
+      clearTimeout(this.timer);
+      this.timer = null;
+      this.timer = setTimeout(function(){
         this.setCarousel();
       }, 100);
     });*/
@@ -48,18 +49,18 @@ class Carousel extends MLP.apps.MLPModule {
     this.btnPrevEvents();
     this.btnNextEvents();
     this.autoPlay();
+    this.mouseoverEvent();
+    this.mouseoutEvent();
   }
 
 
 
   btnPrevEvents() {
-    var _this = this;
-    var deviceWidth = $('body').width();
-    this.el.btnPrev.on('click', function(){
-      if(!_this.sel.animation){
-        _this.sel.animation = true;
-        _this.sel.acount--;
-        _this.animate();
+    this.el.btnPrev.on('click', () => {
+      if(!this.sel.animation){
+        this.sel.animation = true;
+        this.sel.acount--;
+        this.animate();
       }
       /*if(_this.sel.acount===0){
         _this.el.topCarousel.css({'left':'-'+parseInt(deviceWidth * (_this.el.slice.length-1))+'px'},500);
@@ -67,20 +68,17 @@ class Carousel extends MLP.apps.MLPModule {
       }
       _this.sel.acount--;
       _this.el.topCarousel.animate({'left':"-"+ _this.sel.acount*deviceWidth +'px'},500);*/
-      var ac = _this.sel.acount;
-      _this.el.dot.removeClass('active');
-      _this.el.dot.eq(_this.sel.acount).addClass('active');
+      this.el.dot.removeClass('active');
+      this.el.dot.eq(this.sel.acount).addClass('active');
     });
   }
 
   btnNextEvents() {
-    var _this = this;
-    var deviceWidth = $('body').width();
-    this.el.btnNext.on('click', function(){
-      if (!_this.sel.animation){
-        _this.sel.animation = true;
-        _this.sel.acount++;
-        _this.animate();
+    this.el.btnNext.on('click', () => {
+      if (!this.sel.animation){
+        this.sel.animation = true;
+        this.sel.acount++;
+        this.animate();
       }
      
      /* if(_this.sel.acount===_this.el.slice.length-1){
@@ -90,12 +88,8 @@ class Carousel extends MLP.apps.MLPModule {
       _this.sel.acount++;
       _this.el.topCarousel.animate({'left':"-"+ _this.sel.acount*deviceWidth +"px"},500);*/
       
-      var acount = _this.sel.acount;
-      if(acount===3){
-        acount=0;
-      }
-      _this.el.dot.removeClass('active');
-      _this.el.dot.eq(acount).addClass('active');
+      this.el.dot.removeClass('active');
+      this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
     });
   }
 
@@ -114,34 +108,37 @@ class Carousel extends MLP.apps.MLPModule {
     this.el.topCarousel.animate({'left': -parseInt(deviceWidth * this.sel.acount)+'px'}, 500, () => {
       this.sel.animation = false;
     });
-
-    /*this.el.dot.removeClass('active');
-    this.el.dot.eq(this.sel.acount).addClass('active');
-    console.log(this.sel.acount);*/
-
-    /*if(inx<0){
-      this.el.topCarousel.css('left', '-' + parseInt(deviceWidth*this.sel.acount)+'px');
-    }*/
   }
 
   autoPlay() {
-    var _this = this;
-    var deviceWidth = $('body').width();
-    var animTime = setTimeout(function(){
-      if (!_this.sel.animation){
-        _this.sel.animation = true;
-        _this.sel.acount++;
-        _this.animate();
+    this.animTime = setTimeout(() => {
+      if (!this.sel.animation){
+        this.sel.animation = true;
+        this.sel.acount++;
+        this.animate();
       }
-      var acount = _this.sel.acount;
-      if(acount===3){
-        acount=0;
-      }
-      _this.el.dot.removeClass('active');
-      _this.el.dot.eq(acount).addClass('active');
-      _this.autoPlay();
-    },5000);
+      this.el.dot.removeClass('active');
+      this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+      this.autoPlay();
+
+    }, 5000);
   }
+
+  mouseoverEvent() {
+    this.el.homepageCarousel.on('mouseover', () => {
+      console.log('mouseover', this.animTime);
+      clearTimeout(this.animTime);
+    });
+  }
+
+  mouseoutEvent() {
+    this.el.homepageCarousel.on('mouseout', () => {
+      console.log('mouseout');
+      this.autoPlay();
+    });
+  }
+
+  
 
 
 

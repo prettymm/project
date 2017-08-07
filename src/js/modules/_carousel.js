@@ -23,6 +23,15 @@ class Carousel extends MLP.apps.MLPModule {
     super.init();
     this.events();
     this.setCarousel();
+
+    /*var timer = null;
+    $(window).resize(() => {
+      clearTimeout(timer);
+      timer = null;
+      timer = setTimeout(function(){
+        this.setCarousel();
+      }, 100);
+    });*/
     $(window).resize(() => {
       this.setCarousel();
     });
@@ -124,7 +133,6 @@ class Carousel extends MLP.apps.MLPModule {
         _this.sel.acount++;
         _this.animate();
       }
-     
       var acount = _this.sel.acount;
       if(acount===3){
         acount=0;

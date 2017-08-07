@@ -22,6 +22,12 @@ class Slide extends MLP.apps.MLPModule {
       navMenuMobile: $('.nav-menu-mobile'),
       catalent: $('.catalent')
     };
+    this.sel = {
+      sideActive: "side-active",
+      active: "active-l-80",
+      activedb: "active-d-b",
+      sidebarSearchChangebg:"sidebar-search-changebg"
+    };
     super.init();
     this.events();
   }
@@ -61,13 +67,13 @@ class Slide extends MLP.apps.MLPModule {
   navbarEvents() {
     var _this = this;
     this.el.sidebarDisplay.on("click", function(){
-      _this.el.catalent.toggleClass("side-active");
-      _this.el.navbarMobile.toggleClass("active-l-80");
+      _this.el.catalent.toggleClass(_this.sel.sideActive);
+      _this.el.navbarMobile.toggleClass(_this.sel.active);
     });
 
     this.el.sidebarSearch.on("click", function(){
-      $(this).toggleClass("sidebar-search-changebg");
-      _this.el.form.toggleClass("active-d-b");
+      $(this).toggleClass(_this.sel.sidebarSearchChangebg);
+      _this.el.form.toggleClass(_this.sel.activedb);
       _this.el.searchText.focus();
     });
 

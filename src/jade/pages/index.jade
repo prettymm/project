@@ -1,159 +1,157 @@
-extends ../_partials/_template
-block content
-  .main-content-page
-    .homepage
-      .homepage-carousel(data-js-carousel)
-        .btn-position
-          .btn-prev
-          .btn-next
-        .top-carousel
-          .slice.slice-bg.first
-            .slice__content
-              .slice__top
-                .slice__top--left
-                  .kit-middle
-                    .kit-middle-content
-                      h1 Catalent is the #1 partner in helping pharmaceutical, biotech and consumer health innovators develop, deliver and supply superior products that improve people’s lives.
+extends base
+block main-content
+  .homepage
+    .homepage-carousel(data-js-carousel)
+      .btn-position
+        .btn-prev
+        .btn-next
+      .top-carousel
+        .slice.slice-bg.first
+          .slice__content
+            .slice__top  
+              .slice__top--right
+                img(src="assets/img/Home-Carousel-1.png")
 
-                      p
-                        span PLAY VIDEO
-                        
-                .slice__top--right
-                  img(src="assets/img/Home-Carousel-1.png")
+              .slice__top--left
+                .kit-middle
+                  .kit-middle-content
+                    h1 Catalent is the #1 partner in helping pharmaceutical, biotech and consumer health innovators develop, deliver and supply superior products that improve people’s lives.
 
-              .slice__bottom
-                h2.slice-title How can we work together? 
-                .slice-buttons
-                  .slice-button.green-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Drug-Development-Delivery-Supply.png")
-                  .slice-button.purple-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Biologics.png")
-                  .slice-button.blue-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Consumer-Health.png")
-          .slice.slice-bg.second
-            .slice__content
-              .slice__top
-                .slice__top--left
-                  .kit-middle
-                    .kit-middle-content
-                      h2 Explore The Range of Delivery Options for Your Molecule
-                      p This web tool enables drug development professionals to solve one of the most challenging aspects in drug development, determining the optimal finished dose suited to your specific product requirements, target indication and molecule properties. 
-                      p
-                        a(target="_self" href="") LEARN MORE
-                        
-                .slice__top--right
-                  img(src="assets/img/Home-Carousel-FormProRx-Call-Out.png")
+                    p
+                      span PLAY VIDEO
 
-              .slice__bottom
-                h2.slice-title How can we work together? 
-                .slice-buttons
-                  .slice-button.green-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Drug-Development-Delivery-Supply.png")
-                  .slice-button.purple-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Biologics.png")
-                  .slice-button.blue-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Consumer-Health.png")
-          .slice.slice-bg.tired
-            .slice__content
-              .slice__top
-                .slice__top--left
-                  .kit-middle
-                    .kit-middle-content
-                      h2 Why Catalent?
-                      p Unrivaled experience, expertise, and a track record 
-                        br
-                        |of market successes on a global scale.
+            .slice__bottom
+              h2.slice-title How can we work together? 
+              .slice-buttons
+                .slice-button.green-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Drug-Development-Delivery-Supply.png")
+                .slice-button.purple-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Biologics.png")
+                .slice-button.blue-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Consumer-Health.png")
+        .slice.slice-bg.second
+          .slice__content
+            .slice__top 
+              .slice__top--right
+                img(src="assets/img/Home-Carousel-FormProRx-Call-Out.png")
 
-                      p
-                        a(target="_self" href="") LEARN MORE ABOUT US
-                        
-                .slice__top--right
-                  img(src="assets/img/Home-Carousel-4.png")
+              .slice__top--left
+                .kit-middle
+                  .kit-middle-content
+                    h2 Explore The Range of Delivery Options for Your Molecule
+                    p This web tool enables drug development professionals to solve one of the most challenging aspects in drug development, determining the optimal finished dose suited to your specific product requirements, target indication and molecule properties. 
+                    p
+                      a(target="_self" href="") LEARN MORE
 
-              .slice__bottom
-                h2.slice-title How can we work together? 
-                .slice-buttons
-                  .slice-button.green-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Drug-Development-Delivery-Supply.png")
-                  .slice-button.purple-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Biologics.png")
-                  .slice-button.blue-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Consumer-Health.png")
-          .slice.slice-bg.first
-            .slice__content
-              .slice__top
-                .slice__top--left
-                  .kit-middle
-                    .kit-middle-content
-                      h1 Catalent is the #1 partner in helping pharmaceutical, biotech and consumer health innovators develop, deliver and supply superior products that improve people’s lives.
+            .slice__bottom
+              h2.slice-title How can we work together? 
+              .slice-buttons
+                .slice-button.green-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Drug-Development-Delivery-Supply.png")
+                .slice-button.purple-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Biologics.png")
+                .slice-button.blue-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Consumer-Health.png")
+        .slice.slice-bg.tired
+          .slice__content
+            .slice__top
+              .slice__top--right
+                img(src="assets/img/Home-Carousel-4.png")
 
-                      p
-                        span PLAY VIDEO
-                        
-                .slice__top--right
-                  img(src="assets/img/Home-Carousel-1.png")
+              .slice__top--left
+                .kit-middle
+                  .kit-middle-content
+                    h2 Why Catalent?
+                    p Unrivaled experience, expertise, and a track record 
+                      br
+                      |of market successes on a global scale.
 
-              .slice__bottom
-                h2.slice-title How can we work together? 
-                .slice-buttons
-                  .slice-button.green-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Drug-Development-Delivery-Supply.png")
-                  .slice-button.purple-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Biologics.png")
-                  .slice-button.blue-bg
-                    a(href="", target="_self")
-                      .slice-button--content
-                        .slice-button--content-text Drug Development, Delivery & Supply
-                        .slice-button--content-icon
-                          img(src="assets/img/Consumer-Health.png")
-        .dot-group
-          .dot.active
-          .dot
-          .dot
+                    p
+                      a(target="_self" href="") LEARN MORE ABOUT US
+
+            .slice__bottom
+              h2.slice-title How can we work together? 
+              .slice-buttons
+                .slice-button.green-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Drug-Development-Delivery-Supply.png")
+                .slice-button.purple-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Biologics.png")
+                .slice-button.blue-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Consumer-Health.png")
+        .slice.slice-bg.first
+          .slice__content
+            .slice__top
+              .slice__top--right
+                img(src="assets/img/Home-Carousel-1.png")
+              .slice__top--left
+                .kit-middle
+                  .kit-middle-content
+                    h1 Catalent is the #1 partner in helping pharmaceutical, biotech and consumer health innovators develop, deliver and supply superior products that improve people’s lives.
+
+                    p
+                      span PLAY VIDEO
+
+            .slice__bottom
+              h2.slice-title How can we work together? 
+              .slice-buttons
+                .slice-button.green-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Drug-Development-Delivery-Supply.png")
+                .slice-button.purple-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Biologics.png")
+                .slice-button.blue-bg
+                  a(href="", target="_self")
+                    .slice-button--content
+                      .slice-button--content-text Drug Development, Delivery & Supply
+                      .slice-button--content-icon
+                        img(src="assets/img/Consumer-Health.png")
+      .dot-group
+        .dot.active
+        .dot
+        .dot
 
                             
 

@@ -1,0 +1,19 @@
+include ../_mixins/_mixins
+doctype html
+html
+  head
+    - var BASE = "./" 
+    include ../_partials/_head
+    block header
+    block header-js
+  body
+    .catalent
+      //- +messageBar(false)
+      //- +messageBarSubmitted()
+      include ../_partials/_sidebar
+      include ../_partials/_navbar-mobile
+      .main-content
+        include ../_partials/_navbar
+        .main-content-page
+          block main-content
+        include ../_partials/_foot

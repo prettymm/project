@@ -20,7 +20,8 @@ class Slide extends MLP.apps.MLPModule {
       searchText: $('.SearchText'),
       dropDownMobile: $('.drop-down-mobile'),
       navMenuMobile: $('.nav-menu-mobile'),
-      catalent: $('.catalent')
+      catalent: $('.catalent'),
+      homepage: $('.homepage')
     };
     this.sel = {
       sideActive: "side-active",
@@ -45,8 +46,8 @@ class Slide extends MLP.apps.MLPModule {
   }
 
   dropDownEvents() {
-    var _this = this;
-    this.el.arrowDown.click(function(){
+    var _this =this;
+    this.el.arrowDown.click(function() {
       $(this).next().show(500);
       $(this).parent().siblings().find(_this.el.dropDown).hide(500);
     });
@@ -54,7 +55,7 @@ class Slide extends MLP.apps.MLPModule {
 
   bodyEvents() {
     var dropDown = $('.drop-down');
-    $('body').on('click', function(e){
+    $('body').on('click', (e) => {
       var target = $(e.target);
       var dropDownEle = target.closest('.drop-down');
       var arrowDown = target.closest('.arrow-down');
@@ -65,21 +66,22 @@ class Slide extends MLP.apps.MLPModule {
   }
 
   navbarEvents() {
-    var _this = this;
-    this.el.sidebarDisplay.on("click", function(){
-      _this.el.catalent.toggleClass(_this.sel.sideActive);
-      _this.el.navbarMobile.toggleClass(_this.sel.active);
+    var _this= this;
+    this.el.sidebarDisplay.on("click", () => {
+      this.el.catalent.toggleClass(this.sel.sideActive);
+      this.el.navbarMobile.toggleClass(this.sel.active);
+      this.el.homepage.toggleClass(this.sel.active);
     });
 
-    this.el.sidebarSearch.on("click", function(){
-      $(this).toggleClass(_this.sel.sidebarSearchChangebg);
-      _this.el.form.toggleClass(_this.sel.activedb);
-      _this.el.searchText.focus();
+    this.el.sidebarSearch.on("click", () => {
+      $(this).toggleClass(this.sel.sidebarSearchChangebg);
+      this.el.form.toggleClass(this.sel.activedb);
+      this.el.searchText.focus();
     });
 
-    $('.nav-menu-mobile a').each(function(){
+    $('.nav-menu-mobile a').each(function() {
       if($(this).next(_this.el.dropDownMobile).length){
-        $(this).on('click', function(e){
+        $(this).on('click', (e) => {
           e.stopPropagation();
           e.preventDefault();
           $(this).next(_this.el.dropDownMobile).toggle(300);

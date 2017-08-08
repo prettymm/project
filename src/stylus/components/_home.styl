@@ -1,3 +1,13 @@
+.catalent
+  .main-content
+    position relative
+    -moz-transition left ease-in-out .5s
+    -webkit-transition left ease-in-out .5s
+    -o-transition left ease-in-out .5s
+    -ms-transition left ease-in-out .5s
+    transition left ease-in-out .5s
+    width 100%
+
 .homepage
   background-color $col-white
   position relative
@@ -5,12 +15,21 @@
   top 0
   height 546px
   overflow hidden
+  +small()
+    z-index 1
+    top 46px
+    height auto
+    overflow-y scroll
+  
   .dot-group
     position absolute
     left 0
     bottom 0
     text-align center
     width 100%
+    display none
+    +small()
+      display block
     .dot
       display inline-block
       height 10px
@@ -21,7 +40,7 @@
       background url(../img/dot-active.png)
     
   .top-carousel
-    position absolute
+    position relative
     top 0
     left 0
     width 300%
@@ -32,6 +51,8 @@
     margin 0 auto
     position relative
     height 0
+    +small()
+      display none
     
     .btn-prev
       position absolute
@@ -67,16 +88,27 @@
     
     &__top
       height 384px
+      +small()
+        height auto
       
       &--left
         float left
         max-width 480px
         padding-left 50px
         height 100%
+        +small()
+          float none
+          margin 0 auto
+          padding-left 0
+          text-align center
         
         .kit-middle
           display table
           height 100%
+          +small()
+            display inline-block
+            padding 20px 40px 50px
+            height auto
           
           .kit-middle-content
             display table-cell
@@ -126,14 +158,25 @@
         max-width 480px
         padding-right 50px
         height 384px
+        +small()
+          height 200px
+          float none
+          text-align center
+          padding-right 0
         
         img
           height 100%
+          +small()
+            max-width 100%
+            float none
           
     &__bottom
       max-width 774px
       margin 0 auto
       text-align center
+      +small()
+        max-width 100%
+        width 100%
       
       h2
         color $col-white
@@ -142,6 +185,8 @@
         font-size 13px
         line-height 22px
         text-transform uppercase
+        +small()
+          padding-bottom 6px
       
       .slice-title
         color #0f6bab
@@ -163,6 +208,12 @@
         text-transform uppercase
         background #93d7d5
         border-bottom 3px #27afac solid
+        +small()
+          float none
+          margin 0
+          text-align center
+          height 37px
+          display block
         
         a
           color #076462
@@ -170,6 +221,8 @@
           vertical-align middle
           cursor pointer
           text-decoration none
+          +small()
+            display block
           
         &--content-text
           width 129px
@@ -179,6 +232,10 @@
           vertical-align middle
           font-family Whitney Medium
           text-align center
+          +small()
+            width 100%
+            line-height 37px
+            display block
           
         &--content-icon
           width 40px
@@ -186,6 +243,8 @@
           display table-cell
           vertical-align middle
           padding-left 15px
+          +small()
+            display none
           
           img
             height 100%

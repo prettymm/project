@@ -1,0 +1,106 @@
+mixin sidebarLinksBuilder(id)
+  .sidebar
+    .side-shadow
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/development.png') no-repeat 30px center;") DEVELOPMENT
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/delivery.png') no-repeat 30px center;") DELIVERY
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/supply.png') no-repeat 30px center;") SUPPLY
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
+      .drop-down-mobile
+        a(href="") VIEW ALL
+        a(href="") BIOLOGICS
+        a(href="") ORAL TECHNOLOGIES
+        a(href="") INHALATION
+        a(href="") DEVELOPMENT SOLUTIONS
+        a(href="") sterile technologies
+        a(href="") CLINICAL SUPPLY SERVICES
+        a(href="") CONSUMER
+
+
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;") THINKING
+      .drop-down-mobile
+        a(href="") VIEW ALL
+        a(href="") article/whitepaper
+        a(href="") brochure
+        a(href="") case study
+        a(href="") ebook
+        a(href="") offering info
+        a(href="") poster
+        a(href="") PRESENTATION
+        a(href="") WEBINARS
+
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/news-events.png') no-repeat 30px center;") NEWS & EVENTS
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/about-us.png') no-repeat 30px center;") ABOUT US
+    .separator
+    .nav-menu-mobile
+      a(href="", style="background: url('/assets/img/Contact-Us.png') no-repeat 30px center;") CONTACT US
+    .separator
+    .language-outer
+      .language-div-mobile#language-div-mobile
+        p.lang-title Visit Another Site
+        p.language-global
+          a(href="") Global
+        p.regional-sites Our Regional Sites
+        ul
+          li
+            a(href="").f-l-w-50 CHINA
+            a(href="").f-l-w-50 Korea
+          li
+            a(href="") JAPAN
+          li
+            a(href="").f-l-w-33 SOUTH AMERICA
+            a(href="").f-l-w-33 Portuguese
+            a(href="").f-l-w-33 Spanish
+
+mixin topLinksBuilder()
+  .nav-menu
+    a(href="#") DEVELOPMENT
+  .nav-menu
+    a(href="#") DELIVERY
+  .nav-menu
+    a(href="#") SUPPLY
+  .nav-menu
+    a(href="#") OFFERINGS
+    i.arrow-down
+    .drop-down.menu_fliter_false(data-type="offerings")
+      a(href="#") VIEW ALL
+      a(href="#") BIOLOGICS
+      a(href="#") ORAL TECHNOLOGIES
+      a(href="#") INHALATION 
+      a(href="#") DEVELOPMENT SOLUTIONS
+      a(href="#") sterile technologies
+      a(href="#") CLINICAL SUPPLY SERVICES
+      a(href="#") CONSUMER
+  .nav-menu
+    a(href="#") THINKING
+    i.arrow-down
+    .drop-down.menu_fliter_false(data-type="offerings")
+      a(href="#") VIEW ALL
+      a(href="#") article/whitepaper
+      a(href="#") brochure
+      a(href="#") case study  
+      a(href="#") ebook
+      a(href="#") sterile technologies
+      a(href="#") offering info
+      a(href="#") poster
+      a(href="#") PRESENTATION
+      a(href="#") WEBINARS
+  .nav-menu
+    a(href="#") NEWS & EVENTS
+  .nav-menu
+    a(href="#") ABOUT US
+  .nav-menu
+    a(href="#") CONTACT US

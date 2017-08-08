@@ -13,47 +13,62 @@ class Carousel extends MLP.apps.MLPModule {
       slice: $('.slice'),
       topCarousel: $('.top-carousel'),
       dot: $('.dot'),
-      homepageCarousel: $('.homepage-carousel')
+      homepageCarousel: $('.homepage-carousel'),
+      homepage: $('.homepage')
     };
     this.sel = {
       acount: 0,
-      animation: false,
-      isMobile: true
+      animation: false
     };
     this.len = this.el.slice.length - 1;
     super.init();
     this.events();
     this.setCarousel();
     this.animTime;
+    this.autoTimer = null;
     this.timer = null;
+    this.isMobile = true;
+    this.runAgain = null;
+    this.runAgain = setTimeout(() => {
+      this.autoRun();
+    }, 2000);
+
+    this.checkMobile();
+    this.mobileTouchEvents();
     /*$(window).resize(() => {
       clearTimeout(this.timer);
       this.timer = null;
       this.timer = setTimeout(function(){
         this.setCarousel();
       }, 100);
+
+      clearTimeout(this.animTime);
+      this.animTime = null;
+      console.log('go on');
     });*/
     $(window).resize(() => {
       this.setCarousel();
+      console.log('go on');
     });
   }
 
   setCarousel() {
     var deviceWidth = $('body').width();
     var parent = deviceWidth * this.el.slice.length;
-    this.el.topCarousel.css('width', parent + 'px');
+    this.el.topCarousel.css({'width': parent + 'px', 'left': -parseInt(deviceWidth*this.len)+'px'});
     this.el.slice.css('width', deviceWidth + 'px');
   }
 
   events() {
     this.btnPrevEvents();
     this.btnNextEvents();
-    this.autoPlay();
-    this.mouseoverEvent();
-    this.mouseoutEvent();
   }
 
-
+  checkMobile() {
+    if (typeof window.ontouchstart === "undefined") {
+      this.isMobile = false;
+    }
+  }
 
   btnPrevEvents() {
     this.el.btnPrev.on('click', () => {
@@ -93,7 +108,19 @@ class Carousel extends MLP.apps.MLPModule {
     });
   }
 
-  animate() {
+  autoRun() {
+    clearTimeout(this.animTime);
+    this.animTime = null;
+    this.sel.acount++;
+    this.animate();
+    this.animTime = setTimeout(() => {
+      this.autoRun();
+    }, 5000);
+    this.el.dot.removeClass('active');
+    this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+  }
+
+  animate(callback) {
     var deviceWidth = $('body').width();
     if(this.sel.acount>this.el.slice.length-1){
       this.el.topCarousel.css('left', 0);
@@ -107,6 +134,9 @@ class Carousel extends MLP.apps.MLPModule {
 
     this.el.topCarousel.animate({'left': -parseInt(deviceWidth * this.sel.acount)+'px'}, 500, () => {
       this.sel.animation = false;
+      if(typeof callback === "function"){
+        callback();
+      }
     });
   }
 
@@ -119,36 +149,79 @@ class Carousel extends MLP.apps.MLPModule {
       }
       this.el.dot.removeClass('active');
       this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
-      this.autoPlay();
 
     }, 5000);
   }
 
-  mouseoverEvent() {
-    this.el.homepageCarousel.on('mouseover', () => {
-      console.log('mouseover', this.animTime);
-      clearTimeout(this.animTime);
-    });
-  }
-
-  mouseoutEvent() {
-    this.el.homepageCarousel.on('mouseout', () => {
-      console.log('mouseout');
-      this.autoPlay();
-    });
-  }
-
   
 
+  mobileTouchEvents() {
+    let startX = 0;
+    let firstX = 0;
+    if(!this.isMobile){
+      this.el.homepageCarousel.on('mouseover', () => {
+        clearTimeout(this.animTime);
+        this.animTime = null;
+        clearTimeout(this.runAgain);
+        this.runAgain = null;
+      });
 
+      this.el.homepageCarousel.on('mouseout', () => {
+        clearTimeout(this.runAgain);
+        this.runAgain = null;
+        this.runAgain = setTimeout(() => {
+          this.autoRun();
+        }, 5000);
+      });
+    }else{
+      this.el.homepageCarousel.on('touchstart', (e) => {
+        clearTimeout(this.animTime);
+        this.animTime = null;
+        clearTimeout(this.runAgain);
+        this.runAgain = null;
+        startX = e.originalEvent.changedTouches[0].clientX;
+        firstX = startX;
+        this.el.topCarousel.stop(true, true);
+      });
 
+      this.el.homepageCarousel.on('touchmove', (e) => {
+        let nowX = e.originalEvent.changedTouches[0].clientX;
+        let moveX = nowX - startX;
+        let currentLeft = parseFloat(this.el.topCarousel.css("left"));
+        let left = currentLeft + moveX;
+        if (left >= -(this.el.slice.width() * this.len) && left <= 0) {
+          this.el.topCarousel.css('left', left + "px");
+          startX = nowX;
+        }
+      });
 
-
-
-
-
-
-
+      this.el.homepageCarousel.on('touchend', (e) => {
+        let nowX = e.originalEvent.changedTouches[0].clientX;
+        let move = nowX - firstX;
+        if (move > 0) {
+          this.sel.acount -= 1;
+          this.animate(() => {
+            this.runAgain = null;
+            this.runAgain = setTimeout(() => {
+              this.autoRun();
+            }, 2000);
+          });
+          this.el.dot.removeClass('active');
+          this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+        } else {
+          this.sel.acount += 1;
+          this.animate(() => {
+            this.runAgain = null;
+            this.runAgain = setTimeout(() => {
+              this.autoRun();
+            }, 2000);
+          });
+          this.el.dot.removeClass('active');
+          this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+        }
+      });
+    }
+  }
 
 }
 $.mlpModule(Carousel, 'Carousel');

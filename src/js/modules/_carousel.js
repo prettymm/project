@@ -70,6 +70,11 @@ class Carousel extends MLP.apps.MLPModule {
     }
   }
 
+  optimization() {
+    this.el.dot.removeClass('active');
+    this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+  }
+
   btnPrevEvents() {
     this.el.btnPrev.on('click', () => {
       if(!this.sel.animation){
@@ -103,8 +108,7 @@ class Carousel extends MLP.apps.MLPModule {
       _this.sel.acount++;
       _this.el.topCarousel.animate({'left':"-"+ _this.sel.acount*deviceWidth +"px"},500);*/
       
-      this.el.dot.removeClass('active');
-      this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+      this.optimization();
     });
   }
 
@@ -116,8 +120,7 @@ class Carousel extends MLP.apps.MLPModule {
     this.animTime = setTimeout(() => {
       this.autoRun();
     }, 5000);
-    this.el.dot.removeClass('active');
-    this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+    this.optimization();
   }
 
   animate(callback) {
@@ -147,13 +150,9 @@ class Carousel extends MLP.apps.MLPModule {
         this.sel.acount++;
         this.animate();
       }
-      this.el.dot.removeClass('active');
-      this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
-
+      this.optimization();
     }, 5000);
   }
-
-  
 
   mobileTouchEvents() {
     let startX = 0;
@@ -206,8 +205,7 @@ class Carousel extends MLP.apps.MLPModule {
               this.autoRun();
             }, 2000);
           });
-          this.el.dot.removeClass('active');
-          this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+          this.optimization();
         } else {
           this.sel.acount += 1;
           this.animate(() => {
@@ -216,8 +214,7 @@ class Carousel extends MLP.apps.MLPModule {
               this.autoRun();
             }, 2000);
           });
-          this.el.dot.removeClass('active');
-          this.el.dot.eq(this.sel.acount===3?0:this.sel.acount).addClass('active');
+          this.optimization();
         }
       });
     }

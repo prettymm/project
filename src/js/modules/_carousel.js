@@ -34,28 +34,22 @@ class Carousel extends MLP.apps.MLPModule {
     }, 2000);
 
     this.checkMobile();
-    this.mobileTouchEvents();
-    /*$(window).resize(() => {
-      clearTimeout(this.timer);
-      this.timer = null;
-      this.timer = setTimeout(function(){
-        this.setCarousel();
-      }, 100);
-
+    this.bindEvents();
+    $(window).resize(() => {
       clearTimeout(this.animTime);
       this.animTime = null;
-      console.log('go on');
-    });*/
-    $(window).resize(() => {
+      this.animTime = setTimeout(() => {
+        this.autoRun();
+      }, 2000);
+
       this.setCarousel();
-      console.log('go on');
     });
   }
 
   setCarousel() {
     var deviceWidth = $('body').width();
     var parent = deviceWidth * this.el.slice.length;
-    this.el.topCarousel.css({'width': parent + 'px', 'left': -parseInt(deviceWidth*this.len)+'px'});
+    this.el.topCarousel.css({'width': parent + 'px', 'left': -parseInt(deviceWidth*this.sel.acount)+'px'});
     this.el.slice.css('width', deviceWidth + 'px');
   }
 
@@ -80,7 +74,7 @@ class Carousel extends MLP.apps.MLPModule {
       if(!this.sel.animation){
         this.sel.animation = true;
         this.sel.acount--;
-        this.animate();
+        this.animate(this.sel.acount);
       }
       /*if(_this.sel.acount===0){
         _this.el.topCarousel.css({'left':'-'+parseInt(deviceWidth * (_this.el.slice.length-1))+'px'},500);
@@ -98,7 +92,7 @@ class Carousel extends MLP.apps.MLPModule {
       if (!this.sel.animation){
         this.sel.animation = true;
         this.sel.acount++;
-        this.animate();
+        this.animate(this.sel.acount);
       }
      
      /* if(_this.sel.acount===_this.el.slice.length-1){
@@ -116,45 +110,36 @@ class Carousel extends MLP.apps.MLPModule {
     clearTimeout(this.animTime);
     this.animTime = null;
     this.sel.acount++;
-    this.animate();
+    this.animate(this.sel.acount);
     this.animTime = setTimeout(() => {
       this.autoRun();
     }, 5000);
     this.optimization();
   }
 
-  animate(callback) {
+  animate(inx, callback) {
     var deviceWidth = $('body').width();
-    if(this.sel.acount>this.el.slice.length-1){
+    if(inx > (this.len)){
       this.el.topCarousel.css('left', 0);
-      this.sel.acount = 1;
+      inx = 1;
     }
 
-    if(this.sel.acount<0){
+    if(inx<0){
       this.el.topCarousel.css('left', -parseInt(deviceWidth*this.len)+'px');
-      this.sel.acount = this.len-1;
+      inx = this.len-1;
     }
 
-    this.el.topCarousel.animate({'left': -parseInt(deviceWidth * this.sel.acount)+'px'}, 500, () => {
+    this.el.topCarousel.animate({'left': -parseInt(deviceWidth * inx)+'px'}, 500, () => {
       this.sel.animation = false;
       if(typeof callback === "function"){
         callback();
       }
     });
+
+    this.sel.acount = inx;
   }
 
-  autoPlay() {
-    this.animTime = setTimeout(() => {
-      if (!this.sel.animation){
-        this.sel.animation = true;
-        this.sel.acount++;
-        this.animate();
-      }
-      this.optimization();
-    }, 5000);
-  }
-
-  mobileTouchEvents() {
+  bindEvents() {
     let startX = 0;
     let firstX = 0;
     if(!this.isMobile){
@@ -199,7 +184,7 @@ class Carousel extends MLP.apps.MLPModule {
         let move = nowX - firstX;
         if (move > 0) {
           this.sel.acount -= 1;
-          this.animate(() => {
+          this.animate(this.sel.acount, () => {
             this.runAgain = null;
             this.runAgain = setTimeout(() => {
               this.autoRun();
@@ -208,7 +193,7 @@ class Carousel extends MLP.apps.MLPModule {
           this.optimization();
         } else {
           this.sel.acount += 1;
-          this.animate(() => {
+          this.animate(this.sel.acount, () => {
             this.runAgain = null;
             this.runAgain = setTimeout(() => {
               this.autoRun();

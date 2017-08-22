@@ -8,7 +8,9 @@ class Map extends MLP.apps.MLPModule {
 
   init() {
     this.el = {
-      map: $('#map')
+      map: $('#map'),
+      item: $('.item'),
+      square: $('.square')
     };
     this.sel = {
       sideActive: "side-active",
@@ -56,6 +58,7 @@ class Map extends MLP.apps.MLPModule {
 
   events() {
     this.initSquare();
+    this.clickEvents();
   }
 
   initSquare() {
@@ -673,16 +676,27 @@ class Map extends MLP.apps.MLPModule {
       for(var j=0, lens=Obj.block[i].data.length; j<lens; j++){
         var squareItem = '';
         for(var k=0, lenss=Obj.block[i].data[j].content.length; k<lenss; k++){
-          console.log(Obj.block[i].data[j].content.length);
           squareItem += '<span data-id="'+ Obj.block[i].data[j].content[k].dataId +'" data-lat="'+ Obj.block[i].data[j].content[k].dataLat +'" data-lng="'+ Obj.block[i].data[j].content[k].dataLng +'" data-title="'+ Obj.block[i].data[j].content[k].dataTitle +'" data-type="'+ Obj.block[i].data[j].content[k].dataType +'" data-url="'+ Obj.block[i].data[j].content[k].dataUrl +'" class="'+ Obj.block[i].data[j].content[k].dataClass +'"></span>';
         }
         str+='<p><a href="#">'+ Obj.block[i].data[j].text +'</a>'+squareItem+'</p>';
       }       
       addressListBlock.eq(i).append(str);
     }
-      
-    
-    
+  }
+
+  clickEvents() {
+    this.el.item.on('click', function(e) {
+      var target = $(e.target);
+      var id = target.attr('data-id');
+      $(this).siblings().addClass('disabled');
+      $(this).removeClass('disabled');
+      $('.square').addClass('disabled');
+      $('.square[data-id=' + id + ']').removeClass('disabled');
+      if($(this).hasClass('viewAll')){
+        $(this).siblings().removeClass('disabled');
+        $('.square').removeClass('disabled');
+      }
+    });
   }
 
   

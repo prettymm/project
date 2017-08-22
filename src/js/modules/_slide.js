@@ -21,7 +21,8 @@ class Slide extends MLP.apps.MLPModule {
       dropDownMobile: $('.drop-down-mobile'),
       navMenuMobile: $('.nav-menu-mobile'),
       catalent: $('.catalent'),
-      homepage: $('.homepage')
+      homepage: $('.homepage'),
+      development: $('.development')
     };
     this.sel = {
       sideActive: "side-active",
@@ -71,6 +72,7 @@ class Slide extends MLP.apps.MLPModule {
       this.el.catalent.toggleClass(this.sel.sideActive);
       this.el.navbarMobile.toggleClass(this.sel.active);
       this.el.homepage.toggleClass(this.sel.active);
+      this.el.development.toggleClass(this.sel.active);
     });
 
     this.el.sidebarSearch.on("click", () => {

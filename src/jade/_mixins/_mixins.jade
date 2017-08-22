@@ -3,50 +3,94 @@ mixin sidebarLinksBuilder(id)
     .side-shadow
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/development.png') no-repeat 30px center;") DEVELOPMENT
+      if id != 0
+        a(href="development", style="background: url('/assets/img/development.png') no-repeat 30px center;") DEVELOPMENT
+      else
+        a(href="development", style="background: url('/assets/img/development.png') no-repeat 30px center;").selected DEVELOPMENT
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/delivery.png') no-repeat 30px center;") DELIVERY
+      if id != 1
+        a(href="delivery", style="background: url('/assets/img/delivery.png') no-repeat 30px center;") DELIVERY
+      else
+        a(href="delivery", style="background: url('/assets/img/delivery.png') no-repeat 30px center;").selected DELIVERY
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/supply.png') no-repeat 30px center;") SUPPLY
+      if id != 2
+        a(href="", style="background: url('/assets/img/supply.png') no-repeat 30px center;") SUPPLY
+      else
+        a(href="", style="background: url('/assets/img/supply.png') no-repeat 30px center;").selected SUPPLY
+
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
-      .drop-down-mobile
-        a(href="") VIEW ALL
-        a(href="") BIOLOGICS
-        a(href="") ORAL TECHNOLOGIES
-        a(href="") INHALATION
-        a(href="") DEVELOPMENT SOLUTIONS
-        a(href="") sterile technologies
-        a(href="") CLINICAL SUPPLY SERVICES
-        a(href="") CONSUMER
+      if id != 3
+        a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
+        .drop-down-mobile
+          a(href="") VIEW ALL
+          a(href="") BIOLOGICS
+          a(href="") ORAL TECHNOLOGIES
+          a(href="") INHALATION
+          a(href="") DEVELOPMENT SOLUTIONS
+          a(href="") sterile technologies
+          a(href="") CLINICAL SUPPLY SERVICES
+          a(href="") CONSUMER
+      else
+        a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;").selected OFFERINGS
+        .drop-down-mobile
+          a(href="") VIEW ALL
+          a(href="") BIOLOGICS
+          a(href="") ORAL TECHNOLOGIES
+          a(href="") INHALATION
+          a(href="") DEVELOPMENT SOLUTIONS
+          a(href="") sterile technologies
+          a(href="") CLINICAL SUPPLY SERVICES
+          a(href="") CONSUMER
 
 
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;") THINKING
-      .drop-down-mobile
-        a(href="") VIEW ALL
-        a(href="") article/whitepaper
-        a(href="") brochure
-        a(href="") case study
-        a(href="") ebook
-        a(href="") offering info
-        a(href="") poster
-        a(href="") PRESENTATION
-        a(href="") WEBINARS
+      if id != 4
+        a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;") THINKING
+        .drop-down-mobile
+          a(href="") VIEW ALL
+          a(href="") article/whitepaper
+          a(href="") brochure
+          a(href="") case study
+          a(href="") ebook
+          a(href="") offering info
+          a(href="") poster
+          a(href="") PRESENTATION
+          a(href="") WEBINARS
+      else
+        a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;").selected THINKING
+        .drop-down-mobile
+          a(href="") VIEW ALL
+          a(href="") article/whitepaper
+          a(href="") brochure
+          a(href="") case study
+          a(href="") ebook
+          a(href="") offering info
+          a(href="") poster
+          a(href="") PRESENTATION
+          a(href="") WEBINARS
 
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/news-events.png') no-repeat 30px center;") NEWS & EVENTS
+      if id != 5
+        a(href="", style="background: url('/assets/img/news-events.png') no-repeat 30px center;") NEWS & EVENTS
+      else
+        a(href="", style="background: url('/assets/img/news-events.png') no-repeat 30px center;").selected NEWS & EVENTS
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/about-us.png') no-repeat 30px center;") ABOUT US
+      if id != 6
+        a(href="", style="background: url('/assets/img/about-us.png') no-repeat 30px center;") ABOUT US
+      else
+        a(href="", style="background: url('/assets/img/about-us.png') no-repeat 30px center;").selected ABOUT US
     .separator
     .nav-menu-mobile
-      a(href="", style="background: url('/assets/img/Contact-Us.png') no-repeat 30px center;") CONTACT US
+      if id != 6
+        a(href="", style="background: url('/assets/img/Contact-Us.png') no-repeat 30px center;") CONTACT US
+      else
+        a(href="", style="background: url('/assets/img/Contact-Us.png') no-repeat 30px center;").selected CONTACT US
     .separator
     .language-outer
       .language-div-mobile#language-div-mobile
@@ -65,42 +109,88 @@ mixin sidebarLinksBuilder(id)
             a(href="").f-l-w-33 Portuguese
             a(href="").f-l-w-33 Spanish
 
-mixin topLinksBuilder()
+mixin topLinksBuilder(id)
   .nav-menu
-    a(href="#") DEVELOPMENT
+    if id != 0
+      a(href="development.html") DEVELOPMENT
+    else
+      a(href="development.html").selected DEVELOPMENT
   .nav-menu
-    a(href="#") DELIVERY
+    if id != 1
+      a(href="#") DELIVERY
+    else
+      a(href="#").selected DELIVERY
   .nav-menu
-    a(href="#") SUPPLY
+    if id != 2
+      a(href="#") SUPPLY
+    else
+      a(href="#").selected SUPPLY
   .nav-menu
-    a(href="#") OFFERINGS
-    i.arrow-down
-    .drop-down.menu_fliter_false(data-type="offerings")
-      a(href="#") VIEW ALL
-      a(href="#") BIOLOGICS
-      a(href="#") ORAL TECHNOLOGIES
-      a(href="#") INHALATION 
-      a(href="#") DEVELOPMENT SOLUTIONS
-      a(href="#") sterile technologies
-      a(href="#") CLINICAL SUPPLY SERVICES
-      a(href="#") CONSUMER
+    if id != 3
+      a(href="#") OFFERINGS
+      i.arrow-down
+      .drop-down.menu_fliter_false(data-type="offerings")
+        a(href="#") VIEW ALL
+        a(href="#") BIOLOGICS
+        a(href="#") ORAL TECHNOLOGIES
+        a(href="#") INHALATION 
+        a(href="#") DEVELOPMENT SOLUTIONS
+        a(href="#") sterile technologies
+        a(href="#") CLINICAL SUPPLY SERVICES
+        a(href="#") CONSUMER
+    else
+      a(href="#").selected OFFERINGS
+      i.arrow-down
+      .drop-down.menu_fliter_false(data-type="offerings")
+        a(href="#") VIEW ALL
+        a(href="#") BIOLOGICS
+        a(href="#") ORAL TECHNOLOGIES
+        a(href="#") INHALATION 
+        a(href="#") DEVELOPMENT SOLUTIONS
+        a(href="#") sterile technologies
+        a(href="#") CLINICAL SUPPLY SERVICES
+        a(href="#") CONSUMER
   .nav-menu
-    a(href="#") THINKING
-    i.arrow-down
-    .drop-down.menu_fliter_false(data-type="offerings")
-      a(href="#") VIEW ALL
-      a(href="#") article/whitepaper
-      a(href="#") brochure
-      a(href="#") case study  
-      a(href="#") ebook
-      a(href="#") sterile technologies
-      a(href="#") offering info
-      a(href="#") poster
-      a(href="#") PRESENTATION
-      a(href="#") WEBINARS
+    if id != 4
+      a(href="#") THINKING
+      i.arrow-down
+      .drop-down.menu_fliter_false(data-type="offerings")
+        a(href="#") VIEW ALL
+        a(href="#") article/whitepaper
+        a(href="#") brochure
+        a(href="#") case study  
+        a(href="#") ebook
+        a(href="#") sterile technologies
+        a(href="#") offering info
+        a(href="#") poster
+        a(href="#") PRESENTATION
+        a(href="#") WEBINARS
+    else
+      a(href="#").selected THINKING
+      i.arrow-down
+      .drop-down.menu_fliter_false(data-type="offerings")
+        a(href="#") VIEW ALL
+        a(href="#") article/whitepaper
+        a(href="#") brochure
+        a(href="#") case study  
+        a(href="#") ebook
+        a(href="#") sterile technologies
+        a(href="#") offering info
+        a(href="#") poster
+        a(href="#") PRESENTATION
+        a(href="#") WEBINARS
   .nav-menu
-    a(href="#") NEWS & EVENTS
+    if id != 5
+      a(href="#") NEWS & EVENTS
+    else
+      a(href="#").selected NEWS & EVENTS
   .nav-menu
-    a(href="#") ABOUT US
+    if id != 6
+      a(href="#") ABOUT US
+    else
+      a(href="#").selected ABOUT US
   .nav-menu
-    a(href="#") CONTACT US
+    if id != 7
+      a(href="#") CONTACT US
+    else
+      a(href="#").selected CONTACT US

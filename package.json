@@ -48,6 +48,7 @@
     "try-thread-sleep": "^1.0.0"
   },
   "dependencies": {
+    "eventemitter2": "^4.1.2",
     "font-awesome-stylus": "^4.6.2"
   }
 }

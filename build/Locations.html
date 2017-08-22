@@ -19,7 +19,7 @@
       <div class="sidebar">
         <div class="side-shadow"></div>
         <div class="separator"></div>
-        <div class="nav-menu-mobile"><a href="development" style="background: url('/assets/img/development.png') no-repeat 30px center;">DEVELOPMENT</a>
+        <div class="nav-menu-mobile"><a href="development" style="background: url('/assets/img/development.png') no-repeat 30px center;" class="selected">DEVELOPMENT</a>
         </div>
         <div class="separator"></div>
         <div class="nav-menu-mobile"><a href="delivery" style="background: url('/assets/img/delivery.png') no-repeat 30px center;">DELIVERY</a>
@@ -94,7 +94,7 @@
               </div>
             </div><a href="index.html" class="logo"><img src="assets/img/Page-Head_large.png" width="165" height="66" alt="Catalent" title="Catalent"></a>
             <div class="links-container">
-              <div class="nav-menu"><a href="development.html">DEVELOPMENT</a>
+              <div class="nav-menu"><a href="development.html" class="selected">DEVELOPMENT</a>
               </div>
               <div class="nav-menu"><a href="#">DELIVERY</a>
               </div>
@@ -116,6 +116,23 @@
           </div>
         </div>
         <div class="main-content-page">
+          <div class="locations">
+            <div class="first-block">
+              <div class="items">
+                <div data-id="biologic" class="item biologic">Biologics</div>
+                <div data-id="clinical" class="item clinical">Clinical Supply Services</div>
+                <div data-id="development" class="item development">Development & Analytical</div>
+                <div data-id="modified" class="item modified">Modified Release</div>
+                <div data-id="softgel" class="item softgel">Softgel</div>
+                <div data-id="sterile" class="item sterile">Sterile Technologies</div>
+                <div data-id="all" class="item viewAll">view all</div>
+              </div>
+            </div>
+            <div data-js-map class="second-block">
+              <div id="map" class="map">   </div>
+              <div class="address-list"></div>
+            </div>
+          </div>
         </div>
         <script src="/assets/js/vendor/jquery.js"></script><!--[if (lte IE 9)]>
         <script src="/assets/js/vendor/old-ie/html5shiv.js"></script>

@@ -1,0 +1,36 @@
+extends base
+block navbar-top-links
+  +topLinksBuilder(0)
+
+block sidebar-links
+  +sidebarLinksBuilder(0)
+
+block main-content
+  .locations
+    .first-block
+      .items
+        .item.biologic(data-id='biologic') Biologics
+        .item.clinical(data-id='clinical') Clinical Supply Services
+        .item.development(data-id='development') Development & Analytical
+        .item.modified(data-id='modified') Modified Release
+        .item.softgel(data-id='softgel') Softgel
+        .item.sterile(data-id='sterile') Sterile Technologies
+        .item.viewAll(data-id='all') view all
+
+    .second-block(data-js-map)
+      #map.map    
+      .address-list
+
+
+
+
+  
+              
+
+
+
+      
+                            
+
+
+

@@ -9,5 +9,29 @@ script.
   MLP.paths = !{JSON.stringify({static: paths.static, img: paths.img, css: paths.css, js: paths.js})};
   
 script(src=paths.js + 'vendor.min.js')
+//- EventEmitter2 给全局添加emitter方法，此方法触发定义的initMap方法
+script.
+  window.emitter = new EventEmitter2();
+  function initMap(){
+    $(function(){
+      emitter.emit('initMap');
+      window.eqfeed_callback = function(results) {
+      var _this = this;
+      for (var i = 0; i < results.features.length; i++) {
+        var coords = results.features[i].geometry.coordinates;
+        var latLng = new google.maps.LatLng(coords[1],coords[0]);
+        var marker = new google.maps.Marker({
+          position: latLng,
+          map: this.sel.map
+        });
+      }
+    }
+    })
+    
+  }
 script(src=paths.js + 'app.min.js')
+script(src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js")
+script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCJfzft53D3w2fSg3TEDIu03vPpas-d_ts&callback=initMap') 
+
+
 

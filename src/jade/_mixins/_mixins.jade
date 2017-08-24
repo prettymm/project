@@ -23,7 +23,7 @@ mixin sidebarLinksBuilder(id)
     .separator
     .nav-menu-mobile
       if id != 3
-        a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
+        a(href="offerings.html", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
         .drop-down-mobile
           a(href="") VIEW ALL
           a(href="") BIOLOGICS
@@ -34,7 +34,7 @@ mixin sidebarLinksBuilder(id)
           a(href="") CLINICAL SUPPLY SERVICES
           a(href="") CONSUMER
       else
-        a(href="", style="background: url('/assets/img/offerings.png') no-repeat 30px center;").selected OFFERINGS
+        a(href="offerings.html", style="background: url('/assets/img/offerings.png') no-repeat 30px center;").selected OFFERINGS
         .drop-down-mobile
           a(href="") VIEW ALL
           a(href="") BIOLOGICS
@@ -127,7 +127,7 @@ mixin topLinksBuilder(id)
       a(href="#").selected SUPPLY
   .nav-menu
     if id != 3
-      a(href="#") OFFERINGS
+      a(href="offerings.html") OFFERINGS
       i.arrow-down
       .drop-down.menu_fliter_false(data-type="offerings")
         a(href="#") VIEW ALL
@@ -139,7 +139,7 @@ mixin topLinksBuilder(id)
         a(href="#") CLINICAL SUPPLY SERVICES
         a(href="#") CONSUMER
     else
-      a(href="#").selected OFFERINGS
+      a(href="offerings.html").selected OFFERINGS
       i.arrow-down
       .drop-down.menu_fliter_false(data-type="offerings")
         a(href="#") VIEW ALL

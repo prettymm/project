@@ -6,6 +6,7 @@ $(document).ready(function() {
   $('[data-js-carousel]').Carousel();
   $('[data-js-devcarousel]').CarouselDev();
   $('[data-js-map]').Map();
+  $('[data-js-filter]').Filter();
 
 
 });

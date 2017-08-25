@@ -11,7 +11,8 @@ class Filter extends MLP.apps.MLPModule {
       jsElems: $('.js-elems'),
       filterAll:$('.filter-link.all'),
       filter:$('.filter-link.filter'),
-      filterLink:$('.filter-link')
+      filterLink:$('.filter-link'),
+      taggedElem:$('.tagged-elem')
     };
     this.sel = {
       selected: 'selected'
@@ -453,7 +454,7 @@ class Filter extends MLP.apps.MLPModule {
     var html = '';
     for(var i=0, len=Obj.datas.length; i<len; i++){
       html+='<div class="l-grid__col l-w--tabt-min-33p">'
-              +'<div dataTag="'+ Obj.datas[i].dataTag +'" class="tagged-elem show">'
+              +'<div data-tag="'+ Obj.datas[i].dataTag +'" class="tagged-elem show">'
                 +'<a href="'+ Obj.datas[i].href +'">'
                   +'<div class="icon-place-holder">'
                     +'<img src="'+ Obj.datas[i].img +'" />'
@@ -466,11 +467,50 @@ class Filter extends MLP.apps.MLPModule {
     this.el.jsElems.append(html);
   }
 
+  containTag(_id, _array) {
+    for(var i=0, len=_array.length; i<len; i++){
+      var a=_array[i];
+      if(_id === a){
+        return true;
+      }
+      return false;
+    }
+  }
+
+  filterTags() {
+    var tagged = $('.tagged-elem');
+    tagged.removeClass('show');
+    var acountItems = [];
+    if(this.el.filterAll.hasClass('selected')){
+      for(var i=0, len=tagged.length; i<len; i++){
+        tagged.eq(i).addClass('show');
+      }
+    }else{
+      for(var i=0, len=tagged.length; i<len; i++){
+        var elem = tagged.eq(i);
+        var sele = $('.filter-link.filter.selected');
+        for(var k=0, lens=sele.length; k<lens; k++){
+          var tag_id = sele.eq(k).attr('data-tag');
+          var tag = eval(elem.attr('data-tag')); 
+          if(this.containTag(tag_id, tag)){
+            acountItems.push(elem);
+            break;
+          }
+        }
+      }
+    }
+
+    for(var key in acountItems){
+      acountItems[key].addClass('show');
+    }
+  }
+
   filterEvent() {
     var _this = this;
     this.el.filterAll.on("click", function(){
       _this.el.filterLink.removeClass('selected');
       $(this).addClass('selected');
+      _this.filterTags();
     });
 
     this.el.filter.on("click", function(){
@@ -479,6 +519,7 @@ class Filter extends MLP.apps.MLPModule {
       if($('.filter-link.filter.selected').get().length === 0){
         _this.el.filterAll.click();
       }
+      _this.filterTags();
     });
   }
 

@@ -6,7 +6,7 @@ block sidebar-links
   +sidebarLinksBuilder(0)
 
 block main-content
-  .offerings
+  .thinking
     .first-block(data-js-devcarousel)
       .top-shadow
       .nav-elems
@@ -65,7 +65,7 @@ block main-content
                   p 
                     a(href="#", target="_self") OUR DEVELOPMENT SOLUTIONS & SERVICES
     .menu_fliter_false-scroll
-    .third-block(data-js-filter)
+    .third-block(data-js-filterthinking)
       .c-browse
         h2 BROWSE OFFERINGS A TO Z
         p Not sure which are right for you? 
@@ -75,36 +75,58 @@ block main-content
         h2 BROWSE BY TAG
         .c-filter.l-grid
           .c-filter__left.l-grid__col.l-w--tabt-min-25p
+            h3 TOPIC
             ul
               li
-                .filter-link.all.selected(data-tag) VIEW ALL
+                .filter-link.all.selected(data-topic) VIEW ALL
               li
-                .filter-link.filter(data-tag="Biologics") Biologics
+                .filter-link.filter(data-topic="Animal Health") Animal Health
               li
-                .filter-link.filter(data-tag="Oral Technologies") Oral Technologies
+                .filter-link.filter(data-topic="Biologics") Biologics
               li
-                .filter-link.filter(data-tag="Inhalation") Inhalation
+                .filter-link.filter(data-topic="Clinical Supply Services") Clinical Supply Services
               li
-                .filter-link.filter(data-tag="Development Solutions") Development Solutions
+                .filter-link.filter(data-topic="Consumer") Consumer
               li
-                .filter-link.filter(data-tag="Sterile Technologies") Sterile Technologies
+                .filter-link.filter(data-topic="Delivery") Delivery
               li
-                .filter-link.filter(data-tag="Clinical Supply Services") Clinical Supply Services
+                .filter-link.filter(data-topic="Development Solutions") Development Solutions
               li
-                .filter-link.filter(data-tag="Consumer") Consumer
+                .filter-link.filter(data-topic="Inhalation") Inhalation
+              li
+                .filter-link.filter(data-topic="Oral Technologies") Oral Technologies
+              li
+                .filter-link.filter(data-topic="Sterile Technologies") Sterile Technologies
+              li
+                .filter-link.filter(data-topic="Supply") Supply
+
+            h3 TYPE
+            ul
+              li
+                .filter-link.all.selected(data-type) VIEW ALL
+              li
+                .filter-link.filter(data-type="Article/Whitepaper") Article/Whitepaper
+              li
+                .filter-link.filter(data-type="Brochure") Brochure
+              li
+                .filter-link.filter(data-type="Case Study") Case Study
+              li
+                .filter-link.filter(data-type="eBook") eBook
+              li
+                .filter-link.filter(data-type="Offering Info") Offering Info
+              li
+                .filter-link.filter(data-type="Poster") Poster
+              li
+                .filter-link.filter(data-type="Presentation") Presentation
+              li
+                .filter-link.filter(data-type="Webinars") Webinars
 
             .c-filter__text
               p Looking for case studies, Downloadable brochures, and other resources?
               p.c-visit
                 a(href="", target="") Visit our Resource Center
           .c-filter__right.l-grid__col.l-w--tabt-min-75p
-            .l-grid.js-elems
-
-
-
-
-
-                  
+            .js-elems
 
               
 

@@ -469,8 +469,8 @@ class Filter extends MLP.apps.MLPModule {
 
   containTag(_id, _array) {
     for(var i=0, len=_array.length; i<len; i++){
-      var a=_array[i];
-      if(_id === a){
+      var taggedItems=_array[i];
+      if(_id === taggedItems){
         return true;
       }
       return false;
@@ -491,7 +491,7 @@ class Filter extends MLP.apps.MLPModule {
         var sele = $('.filter-link.filter.selected');
         for(var k=0, lens=sele.length; k<lens; k++){
           var tag_id = sele.eq(k).attr('data-tag');
-          var tag = eval(elem.attr('data-tag')); 
+          var tag = eval(elem.attr('data-tag'));
           if(this.containTag(tag_id, tag)){
             acountItems.push(elem);
             break;

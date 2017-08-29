@@ -39,6 +39,8 @@ class Slide extends MLP.apps.MLPModule {
     this.dropDownEvents();
     this.bodyEvents();
     this.navbarEvents();
+    this.scrollEvents();
+    this.jumpToLandingPage();
   }
 
   languageEvents() {
@@ -92,6 +94,56 @@ class Slide extends MLP.apps.MLPModule {
     });
   }
 
+  scrollEvents(){
+    $('.menu_fliter_false a').on('click', function(e){
+      var type = $(this).parents('.menu_fliter_false').attr('data-type');
+      if($('.'+type+ " .menu_fliter_false-scroll").length){
+        e.preventDefault();
+        $('.drop-down').hide();
+        var ltype = $(this).text().toLowerCase().replace(/\s/g,'');
+        $('.filter-link').each(function(){
+          var ltype2 = $(this).text().toLowerCase().replace(/\s/g,'');
+          if(ltype === ltype2){
+            if(!$(this).hasClass('selected')){
+              $(this).trigger('click');
+            }
+            $('html, body').animate({
+              scrollTop: $(".menu_fliter_false-scroll").offset().top
+            }, 500);
+          }
+        });
+
+      }
+    });
+  }
+
+  getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  jumpToLandingPage() {
+    var type = this.getParameterByName('type');
+    if(type){
+      var ltype = type.toLowerCase().replace(/\s/g,'');
+      $('.filter-block .filter-link').each(function(){
+        var ltype2 = $(this).text().toLowerCase().replace(/\s/g,'');
+        if(ltype ==ltype2){
+          $(this).trigger('click');
+          $('html, body').animate({
+            scrollTop: $(".menu_fliter_false-scroll").offset().top
+          }, 500);
+        }
+      });
+    }
+  }
 
 }
 $.mlpModule(Slide, 'Slide');

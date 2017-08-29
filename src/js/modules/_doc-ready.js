@@ -7,6 +7,6 @@ $(document).ready(function() {
   $('[data-js-devcarousel]').CarouselDev();
   $('[data-js-map]').Map();
   $('[data-js-filter]').Filter();
-
+  $('[data-js-filterthinking]').Filterthinking();
 
 });

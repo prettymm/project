@@ -21,57 +21,59 @@ mixin sidebarLinksBuilder(id)
         a(href="", style="background: url('/assets/img/supply.png') no-repeat 30px center;").selected SUPPLY
 
     .separator
-    .nav-menu-mobile
+    .nav-menu-mobile.menu_fliter_false(data-type="offerings")
       if id != 3
         a(href="offerings.html", style="background: url('/assets/img/offerings.png') no-repeat 30px center;") OFFERINGS
         .drop-down-mobile
-          a(href="") VIEW ALL
-          a(href="") BIOLOGICS
-          a(href="") ORAL TECHNOLOGIES
-          a(href="") INHALATION
-          a(href="") DEVELOPMENT SOLUTIONS
-          a(href="") sterile technologies
-          a(href="") CLINICAL SUPPLY SERVICES
-          a(href="") CONSUMER
+          a(href="offerings.html?type=VIEWALL") VIEW ALL
+          a(href="offerings.html?type=BIOLOGICS") BIOLOGICS
+          a(href="offerings.html?type=ORAL TECHNOLOGIES") ORAL TECHNOLOGIES
+          a(href="offerings.html?type=INHALATION") INHALATION 
+          a(href="offerings.html?type=DEVELOPMENT SOLUTIONS") DEVELOPMENT SOLUTIONS
+          a(href="offerings.html?type=sterile technologies") sterile technologies
+          a(href="offerings.html?type=CLINICAL SUPPLY SERVICES") CLINICAL SUPPLY SERVICES
+          a(href="offerings.html?type=CONSUMER") CONSUMER
       else
         a(href="offerings.html", style="background: url('/assets/img/offerings.png') no-repeat 30px center;").selected OFFERINGS
         .drop-down-mobile
-          a(href="") VIEW ALL
-          a(href="") BIOLOGICS
-          a(href="") ORAL TECHNOLOGIES
-          a(href="") INHALATION
-          a(href="") DEVELOPMENT SOLUTIONS
-          a(href="") sterile technologies
-          a(href="") CLINICAL SUPPLY SERVICES
-          a(href="") CONSUMER
+          a(href="offerings.html?type=VIEWALL") VIEW ALL
+          a(href="offerings.html?type=BIOLOGICS") BIOLOGICS
+          a(href="offerings.html?type=ORAL TECHNOLOGIES") ORAL TECHNOLOGIES
+          a(href="offerings.html?type=INHALATION") INHALATION 
+          a(href="offerings.html?type=DEVELOPMENT SOLUTIONS") DEVELOPMENT SOLUTIONS
+          a(href="offerings.html?type=sterile technologies") sterile technologies
+          a(href="offerings.html?type=CLINICAL SUPPLY SERVICES") CLINICAL SUPPLY SERVICES
+          a(href="offerings.html?type=CONSUMER") CONSUMER
 
 
     .separator
-    .nav-menu-mobile
+    .nav-menu-mobile.menu_fliter_false(data-type="thinking")
       if id != 4
-        a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;") THINKING
+        a(href="thinking.html", style="background: url('/assets/img/thinking.png') no-repeat 30px center;") THINKING
         .drop-down-mobile
-          a(href="") VIEW ALL
-          a(href="") article/whitepaper
-          a(href="") brochure
-          a(href="") case study
-          a(href="") ebook
-          a(href="") offering info
-          a(href="") poster
-          a(href="") PRESENTATION
-          a(href="") WEBINARS
+          a(href="thinking.html?type=VIEWALL") VIEW ALL
+          a(href="thinking.html?type=article/whitepaper") article/whitepaper
+          a(href="thinking.html?type=brochure") brochure
+          a(href="thinking.html?type=case study") case study  
+          a(href="thinking.html?type=ebook") ebook
+          a(href="thinking.html?type=sterile technologies") sterile technologies
+          a(href="thinking.html?type=offering info") offering info
+          a(href="thinking.html?type=poster") poster
+          a(href="thinking.html?type=PRESENTATION") PRESENTATION
+          a(href="thinking.html?type=WEBINARS") WEBINARS
       else
-        a(href="", style="background: url('/assets/img/thinking.png') no-repeat 30px center;").selected THINKING
+        a(href="thinking.html", style="background: url('/assets/img/thinking.png') no-repeat 30px center;").selected THINKING
         .drop-down-mobile
-          a(href="") VIEW ALL
-          a(href="") article/whitepaper
-          a(href="") brochure
-          a(href="") case study
-          a(href="") ebook
-          a(href="") offering info
-          a(href="") poster
-          a(href="") PRESENTATION
-          a(href="") WEBINARS
+          a(href="thinking.html?type=VIEWALL") VIEW ALL
+          a(href="thinking.html?type=article/whitepaper") article/whitepaper
+          a(href="thinking.html?type=brochure") brochure
+          a(href="thinking.html?type=case study") case study  
+          a(href="thinking.html?type=ebook") ebook
+          a(href="thinking.html?type=sterile technologies") sterile technologies
+          a(href="thinking.html?type=offering info") offering info
+          a(href="thinking.html?type=poster") poster
+          a(href="thinking.html?type=PRESENTATION") PRESENTATION
+          a(href="thinking.html?type=WEBINARS") WEBINARS
 
     .separator
     .nav-menu-mobile
@@ -125,60 +127,60 @@ mixin topLinksBuilder(id)
       a(href="#") SUPPLY
     else
       a(href="#").selected SUPPLY
-  .nav-menu
+  .nav-menu.menu_fliter_false(data-type="offerings")
     if id != 3
       a(href="offerings.html") OFFERINGS
       i.arrow-down
-      .drop-down.menu_fliter_false(data-type="offerings")
-        a(href="#") VIEW ALL
-        a(href="#") BIOLOGICS
-        a(href="#") ORAL TECHNOLOGIES
-        a(href="#") INHALATION 
-        a(href="#") DEVELOPMENT SOLUTIONS
-        a(href="#") sterile technologies
-        a(href="#") CLINICAL SUPPLY SERVICES
-        a(href="#") CONSUMER
+      .drop-down
+        a(href="offerings.html?type=VIEWALL") VIEW ALL
+        a(href="offerings.html?type=BIOLOGICS") BIOLOGICS
+        a(href="offerings.html?type=ORAL TECHNOLOGIES") ORAL TECHNOLOGIES
+        a(href="offerings.html?type=INHALATION") INHALATION 
+        a(href="offerings.html?type=DEVELOPMENT SOLUTIONS") DEVELOPMENT SOLUTIONS
+        a(href="offerings.html?type=sterile technologies") sterile technologies
+        a(href="offerings.html?type=CLINICAL SUPPLY SERVICES") CLINICAL SUPPLY SERVICES
+        a(href="offerings.html?type=CONSUMER") CONSUMER
     else
       a(href="offerings.html").selected OFFERINGS
       i.arrow-down
-      .drop-down.menu_fliter_false(data-type="offerings")
-        a(href="#") VIEW ALL
-        a(href="#") BIOLOGICS
-        a(href="#") ORAL TECHNOLOGIES
-        a(href="#") INHALATION 
-        a(href="#") DEVELOPMENT SOLUTIONS
-        a(href="#") sterile technologies
-        a(href="#") CLINICAL SUPPLY SERVICES
-        a(href="#") CONSUMER
-  .nav-menu
+      .drop-down
+        a(href="offerings.html?type=VIEWALL") VIEW ALL
+        a(href="offerings.html?type=BIOLOGICS") BIOLOGICS
+        a(href="offerings.html?type=ORAL TECHNOLOGIES") ORAL TECHNOLOGIES
+        a(href="offerings.html?type=INHALATION") INHALATION 
+        a(href="offerings.html?type=DEVELOPMENT SOLUTIONS") DEVELOPMENT SOLUTIONS
+        a(href="offerings.html?type=sterile technologies") sterile technologies
+        a(href="offerings.html?type=CLINICAL SUPPLY SERVICES") CLINICAL SUPPLY SERVICES
+        a(href="offerings.html?type=CONSUMER") CONSUMER
+  .nav-menu.menu_fliter_false(data-type="thinking")
     if id != 4
-      a(href="#") THINKING
+      a(href="thinking.html") THINKING
       i.arrow-down
-      .drop-down.menu_fliter_false(data-type="offerings")
-        a(href="#") VIEW ALL
-        a(href="#") article/whitepaper
-        a(href="#") brochure
-        a(href="#") case study  
-        a(href="#") ebook
-        a(href="#") sterile technologies
-        a(href="#") offering info
-        a(href="#") poster
-        a(href="#") PRESENTATION
-        a(href="#") WEBINARS
+      .drop-down.menu_fliter_false
+        a(href="thinking.html?type=VIEWALL") VIEW ALL
+        a(href="thinking.html?type=article/whitepaper") article/whitepaper
+        a(href="thinking.html?type=brochure") brochure
+        a(href="thinking.html?type=case study") case study  
+        a(href="thinking.html?type=ebook") ebook
+        a(href="thinking.html?type=sterile technologies") sterile technologies
+        a(href="thinking.html?type=offering info") offering info
+        a(href="thinking.html?type=poster") poster
+        a(href="thinking.html?type=PRESENTATION") PRESENTATION
+        a(href="thinking.html?type=WEBINARS") WEBINARS
     else
-      a(href="#").selected THINKING
+      a(href="thinking.html").selected THINKING
       i.arrow-down
-      .drop-down.menu_fliter_false(data-type="offerings")
-        a(href="#") VIEW ALL
-        a(href="#") article/whitepaper
-        a(href="#") brochure
-        a(href="#") case study  
-        a(href="#") ebook
-        a(href="#") sterile technologies
-        a(href="#") offering info
-        a(href="#") poster
-        a(href="#") PRESENTATION
-        a(href="#") WEBINARS
+      .drop-down
+        a(href="thinking.html?type=VIEWALL") VIEW ALL
+        a(href="thinking.html?type=article/whitepaper") article/whitepaper
+        a(href="thinking.html?type=brochure") brochure
+        a(href="thinking.html?type=case study") case study  
+        a(href="thinking.html?type=ebook") ebook
+        a(href="thinking.html?type=sterile technologies") sterile technologies
+        a(href="thinking.html?type=offering info") offering info
+        a(href="thinking.html?type=poster") poster
+        a(href="thinking.html?type=PRESENTATION") PRESENTATION
+        a(href="thinking.html?type=WEBINARS") WEBINARS
   .nav-menu
     if id != 5
       a(href="#") NEWS & EVENTS
